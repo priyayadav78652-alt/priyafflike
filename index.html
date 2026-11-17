@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090b12">
+  <title>Priya FF Like</title>
+  <style>
+    :root{--bg:#090b12;--panel:#141824;--gold:#f5c451;--muted:#aab1c2;--line:#293044;--green:#25d366}
+    *{box-sizing:border-box}
+    body{margin:0;background:radial-gradient(circle at top,#202238 0,#090b12 48%);color:#f7f7fb;font-family:Arial,Helvetica,sans-serif;min-height:100vh}
+    .wrap{max-width:760px;margin:auto;padding:22px 15px 42px}
+    header{text-align:center;padding:22px 10px 18px}
+    .badge{display:inline-block;border:1px solid #7c6227;color:var(--gold);border-radius:99px;padding:7px 13px;font-size:12px;letter-spacing:1.5px}
+    h1{margin:14px 0 7px;font-size:clamp(30px,7vw,46px);letter-spacing:1px}
+    h1 span{color:var(--gold)}
+    .sub{color:var(--muted);font-size:14px;line-height:1.5}
+    .card{background:linear-gradient(160deg,#171d2b,#10141e);border:1px solid var(--line);border-radius:18px;padding:19px;margin:15px 0;box-shadow:0 12px 35px #0005}
+    h2{font-size:18px;margin:0 0 14px}
+    .region{color:var(--gold);font-size:13px;font-weight:bold;letter-spacing:1px}
+    .plans{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    .plan{border:1px solid var(--line);background:#0d111b;color:#fff;border-radius:13px;padding:13px;text-align:left;cursor:pointer;min-height:92px}
+    .plan strong{display:block;color:var(--gold);font-size:18px;margin-bottom:5px}
+    .plan small{display:block;color:var(--muted);line-height:1.45}
+    .plan.selected{border:2px solid var(--gold);background:#282113}
+    label{display:block;font-size:13px;color:#d9deea;margin:14px 0 7px}
+    input{width:100%;background:#0b0f18;border:1px solid #343c50;border-radius:10px;color:#fff;padding:13px;font-size:15px;outline:none}
+    input:focus{border-color:var(--gold)}
+    .selected-info{display:flex;justify-content:space-between;gap:12px;padding:13px;background:#0c111b;border-radius:10px;margin-top:14px}
+    .selected-info b{color:var(--gold)}
+    .btn{display:block;width:100%;border:0;border-radius:11px;padding:14px 16px;font-size:15px;font-weight:bold;cursor:pointer;text-align:center;text-decoration:none;margin-top:12px}
+    .pay{background:var(--gold);color:#17130a}
+    .wa{background:var(--green);color:#06200f}
+    .note{font-size:12px;color:var(--muted);line-height:1.55;margin-top:12px}
+    .steps{padding-left:19px;color:#d4d9e5;line-height:1.8;font-size:14px}
+    footer{text-align:center;color:#788197;font-size:12px;padding:15px}
+    @media(max-width:430px){.plans{grid-template-columns:1fr 1fr}.card{padding:15px}.plan{padding:11px}.plan strong{font-size:16px}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header>
+      <div class="badge">IND-BD REGION</div>
+      <h1>PRIYA <span>FF LIKE</span></h1>
+      <div class="sub">Choose your plan • Pay by UPI • Send your order on WhatsApp</div>
+    </header>
+
+    <section class="card">
+      <div class="region">🌏 REGION: IND-BD</div>
+      <h2 style="margin-top:10px">Select a Like Plan</h2>
+      <div class="plans" id="plans"></div>
+      <div class="selected-info"><span id="chosen">Selected: 1 Day</span><b id="price">₹15</b></div>
+    </section>
+
+    <section class="card">
+      <h2>Player & Payment Details</h2>
+      <label for="uid">Free Fire Player UID</label>
+      <input id="uid" inputmode="numeric" maxlength="20" placeholder="Enter your Player UID">
+      <label for="player">Player name (optional)</label>
+      <input id="player" maxlength="40" placeholder="Enter player name">
+      <label for="utr">UPI Transaction ID / UTR (after payment)</label>
+      <input id="utr" maxlength="40" placeholder="Enter UTR / transaction reference">
+      <button class="btn pay" onclick="payNow()">PAY WITH UPI</button>
+      <button class="btn wa" onclick="sendOrder()">SEND ORDER ON WHATSAPP</button>
+      <p class="note">After paying, return to this page, enter your UTR / transaction reference, then send the order on WhatsApp. Your order remains pending until the payment is manually verified. Never share your UPI PIN or OTP.</p>
+    </section>
+
+    <section class="card">
+      <h2>How to Order</h2>
+      <ol class="steps">
+        <li>Select your plan and enter your Player UID.</li>
+        <li>Tap Pay with UPI and complete payment in your UPI app.</li>
+        <li>Enter your UTR / transaction reference.</li>
+        <li>Tap Send Order on WhatsApp to send the order details.</li>
+        <li>Wait for manual payment verification and order confirmation.</li>
+      </ol>
+    </section>
+    <footer>PRIYA FF LIKE • Order support on WhatsApp</footer>
+  </main>
+
+<script>
+const UPI_ID = "priyayadav78652@okicici";
+const WHATSAPP_NUMBER = "918630469586";
+const plans = [
+  {label:"1 Day",days:1,likes:220,price:15},
+  {label:"7 Days",days:7,likes:1540,price:55},
+  {label:"15 Days",days:15,likes:3300,price:99},
+  {label:"30 Days",days:30,likes:6600,price:179},
+  {label:"60 Days",days:60,likes:13200,price:240},
+  {label:"90 Days",days:90,likes:19800,price:340},
+  {label:"120 Days",days:120,likes:26400,price:400},
+  {label:"150 Days",days:150,likes:33000,price:500},
+  {label:"180 Days",days:180,likes:39600,price:600},
+  {label:"365 Days",days:365,likes:80300,price:1000}
+];
+let selected = 0;
+const plansEl = document.getElementById("plans");
+plans.forEach((p,i)=>{
+  const b=document.createElement("button");
+  b.type="button"; b.className="plan"+(i===0?" selected":"");
+  b.innerHTML=`<strong>${p.label} — ₹${p.price}</strong><small>${p.likes.toLocaleString("en-IN")} likes<br>220 likes/day</small>`;
+  b.addEventListener("click",()=>choose(i));
+  plansEl.appendChild(b);
+});
+function choose(i){
+  selected=i;
+  document.querySelectorAll(".plan").forEach((b,n)=>b.classList.toggle("selected",n===i));
+  document.getElementById("chosen").textContent="Selected: "+plans[i].label+" • "+plans[i].likes.toLocaleString("en-IN")+" likes";
+  document.getElementById("price").textContent="₹"+plans[i].price;
+}
+function getDetails(){
+  const uid=document.getElementById("uid").value.trim();
+  const player=document.getElementById("player").value.trim();
+  const utr=document.getElementById("utr").value.trim();
+  if(!/^[0-9]{5,20}$/.test(uid)){alert("Please enter a valid Player UID (5–20 digits).");return null;}
+  return {uid,player,utr,p:plans[selected]};
+}
+function payNow(){
+  const d=getDetails(); if(!d)return;
+  const p=d.p;
+  const link=`upi://pay?pa=${encodeURIComponent(UPI_ID)}&pn=${encodeURIComponent("Priya FF Like")}&am=${p.price}&cu=INR&tn=${encodeURIComponent("Priya FF Like "+p.label+" order UID "+d.uid)}`;
+  window.location.href=link;
+}
+function sendOrder(){
+  const d=getDetails(); if(!d)return;
+  if(!d.utr){alert("Please enter your UTR / transaction reference after completing payment.");return;}
+  const msg=[
+    "NEW ORDER - PRIYA FF LIKE",
+    "Region: IND-BD",
+    "Player UID: "+d.uid,
+    "Player Name: "+(d.player||"Not provided"),
+    "Plan: "+d.p.label,
+    "Likes: "+d.p.likes.toLocaleString("en-IN"),
+    "Amount: Rs. "+d.p.price,
+    "UPI ID: "+UPI_ID,
+    "UTR / Transaction Ref: "+d.utr,
+    "Payment Status: PENDING VERIFICATION",
+    "Order Status: PENDING"
+  ].join("\n");
+  window.open("https://wa.me/"+WHATSAPP_NUMBER+"?text="+encodeURIComponent(msg),"_blank");
+}
+</script>
+</body>
+</html>
