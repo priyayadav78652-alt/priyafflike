@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#08090d">
+<title>PRIYA FF LIKE | Premium Like Plans</title>
+<style>
+:root{--bg:#08090d;--surface:#11141c;--surface2:#171b25;--gold:#f3c65e;--gold2:#ffe6a1;--text:#f7f5ef;--muted:#a5a8b2;--line:rgba(243,198,94,.19);--green:#22c875}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at 50% -10%,rgba(178,126,35,.22),transparent 38%),radial-gradient(circle at 100% 40%,rgba(84,62,25,.10),transparent 30%),var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif;min-height:100vh}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.12;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:38px 38px;mask-image:linear-gradient(to bottom,black,transparent 85%)}
+.wrap{width:min(100% - 28px,820px);margin:auto;position:relative;padding:22px 0 46px}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:7px 2px 18px;border-bottom:1px solid rgba(255,255,255,.08)}
+.brand-mini{font-weight:900;letter-spacing:1.7px;font-size:12px}.brand-mini span{color:var(--gold)}
+.live{font-size:10px;letter-spacing:1.3px;color:#b5f5ce;border:1px solid rgba(34,200,117,.3);background:rgba(34,200,117,.08);border-radius:30px;padding:7px 10px}
+.hero{text-align:center;padding:39px 12px 26px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:30px;padding:8px 13px;color:var(--gold2);font-size:10px;font-weight:800;letter-spacing:2px;background:rgba(243,198,94,.055)}
+.eyebrow:before{content:"";width:6px;height:6px;background:var(--gold);border-radius:50%;box-shadow:0 0 12px var(--gold)}
+h1{font-size:clamp(36px,9vw,64px);line-height:.98;letter-spacing:-2.5px;margin:19px 0 12px;font-weight:950}
+h1 span{background:linear-gradient(110deg,#fff0b8 0%,#e5ad3e 45%,#fff0b8 90%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{margin:0;color:var(--muted);font-size:14px;line-height:1.6}
+.hero-stats{display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin-top:21px}
+.hero-stats span{font-size:11px;color:#d7d2c4;background:#141720;border:1px solid rgba(255,255,255,.07);padding:8px 11px;border-radius:8px}
+.hero-stats b{color:var(--gold)}
+.panel{background:linear-gradient(145deg,rgba(24,27,36,.97),rgba(13,15,21,.98));border:1px solid var(--line);border-radius:19px;padding:19px;margin:14px 0;box-shadow:0 18px 55px rgba(0,0,0,.25);position:relative;overflow:hidden}
+.panel:before{content:"";position:absolute;top:0;left:22px;right:22px;height:1px;background:linear-gradient(90deg,transparent,rgba(255,226,153,.55),transparent)}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:15px}
+.section-head h2{margin:0;font-size:16px;letter-spacing:.1px}
+.section-head small{font-size:10px;letter-spacing:1.4px;color:var(--gold);font-weight:800}
+.region{display:flex;align-items:center;gap:8px;color:#f1d58f;font-size:11px;font-weight:800;letter-spacing:1.6px;margin-bottom:15px}
+.region i{font-style:normal;background:rgba(243,198,94,.12);padding:6px 8px;border-radius:6px}
+.plans{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.plan{position:relative;text-align:left;border:1px solid rgba(255,255,255,.09);border-radius:12px;padding:13px 12px;background:linear-gradient(145deg,#171b25,#10131b);color:var(--text);cursor:pointer;min-height:91px;transition:.18s}
+.plan:active{transform:scale(.985)}
+.plan strong{display:block;font-size:15px;color:#fff;margin-bottom:6px}
+.plan .likes{font-size:11px;color:#b6bac4}
+.plan .daily{display:block;color:#888f9e;font-size:10px;margin-top:4px}
+.plan .cost{position:absolute;right:11px;top:12px;color:var(--gold);font-weight:900;font-size:15px}
+.plan.selected{border-color:var(--gold);background:linear-gradient(145deg,rgba(103,75,25,.34),rgba(27,25,20,.95));box-shadow:inset 0 0 0 1px rgba(243,198,94,.18),0 0 20px rgba(243,198,94,.08)}
+.plan.selected:after{content:"✓";position:absolute;right:10px;bottom:9px;color:var(--gold);font-size:12px;font-weight:900}
+.plan.selected .cost{right:auto;left:12px;top:auto;bottom:10px}
+.plan.selected strong{padding-right:35px}
+.selection{display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding:13px 14px;border-radius:11px;background:#0a0c11;border:1px solid rgba(255,255,255,.07)}
+.selection span{font-size:12px;color:var(--muted)}.selection b{font-size:21px;color:var(--gold)}
+label{display:block;color:#d7d9df;font-size:12px;font-weight:700;margin:14px 0 7px}
+input{width:100%;border:1px solid #303543;border-radius:10px;background:#0a0c12;color:#fff;padding:14px;font-size:14px;outline:none;transition:.2s}
+input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(243,198,94,.08)}
+input::placeholder{color:#686e7b}
+.actions{display:grid;grid-template-columns:1fr;gap:9px;margin-top:17px}
+.btn{width:100%;border:0;border-radius:10px;padding:15px 16px;font-weight:900;font-size:13px;letter-spacing:.6px;cursor:pointer;text-decoration:none;text-align:center;display:block}
+.pay{color:#17130a;background:linear-gradient(110deg,#f9df98,#dca83c);box-shadow:0 7px 22px rgba(219,169,63,.17)}
+.wa{color:#062112;background:linear-gradient(110deg,#53ed9a,#19bd69)}
+.note{font-size:11px;color:#8f95a3;line-height:1.65;margin:13px 1px 0}
+.how{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}
+.step{display:flex;gap:10px;align-items:flex-start;background:#0c0f16;border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:12px}
+.step em{font-style:normal;display:grid;place-items:center;flex:0 0 23px;height:23px;border-radius:7px;background:rgba(243,198,94,.13);color:var(--gold);font-size:11px;font-weight:900}
+.step span{font-size:11px;color:#c5c8d0;line-height:1.5}
+.footer{text-align:center;color:#626978;font-size:10px;letter-spacing:1.2px;padding:18px 0 0}
+.footer b{color:#c5a14c}
+@media(min-width:600px){.plans{grid-template-columns:repeat(3,minmax(0,1fr))}.actions{grid-template-columns:1fr 1fr}.panel{padding:23px}.hero{padding-top:48px}.how{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:360px){.plans{gap:7px}.plan{padding:11px 9px}.plan strong{font-size:13px}.plan .cost{font-size:13px}}
+
+/* Luxury floral layer */
+body{
+  background:
+    radial-gradient(ellipse at 50% -10%,rgba(222,166,190,.20),transparent 42%),
+    radial-gradient(circle at 8% 35%,rgba(255,192,214,.10),transparent 28%),
+    radial-gradient(circle at 95% 65%,rgba(190,135,173,.12),transparent 30%),
+    linear-gradient(145deg,#09070d,#160d18 52%,#09070d);
+}
+:root{--gold:#f2c5d8;--gold2:#ffe8f1;--line:rgba(242,197,216,.24)}
+h1 span{background:linear-gradient(110deg,#fff0f6 0%,#d88eaf 48%,#ffe6f0 90%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.panel{background:linear-gradient(145deg,rgba(37,23,36,.97),rgba(15,11,19,.98));border-color:rgba(242,197,216,.24);box-shadow:0 18px 55px rgba(0,0,0,.35),0 0 28px rgba(205,132,169,.06)}
+.panel:before{background:linear-gradient(90deg,transparent,rgba(255,220,235,.72),transparent)}
+.plan.selected{border-color:#e8a9c4;background:linear-gradient(145deg,rgba(112,54,83,.42),rgba(30,18,29,.96));box-shadow:inset 0 0 0 1px rgba(242,197,216,.2),0 0 22px rgba(224,143,180,.13)}
+.plan .cost,.selection b,.hero-stats b,.footer b,.section-head small,.region{color:#f2c5d8}
+.pay{color:#24121b;background:linear-gradient(110deg,#ffe3ef,#d88eaf);box-shadow:0 7px 22px rgba(219,145,177,.20)}
+.eyebrow{border-color:rgba(242,197,216,.28);color:#ffe8f1;background:rgba(242,197,216,.07)}
+.eyebrow:before{background:#f2c5d8;box-shadow:0 0 12px #f2c5d8}
+.welcome-line{margin:13px auto 0;color:#f5cfe0;font-size:13px;letter-spacing:.3px}
+.voice-btn{margin-top:13px;border:1px solid rgba(242,197,216,.38);border-radius:30px;padding:9px 15px;background:rgba(242,197,216,.09);color:#ffe8f1;font-size:11px;font-weight:800;letter-spacing:.5px;cursor:pointer}
+.petal{position:fixed;top:-35px;z-index:5;pointer-events:none;opacity:.78;font-size:18px;animation:petalFall linear forwards;filter:drop-shadow(0 2px 5px rgba(255,180,210,.25))}
+@keyframes petalFall{0%{transform:translate3d(0,-5vh,0) rotate(0deg);opacity:0}10%{opacity:.85}50%{transform:translate3d(45px,50vh,0) rotate(220deg)}100%{transform:translate3d(-25px,110vh,0) rotate(500deg);opacity:0}}
+@media(prefers-reduced-motion:reduce){.petal{display:none}*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="topbar"><div class="brand-mini">PRIYA <span>FF LIKE</span></div><div class="live">● ORDER SUPPORT</div></div>
+  <header class="hero">
+    <div class="eyebrow">PREMIUM FREE FIRE SERVICES</div>
+    <h1>PRIYA <span>FF LIKE</span></h1>
+    <p>Choose your plan. Make your payment.<br>Send your order directly to our WhatsApp.</p>
+
+    <p class="welcome-line">🌸 PRIYA FF LIKE में आपका स्वागत है 🌸</p>
+    <button class="voice-btn" type="button" id="welcomeVoice">🔊 स्वागत संदेश सुनें</button>
+    <div class="hero-stats"><span>🌏 REGION <b>IND-BD</b></span><span>⚡ EASY ORDER</span><span>🔒 MANUAL VERIFICATION</span></div>
+  </header>
+
+  <section class="panel">
+    <div class="region"><i>🌏 IND-BD</i> SELECT YOUR LIKE PLAN</div>
+    <div class="section-head"><h2>Available Packages</h2><small>10 PLANS</small></div>
+    <div class="plans" id="plans"></div>
+    <div class="selection"><span id="chosen">Selected: 1 Day · 220 Likes</span><b id="price">₹15</b></div>
+  </section>
+
+  <section class="panel">
+    <div class="section-head"><h2>Player & Payment Details</h2><small>ORDER FORM</small></div>
+    <label for="uid">FREE FIRE PLAYER UID</label>
+    <input id="uid" inputmode="numeric" maxlength="20" placeholder="Enter your Player UID">
+    <label for="player">PLAYER NAME <span style="color:#777;font-weight:400">(optional)</span></label>
+    <input id="player" maxlength="40" placeholder="Enter player name">
+    <label for="utr">UPI TRANSACTION ID / UTR</label>
+    <input id="utr" maxlength="40" placeholder="Enter UTR after completing payment">
+    <div class="actions">
+      <button class="btn pay" onclick="payNow()">PAY WITH UPI &nbsp; →</button>
+      <button class="btn wa" onclick="sendOrder()">SEND ORDER ON WHATSAPP &nbsp; ↗</button>
+    </div>
+    <p class="note">Complete your UPI payment first. Then enter the UTR / transaction reference and send your order. Payment and order remain pending until manually checked. Never share your UPI PIN or OTP.</p>
+  </section>
+
+  <section class="panel">
+    <div class="section-head"><h2>How It Works</h2><small>4 SIMPLE STEPS</small></div>
+    <div class="how">
+      <div class="step"><em>01</em><span>Select your preferred like package.</span></div>
+      <div class="step"><em>02</em><span>Pay using the UPI payment option.</span></div>
+      <div class="step"><em>03</em><span>Enter your UTR and send order on WhatsApp.</span></div>
+      <div class="step"><em>04</em><span>Wait for payment verification and order update.</span></div>
+    </div>
+  </section>
+  <div class="footer">© PRIYA <b>FF LIKE</b> · IND-BD REGION</div>
+</main>
+<script>
+const UPI_ID="priyayadav78652@okicici";
+const WHATSAPP_NUMBER="918630469586";
+const plans=[
+ {label:"1 Day",likes:220,price:15},{label:"7 Days",likes:1540,price:55},
+ {label:"15 Days",likes:3300,price:99},{label:"30 Days",likes:6600,price:179},
+ {label:"60 Days",likes:13200,price:240},{label:"90 Days",likes:19800,price:340},
+ {label:"120 Days",likes:26400,price:400},{label:"150 Days",likes:33000,price:500},
+ {label:"180 Days",likes:39600,price:600},{label:"365 Days",likes:80300,price:1000}
+];
+let selected=0;
+const fmt=n=>n.toLocaleString("en-IN");
+const plansEl=document.getElementById("plans");
+plans.forEach((p,i)=>{
+ const b=document.createElement("button");b.type="button";b.className="plan"+(i===0?" selected":"");
+ b.innerHTML=`<strong>${p.label}</strong><span class="cost">₹${p.price}</span><span class="likes">${fmt(p.likes)} likes</span><span class="daily">220 likes / day</span>`;
+ b.addEventListener("click",()=>choose(i));plansEl.appendChild(b);
+});
+function choose(i){selected=i;document.querySelectorAll(".plan").forEach((b,n)=>b.classList.toggle("selected",n===i));document.getElementById("chosen").textContent=`Selected: ${plans[i].label} · ${fmt(plans[i].likes)} Likes`;document.getElementById("price").textContent="₹"+plans[i].price;}
+function details(){const uid=document.getElementById("uid").value.trim(),player=document.getElementById("player").value.trim(),utr=document.getElementById("utr").value.trim();if(!/^[0-9]{5,20}$/.test(uid)){alert("Please enter a valid Player UID (5–20 digits).");return null;}return{uid,player,utr,p:plans[selected]};}
+function payNow(){const d=details();if(!d)return;const p=d.p;location.href=`upi://pay?pa=${encodeURIComponent(UPI_ID)}&pn=${encodeURIComponent("Priya FF Like")}&am=${p.price}&cu=INR&tn=${encodeURIComponent("Priya FF Like "+p.label+" UID "+d.uid)}`;}
+function sendOrder(){const d=details();if(!d)return;if(!d.utr){alert("Enter your UTR / transaction reference after completing payment.");return;}const msg=["NEW ORDER - PRIYA FF LIKE","Region: IND-BD","Player UID: "+d.uid,"Player Name: "+(d.player||"Not provided"),"Plan: "+d.p.label,"Likes: "+fmt(d.p.likes),"Amount: Rs. "+d.p.price,"UPI ID: "+UPI_ID,"UTR / Transaction Ref: "+d.utr,"Payment Status: PENDING VERIFICATION","Order Status: PENDING"].join("\n");window.open("https://wa.me/"+WHATSAPP_NUMBER+"?text="+encodeURIComponent(msg),"_blank");}
+
+// Decorative falling flower petals. This does not change ordering/payment logic.
+(function startPetals(){
+  const symbols=["🌸","🌺","💮","🌷"];
+  function dropPetal(){
+    const petal=document.createElement("span");
+    petal.className="petal";
+    petal.textContent=symbols[Math.floor(Math.random()*symbols.length)];
+    petal.style.left=(Math.random()*100)+"vw";
+    petal.style.animationDuration=(7+Math.random()*7)+"s";
+    petal.style.fontSize=(12+Math.random()*13)+"px";
+    document.body.appendChild(petal);
+    setTimeout(()=>petal.remove(),15000);
+  }
+  for(let i=0;i<9;i++) setTimeout(dropPetal,i*420);
+  setInterval(dropPetal,850);
+})();
+
+// Browsers block automatic sound until the visitor taps. The button speaks
+// the welcome line using the device's available Hindi voice.
+(function welcomeVoice(){
+  const button=document.getElementById("welcomeVoice");
+  if(!button) return;
+  button.addEventListener("click",()=>{
+    if(!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)){
+      alert("Is browser mein voice support available nahi hai.");
+      return;
+    }
+    window.speechSynthesis.cancel();
+    const message=new SpeechSynthesisUtterance("Priya FF Like mein aapka swagat hai.");
+    message.lang="hi-IN";
+    message.rate=0.88;
+    message.pitch=1.08;
+    window.speechSynthesis.speak(message);
+  });
+})();
+
+</script>
+</body>
+</html>
