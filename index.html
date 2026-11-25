@@ -1,212 +1,2612 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#f5f6fa">
-<title>Instagram Media Extractor</title>
-<style>
-:root{color-scheme:light dark;--bg:#f4f5f9;--text:#171923;--muted:#707585;--card:rgba(255,255,255,.72);--line:rgba(90,98,120,.16);--accent:#6257e8;--accent2:#9187ff;--green:#168454;--shadow:0 18px 55px rgba(36,40,70,.10);--field:rgba(255,255,255,.72)}
-@media(prefers-color-scheme:dark){:root{--bg:#0b0c10;--text:#f4f5fb;--muted:#a0a5b5;--card:rgba(27,29,38,.76);--line:rgba(210,215,240,.13);--accent:#a39aff;--accent2:#7469e9;--green:#61d6a0;--shadow:0 18px 55px rgba(0,0,0,.30);--field:rgba(255,255,255,.045)}}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 12% 0%,rgba(119,105,255,.13),transparent 36%),radial-gradient(ellipse at 100% 40%,rgba(67,180,220,.10),transparent 32%),var(--bg);color:var(--text);font:15px/1.5 -apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;min-height:100vh;padding:28px 16px 22px}
-main{max-width:780px;margin:0 auto}.glass{background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-radius:25px}.panel{padding:20px}.tabs{display:grid;grid-template-columns:1fr 1fr;gap:5px;background:var(--field);border:1px solid var(--line);border-radius:15px;padding:5px;margin-bottom:17px}.tab{border:0;border-radius:11px;padding:11px 8px;color:var(--muted);background:transparent;font-weight:650;cursor:pointer}.tab.active{background:var(--card);color:var(--text);box-shadow:0 2px 9px rgba(0,0,0,.08)}.inputrow{display:flex;gap:9px}.input{min-width:0;flex:1;background:var(--field);border:1px solid var(--line);border-radius:14px;padding:14px 15px;color:var(--text);outline:none;font:inherit}.input:focus{border-color:var(--accent)}button{font:inherit}.primary{border:0;border-radius:14px;padding:0 19px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;font-weight:700;cursor:pointer;box-shadow:0 7px 18px rgba(98,87,232,.22)}button:disabled{opacity:.6;cursor:wait}.hint{color:var(--muted);font-size:12px;margin:10px 2px 0}.statusline{display:flex;justify-content:center;margin:17px 0 0;min-height:28px}.status{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--field);border-radius:999px;padding:5px 11px;font-size:12px;color:var(--muted)}.status.done{color:var(--green);border-color:color-mix(in srgb,var(--green) 35%,transparent)}.spinner{width:12px;height:12px;border:2px solid var(--line);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.hidden{display:none!important}.results{margin-top:18px;display:grid;gap:14px}.summary{padding:17px}.profile{display:flex;gap:12px;align-items:center;min-width:0}.avatar{width:49px;height:49px;border-radius:50%;object-fit:cover;background:var(--field);border:1px solid var(--line);flex-shrink:0}.username{font-weight:750;overflow-wrap:anywhere}.caption{color:var(--muted);font-size:13px;white-space:pre-wrap;overflow-wrap:anywhere;margin-top:3px;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}.chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:15px}.chip{font-size:11px;padding:5px 9px;border:1px solid var(--line);border-radius:999px;background:var(--field);color:var(--muted)}.media-card{overflow:hidden}.preview{position:relative;background:#08090d;display:flex;align-items:center;justify-content:center;min-height:150px;max-height:560px}.preview img,.preview video{display:block;width:100%;max-height:560px;object-fit:contain}.preview video{background:#08090d}.playhint{position:absolute;width:54px;height:54px;border-radius:50%;display:grid;place-items:center;background:rgba(15,15,20,.55);border:1px solid rgba(255,255,255,.45);color:white;pointer-events:none;backdrop-filter:blur(8px);font-size:21px;padding-left:3px}.media-body{padding:14px}.media-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;font-weight:700}.type-tag{font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:8px;padding:3px 7px}.urlbox{border:1px solid var(--line);border-radius:11px;background:var(--field);padding:9px 10px;font:11px/1.45 ui-monospace,SFMono-Regular,Consolas,monospace;overflow-wrap:anywhere;color:var(--muted);margin-bottom:10px}.urltext{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.urltext.full{display:block;overflow-wrap:anywhere}.urltoggle{border:0;background:none;color:var(--accent);font-size:11px;padding:5px 0 0;cursor:pointer}.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.action{border:1px solid var(--line);background:var(--field);color:var(--text);border-radius:11px;padding:10px 8px;font-size:12px;font-weight:650;cursor:pointer;text-align:center;text-decoration:none}.action.download{grid-column:1/-1;background:var(--accent);border-color:transparent;color:#fff}.errorbox{padding:16px;border:1px solid rgba(220,70,70,.25);border-radius:15px;background:var(--card);color:var(--muted);font-size:13px}.footer{margin-top:24px;text-align:center;color:var(--muted);font-size:11px}.footbuttons{display:flex;justify-content:center;gap:8px;margin-bottom:12px}.footbuttons button{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:10px;padding:7px 14px;font-size:11px;font-weight:650;cursor:pointer}.credit{margin-top:4px}.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:var(--text);color:var(--bg);padding:10px 15px;border-radius:12px;font-size:12px;box-shadow:var(--shadow);transition:.22s;z-index:20;max-width:90vw;text-align:center}.toast.show{opacity:1;transform:translate(-50%,0)}.modalback{position:fixed;inset:0;z-index:30;display:grid;place-items:center;padding:20px;background:rgba(15,17,28,.35);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}.modal{width:min(100%,560px);max-height:min(82vh,700px);overflow:auto;padding:21px;border-radius:24px;background:var(--card);border:1px solid var(--line);box-shadow:0 28px 100px rgba(0,0,0,.25)}.modalhead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.modalhead h2{font-size:18px;margin:0}.close{border:1px solid var(--line);background:var(--field);color:var(--text);width:32px;height:32px;border-radius:50%;cursor:pointer}.modaltext{font-size:13px;color:var(--muted);white-space:pre-wrap;overflow-wrap:anywhere}.modalpre{font:12px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere;background:var(--field);border:1px solid var(--line);border-radius:13px;padding:13px}.modalactions{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}.modalactions .action{padding:9px 15px}.notice{font-size:11px;color:var(--muted);margin-top:12px}
-@media(min-width:600px){body{padding-top:48px}.panel{padding:25px}.summary{padding:21px}.media-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}.media-card{min-width:0}.preview{min-height:190px}}
-@media(max-width:420px){body{padding:15px 10px}.panel{padding:14px}.inputrow{flex-direction:column}.primary{padding:13px}.input{width:100%}.summary{padding:14px}.profile{align-items:flex-start}.actions{gap:7px}}
-</style>
-</head>
-<body>
-<main>
-  <section class="glass panel">
-    <div class="tabs" role="tablist" aria-label="URL type">
-      <button class="tab active" data-mode="ig" role="tab" aria-selected="true">Instagram URL</button>
-      <button class="tab" data-mode="cdn" role="tab" aria-selected="false">Paste CDN URL</button>
-    </div>
-    <form id="extractForm">
-      <div class="inputrow">
-        <input id="urlInput" class="input" type="url" inputmode="url" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Paste Instagram post or reel URL" aria-label="URL">
-        <button id="extractBtn" class="primary" type="submit">Extract</button>
-      </div>
-    </form>
-    <div class="hint" id="hint">Paste a public Instagram post, reel, or image URL.</div>
-    <div class="statusline"><span id="status" class="status hidden" aria-live="polite"></span></div>
-  </section>
-  <section id="results" class="results hidden" aria-live="polite"></section>
-  <footer class="footer">
-    <div class="footbuttons">
-      <button type="button" id="docsBtn">Docs</button>
-      <button type="button" id="promptBtn">Prompt</button>
-    </div>
-    <div>Copyright © Growfansite 2026</div>
-    <div class="credit">Credit @Growfansite</div>
-  </footer>
-</main>
-<div id="toast" class="toast" role="status"></div>
-<div id="modalBack" class="modalback hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-  <div class="modal">
-    <div class="modalhead"><h2 id="modalTitle">Details</h2><button class="close" id="closeModal" aria-label="Close">×</button></div>
-    <div id="modalContent"></div>
-    <div class="modalactions"><button class="action" id="modalCopy">Copy</button><button class="action" id="modalDone">Done</button></div>
-  </div>
-</div>
-<script>
-(() => {
-  const $ = s => document.querySelector(s);
-  const input = $('#urlInput'), form = $('#extractForm'), btn = $('#extractBtn');
-  const status = $('#status'), results = $('#results'), hint = $('#hint');
-  let mode = 'ig', toastTimer, modalCopyText = '';
-  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2300)}
-  async function copyText(text){try{await navigator.clipboard.writeText(text);toast('Copied to clipboard')}catch(e){try{const ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();const ok=document.execCommand('copy');ta.remove();if(ok)toast('Copied to clipboard');else toast('Copy failed')}catch(_){toast('Copy failed')}}}
-  function setStatus(kind, text){status.className='status'+(kind==='done'?' done':'');status.innerHTML=(kind==='loading'?'<span class="spinner"></span>':'')+esc(text);status.classList.remove('hidden')}
-  function setLoading(v){btn.disabled=v;btn.textContent=v?'Working…':'Extract'}
-  function isHttpUrl(s){try{const u=new URL(s);return u.protocol==='http:'||u.protocol==='https:'}catch(e){return false}}
-  function normalizeMedia(data){
-    let raw = Array.isArray(data?.media) ? data.media : [];
-    if(!raw.length && data?.data) raw = Array.isArray(data.data) ? data.data : (Array.isArray(data.data.media) ? data.data.media : []);
-    const out = raw.map(x=>({type:String(x.type|| (x.video_url?'video':x.display_url?'image':'image')).toLowerCase()==='video'?'video':'image',cdn_url:x.cdn_url||x.video_url||x.display_url||x.url||'',download_url:x.download_url||x.cdn_url||x.video_url||x.display_url||x.url||''})).filter(x=>isHttpUrl(x.cdn_url));
-    return {success:data?.success!==false && out.length>0,type:data?.type||'',media:out,meta:data?.meta||data?.metadata||{username:data?.username,description:data?.description,thumbnail_url:data?.thumbnail_url,likes:data?.likes}};
-  }
-  async function fetchJson(url, timeout=15000){
-    const controller=new AbortController(), timer=setTimeout(()=>controller.abort(),timeout);
-    try{const r=await fetch(url,{signal:controller.signal,headers:{'Accept':'application/json'}});if(!r.ok)throw Error('HTTP '+r.status);return await r.json()}finally{clearTimeout(timer)}
-  }
-  async function tryApi(igUrl){
-    const endpoint='https://ig-dl-api.vercel.app/api/igdl?url='+encodeURIComponent(igUrl);
-    const d=await fetchJson(endpoint,18000), n=normalizeMedia(d);
-    if(n.success) return n;
-    throw Error('No media returned');
-  }
-  async function relayExtract(igUrl){
-    const targets=[
-      'https://api.allorigins.win/raw?url='+encodeURIComponent(igUrl),
-      'https://api.codetabs.com/v1/proxy?quest='+encodeURIComponent(igUrl)
-    ];
-    for(const relay of targets){
-      try{
-        const r=await fetch(relay,{headers:{'Accept':'text/html,application/json'},signal:AbortSignal.timeout?AbortSignal.timeout(12000):undefined});
-        if(!r.ok)continue;
-        const text=await r.text();
-        let html=text;
-        try{const j=JSON.parse(text);html=j.contents||j.html||text}catch(_){}
-        const vids=[...html.matchAll(/["'](?:video_url|videoUrl)["']\s*:\s*["']([^"']+)["']/g)].map(m=>m[1].replace(/\\u0026/g,'&').replace(/\\\//g,'/'));
-        const imgs=[...html.matchAll(/["'](?:display_url|displayUrl|og:image)["']\s*:\s*["']([^"']+)["']/g)].map(m=>m[1].replace(/\\u0026/g,'&').replace(/\\\//g,'/'));
-        const media=[...new Set(vids)].filter(isHttpUrl).map(cdn_url=>({type:'video',cdn_url,download_url:cdn_url}));
-        for(const cdn_url of [...new Set(imgs)].filter(isHttpUrl)) if(!media.some(x=>x.cdn_url===cdn_url))media.push({type:'image',cdn_url,download_url:cdn_url});
-        if(media.length)return {success:true,type:media.some(x=>x.type==='video')?'mixed':'image',media,meta:{username:'',description:'',thumbnail_url:media.find(x=>x.type==='image')?.cdn_url||'',likes:null}};
-      }catch(_){}
-    }
-    throw Error('Relay extraction failed');
-  }
-  async function microlinkImage(igUrl){
-    try{
-      const d=await fetchJson('https://api.microlink.io/?url='+encodeURIComponent(igUrl)+'&data=image.url,video.url,title,description',14000);
-      const image=d?.data?.image?.url;
-      if(image&&isHttpUrl(image))return {success:true,type:'image',media:[{type:'image',cdn_url:image,download_url:image}],meta:{username:'',description:d.data.description||d.data.title||'',thumbnail_url:image,likes:null}};
-    }catch(_){}
-    return null;
-  }
-  async function extract(igUrl){
-    let firstError;
-    try{return await tryApi(igUrl)}catch(e){firstError=e}
-    try{return await relayExtract(igUrl)}catch(_){}
-    const mic=await microlinkImage(igUrl);if(mic)return mic;
-    throw firstError||Error('Could not extract media');
-  }
-  function formatLikes(v){if(v===null||v===undefined||v==='')return null;const n=Number(v);return Number.isFinite(n)?n.toLocaleString():String(v)}
-  function safeHost(url){try{return new URL(url).hostname}catch(e){return 'media URL'}}
-  function renderSummary(data){
-    const m=data.meta||{}, videos=data.media.filter(x=>x.type==='video').length, images=data.media.filter(x=>x.type==='image').length;
-    const username=m.username?('@'+String(m.username).replace(/^@/,'')):'Instagram media';
-    const avatar=m.thumbnail_url&&isHttpUrl(m.thumbnail_url)?m.thumbnail_url:'';
-    const likes=formatLikes(m.likes);
-    return `<section class="glass summary"><div class="profile"><img class="avatar" alt="" referrerpolicy="no-referrer" src="${esc(avatar)}" onerror="this.style.visibility='hidden'"><div style="min-width:0"><div class="username">${esc(username)}</div><div class="caption">${esc(m.description||'Media extracted successfully.')}</div></div></div><div class="chips"><span class="chip">${videos} video${videos===1?'':'s'}</span><span class="chip">${images} image${images===1?'':'s'}</span><span class="chip">${esc(data.type|| (videos&&images?'mixed':videos?'video':'image'))}</span>${likes!==null?`<span class="chip">♥ ${esc(likes)} likes</span>`:''}</div></section>`;
-  }
-  function mediaCard(item,index){
-    const url=item.cdn_url, download=item.download_url||url, isVideo=item.type==='video';
-    const preview=isVideo
-      ? `<video class="videoEl" controls playsinline preload="metadata" src="${esc(url)}" crossorigin="anonymous" aria-label="Video preview"></video><span class="playhint" aria-hidden="true">▶</span>`
-      : `<img class="imageEl" src="${esc(url)}" alt="Instagram image ${index+1}" referrerpolicy="no-referrer" loading="lazy">`;
-    return `<article class="glass media-card" data-index="${index}"><div class="preview">${preview}</div><div class="media-body"><div class="media-top"><span>${isVideo?'Video':'Image'} ${index+1}</span><span class="type-tag">${esc(safeHost(url))}</span></div><div class="urlbox"><div class="urltext" id="urltext-${index}">${esc(url)}</div><button class="urltoggle" data-action="toggle" data-index="${index}">Show full URL</button></div><div class="actions"><a class="action download" href="${esc(download)}" target="_blank" rel="noopener noreferrer" download>↓ &nbsp; Download</a><button class="action" data-action="copy" data-index="${index}">Copy URL</button><a class="action" href="${esc(url)}" target="_blank" rel="noopener noreferrer">Open URL ↗</a></div></div></article>`;
-  }
-  function proxyImageUrl(url){return 'https://images.weserv.nl/?url='+encodeURIComponent(url.replace(/^https?:\/\//,''))}
-  function attachFallbacks(data){
-    results.querySelectorAll('.videoEl').forEach((video)=>{
-      const original=video.getAttribute('src');let triedBlob=false;
-      video.addEventListener('error',async()=>{
-        if(triedBlob)return;triedBlob=true;
-        try{
-          const response=await fetch(original,{mode:'cors',cache:'no-store'});
-          if(!response.ok)throw Error('fetch failed');
-          const blob=await response.blob();
-          if(!blob.type.startsWith('video/'))throw Error('not video');
-          video.src=URL.createObjectURL(blob);video.load();
-          const overlay=video.parentElement.querySelector('.playhint');if(overlay)overlay.remove();
-        }catch(_){const overlay=video.parentElement.querySelector('.playhint');if(overlay)overlay.remove();video.insertAdjacentHTML('afterend','<div style="position:absolute;bottom:8px;left:8px;right:8px;color:white;background:#181922d9;border-radius:8px;padding:8px;font-size:11px;text-align:center">Preview unavailable in this browser. Use Download or Open URL.</div>')}
-      });
-      video.addEventListener('play',()=>{const overlay=video.parentElement.querySelector('.playhint');if(overlay)overlay.remove()},{once:true});
-      video.addEventListener('loadeddata',()=>{const overlay=video.parentElement.querySelector('.playhint');if(overlay)overlay.remove()},{once:true});
-    });
-    results.querySelectorAll('.imageEl').forEach((img)=>{
-      let stage=0;const original=img.src;const item=data.media[Number(img.closest('.media-card').dataset.index)];
-      img.addEventListener('error',()=>{
-        stage++;
-        if(stage===1 && item.download_url && item.download_url!==original){img.src=item.download_url;return}
-        if(stage<=2){img.referrerPolicy='no-referrer';img.src=proxyImageUrl(original);return}
-        img.replaceWith(Object.assign(document.createElement('div'),{textContent:'Image preview unavailable. Try Download or Open URL.',style:'color:white;padding:24px;text-align:center;font-size:12px'}));
-      });
-    });
-  }
-  function render(data){
-    const videos=data.media.filter(x=>x.type==='video').length, images=data.media.filter(x=>x.type==='image').length;
-    results.innerHTML=renderSummary(data)+'<div class="media-grid">'+data.media.map(mediaCard).join('')+'</div>';
-    results.classList.remove('hidden');attachFallbacks(data);
-    setStatus('done',`Done — ${videos} video(s), ${images} image(s)`);
-  }
-  function validateInstagram(url){return isHttpUrl(url)&&/(^|\.)instagram\.com$/i.test(new URL(url).hostname)}
-  form.addEventListener('submit',async e=>{
-    e.preventDefault();const value=input.value.trim();
-    if(!value){toast('Paste a URL first');input.focus();return}
-    if(!isHttpUrl(value)){toast('Please enter a valid http(s) URL');return}
-    setLoading(true);results.classList.add('hidden');results.innerHTML='';setStatus('loading',mode==='ig'?'Extracting…':'Loading CDN media…');
-    try{
-      if(mode==='cdn'){
-        const kind=/\.(mp4|m3u8|mov)(\?|$)/i.test(value)?'video':'image';
-        render({success:true,type:kind,media:[{type:kind,cdn_url:value,download_url:value}],meta:{username:'Direct CDN URL',description:'Preview and download the pasted direct media URL.',thumbnail_url:kind==='image'?value:'',likes:null}});
-      }else{
-        if(!validateInstagram(value)){throw Error('Enter a valid instagram.com post, reel, or image URL.')}
-        const data=await extract(value);render(data);
-      }
-    }catch(err){results.innerHTML=`<div class="errorbox">Could not extract media from this URL. The post may be private, unavailable, or blocked by the source. Please try a public post or paste a direct CDN URL instead.</div>`;results.classList.remove('hidden');setStatus('error','Could not extract media');}
-    finally{setLoading(false)}
-  });
-  document.querySelectorAll('.tab').forEach(tab=>tab.addEventListener('click',()=>{
-    mode=tab.dataset.mode;document.querySelectorAll('.tab').forEach(t=>{t.classList.toggle('active',t===tab);t.setAttribute('aria-selected',String(t===tab))});
-    input.value='';input.placeholder=mode==='ig'?'Paste Instagram post or reel URL':'Paste direct CDN image or video URL';
-    hint.textContent=mode==='ig'?'Paste a public Instagram post, reel, or image URL.':'Paste a direct media CDN URL to preview or download it.';
-    results.classList.add('hidden');status.classList.add('hidden');input.focus();
-  }));
-  results.addEventListener('click',e=>{
-    const b=e.target.closest('[data-action]');if(!b)return;
-    const index=Number(b.dataset.index), item=window.currentMedia?.[index];
-    if(b.dataset.action==='toggle'){const el=$('#urltext-'+index);const full=el.classList.toggle('full');b.textContent=full?'Hide full URL':'Show full URL'}
-    if(b.dataset.action==='copy'&&item)copyText(item.cdn_url);
-  });
-  const originalRender=render;
-  render=function(data){window.currentMedia=data.media;originalRender(data)};
-  const promptText=`Build a premium, mobile-first, single-file HTML Instagram media URL extractor with glassmorphism and Apple-style design, auto light/dark theme, and no external dependencies. Include tabs for Instagram URL and Paste CDN URL; call GET https://ig-dl-api.vercel.app/api/igdl?url={encoded_ig_url}; handle response {success,type,media:[{type:"video"|"image",cdn_url,download_url}],meta:{username,description,thumbnail_url,likes}}. Show summary avatar, username, caption and count/type/likes chips. Video previews use cdn_url with HTML5 video and blob fallback; image previews use referrerpolicy=no-referrer with download_url then images.weserv.nl fallback. Each media item needs a truncated direct URL with Show full URL toggle and Download, Copy, Open buttons. If API fails, silently try AllOrigins/Codetabs relay parsing video_url/display_url, then Microlink for image only. Show status spinner Extracting… and Done — X video(s), Y image(s). Footer has Docs and Prompt modals with Copy buttons, Copyright © Growfansite 2026 and Credit @Growfansite. No header/logo, no prefilled input, Enter submits, copy toast, responsive layout. All CSS and JS inline.`;
-  function openModal(title,content,copyTextValue,pre=false){
-    $('#modalTitle').textContent=title;$('#modalContent').innerHTML=pre?`<div class="modalpre">${esc(content)}</div>`:`<div class="modaltext">${content}</div>`;
-    modalCopyText=copyTextValue;$('#modalBack').classList.remove('hidden');
-  }
-  const docsText='API endpoint:\nGET https://ig-dl-api.vercel.app/api/igdl?url={encoded_ig_url}\n\nExample response:\n{\n  "success": true,\n  "type": "video",\n  "media": [{"type":"video","cdn_url":"https://…","download_url":"https://…"}],\n  "meta": {"username":"example","description":"Caption","thumbnail_url":"https://…","likes":123}\n}\n\nNotes: Works best with public posts. CDN preview and downloads depend on the remote host, browser CORS, and Instagram availability. Use download_url for downloading; do not assume it can be embedded.';
-  $('#docsBtn').addEventListener('click',()=>openModal('API Docs',docsText,docsText,true));
-  $('#promptBtn').addEventListener('click',()=>openModal('AI Prompt',promptText,promptText,true));
-  $('#closeModal').addEventListener('click',()=>$('#modalBack').classList.add('hidden'));
-  $('#modalDone').addEventListener('click',()=>$('#modalBack').classList.add('hidden'));
-  $('#modalCopy').addEventListener('click',()=>copyText(modalCopyText));
-  $('#modalBack').addEventListener('click',e=>{if(e.target===$('#modalBack'))$('#modalBack').classList.add('hidden')});
-  document.addEventListener('keydown',e=>{if(e.key==='Escape')$('#modalBack').classList.add('hidden')});
-})();
-</script>
-</body>
-</html>
+Netflix Hits — 20261116_181533
+======================================================================
+
+#1
+Email:        adityakumar84113@gmail.com
+Name:         adityakumar84113
+Country:      India (IN)
+Plan:         Mobile
+Price:        ₹149
+Member Since: July 2026
+Next Billing: 9 December 2026
+Free Trial:   No
+Quality:      SD 480p
+Max Streams:  1
+Extra Slots:  0
+Card Brand:   N/A
+Card Last 4:  a\x2A\x2A\x2A\x40ybl
+Pay Method:   UPI
+Phone:        062059 98450
+Phone Verif:  No
+Profiles:     adityakumar84113
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAfmdieyOLHQ7v4mKVQx%2BE%2B%2F96GZWdXiJw1QY2JBFDqLVf%2BOfUDK1Yp1m5dBQ80k65L%2Bn0LlIfD0ElgBCNVZOtVrCK0Toe24jbR%2BzmxcpkcwmFHRQO0repTST34%2FwpZ99KqvSNUC%2F3tw%2BieycR9aGblSGx9ZCH2hhezaBfr%2B9ruSE2HsE0JD1T6H88Mch9bkJOSWkrJWmMxKkELr2dPsIo%2FAib9aF%2Fm7hEkj8OYc0mWWOeM5gaI%2BfjR8s8n9xomfnAQyQGAYiDgoMu%2B8t%2F6SdCW118%2FpE
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAfmdieyOLHQ7v4mKVQx%2BE%2B%2F96GZWdXiJw1QY2JBFDqLVf%2BOfUDK1Yp1m5dBQ80k65L%2Bn0LlIfD0ElgBCNVZOtVrCK0Toe24jbR%2BzmxcpkcwmFHRQO0repTST34%2FwpZ99KqvSNUC%2F3tw%2BieycR9aGblSGx9ZCH2hhezaBfr%2B9ruSE2HsE0JD1T6H88Mch9bkJOSWkrJWmMxKkELr2dPsIo%2FAib9aF%2Fm7hEkj8OYc0mWWOeM5gaI%2BfjR8s8n9xomfnAQyQGAYiDgoMu%2B8t%2F6SdCW118%2FpE
+Login TV:     https://www.netflix.com/tv2
+Source:       Basic_IN_adityakumar84113@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#2
+Email:        swetakumaristaa@gmail.com
+Name:         swetakumaristaa
+Country:      India (IN)
+Plan:         Mobile
+Price:        ₹149
+Member Since: October 2026
+Next Billing: 9 December 2026
+Free Trial:   No
+Quality:      SD 480p
+Max Streams:  1
+Extra Slots:  0
+Card Brand:   N/A
+Card Last 4:  N/A
+Pay Method:   N/A
+Phone:        N/A
+Phone Verif:  No
+Profiles:     swetakumaristaa
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAcqsi6SpSoA0c6AVwXxZYHLDXxCBDCXlMYZYsabFzO4S9ggj685Twdk707WnaXY%2FRpwHrDSdKjdO7oe8aP%2FL4PmLy2k7i87B%2BqhsCQbtVdWJmHR3qUl6wQtAdqFwl0ANFABvAYy6muhyT4jlPMFCbKAIYaqg2aIaVVmWc5gZlfK3HnsuHIj7wdDHXb9HqxBX0FBDtaO3SH5u%2Flgei9Yo6E0sQuE%2FBTpmF8oQ3SMgGe3vlTdkdo%2FHPTMWy9Okbvb7jdSjGAYiDgoMpSj4Lhm00vNE9Tkp
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAcqsi6SpSoA0c6AVwXxZYHLDXxCBDCXlMYZYsabFzO4S9ggj685Twdk707WnaXY%2FRpwHrDSdKjdO7oe8aP%2FL4PmLy2k7i87B%2BqhsCQbtVdWJmHR3qUl6wQtAdqFwl0ANFABvAYy6muhyT4jlPMFCbKAIYaqg2aIaVVmWc5gZlfK3HnsuHIj7wdDHXb9HqxBX0FBDtaO3SH5u%2Flgei9Yo6E0sQuE%2FBTpmF8oQ3SMgGe3vlTdkdo%2FHPTMWy9Okbvb7jdSjGAYiDgoMpSj4Lhm00vNE9Tkp
+Login TV:     https://www.netflix.com/tv2
+Source:       Basic_IN_swetakumaristaa@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#3
+Email:        swetasinghrajput26@gmail.com
+Name:         swetasinghrajput26
+Country:      India (IN)
+Plan:         Mobile
+Price:        N/A
+Member Since: April 2026
+Next Billing: N/A
+Free Trial:   No
+Quality:      SD 480p
+Max Streams:  1
+Extra Slots:  0
+Card Brand:   N/A
+Card Last 4:  N/A
+Pay Method:   FLIPKART_BILLED
+Phone:        093155 50248
+Phone Verif:  No
+Profiles:     swetasinghrajput26
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAcSY1YwjDLdQ%2BXWa6WZ2PJ%2B4nDH0RWLC0YBfx6xjwuV%2FhiuXiGJl03cAbPGh9WlYafNq4RqHs%2FP6QGSjKgtRBrE%2BykkAh%2BD9RPz8DDesp2DFkSUofOyosdyr9BedebT6lpLQgfBpy2n65NmVSnA82EyrDRbqh2RKDiIpTLfLiAY2iF4%2FEqw70IfYBYjPgmS87w2Cqv%2FcNCQdWoKwYZJXElhgZF%2BBEORrt8TvEf4yphvXz%2Fc%2F1XUwwEsb02WkUtzZGX2WGAYiDgoMbmJcAxaIHIerUTxD
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAcSY1YwjDLdQ%2BXWa6WZ2PJ%2B4nDH0RWLC0YBfx6xjwuV%2FhiuXiGJl03cAbPGh9WlYafNq4RqHs%2FP6QGSjKgtRBrE%2BykkAh%2BD9RPz8DDesp2DFkSUofOyosdyr9BedebT6lpLQgfBpy2n65NmVSnA82EyrDRbqh2RKDiIpTLfLiAY2iF4%2FEqw70IfYBYjPgmS87w2Cqv%2FcNCQdWoKwYZJXElhgZF%2BBEORrt8TvEf4yphvXz%2Fc%2F1XUwwEsb02WkUtzZGX2WGAYiDgoMbmJcAxaIHIerUTxD
+Login TV:     https://www.netflix.com/tv2
+Source:       Basic_IN_swetasinghrajput26@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#4
+Email:        neutonalvesdesousaalves@gmail.com
+Name:         Neuton
+Country:      Brazil (BR)
+Plan:         Premium
+Price:        R$ 59,90
+Member Since: julho de 2026
+Next Billing: 4 de dezembro de 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   ELO
+Card Last 4:  4209
+Pay Method:   DC
+Phone:        (21) 98778-9197
+Phone Verif:  No
+Profiles:     Neuton
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLEAVCEeZZfIIjEKgh%2F6T5WfnCEu22ysr%2FND7vh9Uc2F5Qyjz%2BRdvWQojs1POzuj0g8KnJ8hmms6yxb2g9%2FK2hx33rcFXQrUIwbOLdEAYBa%2FZfMWPXkWunlWwdbHu0YvamHlFg5D0dJWC2GMcS0Fq1WNjRDG%2FbpoJq5WXII7ufQcoQw7%2BrSZsx%2Fk4Zug0n%2BtaX5M0dwUgBUsm67CqEy0jIqXN8MWRAG%2FFYmrENRpbh41zwlmOQ1zzdjVIgIbOpHNuxApg3pDcQYBiIOCgyezXJA%2BXwmHyfP7oM%3D
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLEAVCEeZZfIIjEKgh%2F6T5WfnCEu22ysr%2FND7vh9Uc2F5Qyjz%2BRdvWQojs1POzuj0g8KnJ8hmms6yxb2g9%2FK2hx33rcFXQrUIwbOLdEAYBa%2FZfMWPXkWunlWwdbHu0YvamHlFg5D0dJWC2GMcS0Fq1WNjRDG%2FbpoJq5WXII7ufQcoQw7%2BrSZsx%2Fk4Zug0n%2BtaX5M0dwUgBUsm67CqEy0jIqXN8MWRAG%2FFYmrENRpbh41zwlmOQ1zzdjVIgIbOpHNuxApg3pDcQYBiIOCgyezXJA%2BXwmHyfP7oM%3D
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_BR_neutonalvesdesousaalves@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#5
+Email:        sahilthakur216015@gmail.com
+Name:         Sahil
+Country:      India (IN)
+Plan:         Mobile
+Price:        ₹149
+Member Since: October 2026
+Next Billing: 5 December 2026
+Free Trial:   No
+Quality:      SD 480p
+Max Streams:  1
+Extra Slots:  0
+Card Brand:   N/A
+Card Last 4:  N/A
+Pay Method:   N/A
+Phone:        098175 02388
+Phone Verif:  No
+Profiles:     sahilthakur216015
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAZfA%2BiGipXabRzsLFAhHyKTmMVZLs76PbP6YLJAL8MpPAWQXGDXodP73Qrah7DasWH2oROq6NSMN%2F24Hp%2F%2FG1nRDH8Z67sjbhgsVQVdYQJdCBIZUZskoCmOEKYCBiSvY5K8IpEHYkcWIdKPL8c6EgjAf8ZFsrzg%2B6EzMUYFzPcWSmMDRNgbmHrPgCzZWLxlBhMpE3CBcKuyKnI6XyRZpAycre%2F857nnujR7Xe0TRSrYa1xs4N1ERqA%2B%2FKAwm0xKDY5w0GAYiDgoMJZmL3%2F8Ot6erW5zh
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAZfA%2BiGipXabRzsLFAhHyKTmMVZLs76PbP6YLJAL8MpPAWQXGDXodP73Qrah7DasWH2oROq6NSMN%2F24Hp%2F%2FG1nRDH8Z67sjbhgsVQVdYQJdCBIZUZskoCmOEKYCBiSvY5K8IpEHYkcWIdKPL8c6EgjAf8ZFsrzg%2B6EzMUYFzPcWSmMDRNgbmHrPgCzZWLxlBhMpE3CBcKuyKnI6XyRZpAycre%2F857nnujR7Xe0TRSrYa1xs4N1ERqA%2B%2FKAwm0xKDY5w0GAYiDgoMJZmL3%2F8Ot6erW5zh
+Login TV:     https://www.netflix.com/tv2
+Source:       Basic_IN_sahilthakur216015@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#6
+Email:        san43147@gmail.com
+Name:         san43147
+Country:      Indonesia (ID)
+Plan:         Ponsel
+Price:        Rp54.000
+Member Since: September 2026
+Next Billing: 24 November 2026
+Free Trial:   No
+Quality:      SD 480p
+Max Streams:  1
+Extra Slots:  0
+Card Brand:   N/A
+Card Last 4:  N/A
+Pay Method:   N/A
+Phone:        0858-2003-8239
+Phone Verif:  No
+Profiles:     san43147
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCARnTuojMlHomeeGdEbmJ9yt%2FcnPC%2BGTmsvqQHSSgl242BL%2FJun72HfsA7FbNjkRtEBqk%2Bt6h21wsxQK8QhqDIIqmfTJrJ2mx9U5GqVxjrTwAN7FV%2B1scDOOOAA%2FHDaZafOWDoFyLK5r%2F6tkrd52QrB6%2FTPNVFiCRONyitJ663CIRADzklst8PzmWo2Z9Lcw7KYCtP6LOB9teEiwRMw7nektKT9vo3jPCKfhkbMGe9VDGbahwaxMNySy5OK02J%2BBaZjbfGAYiDgoMijB%2FSlLdNzeAo2Sy
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCARnTuojMlHomeeGdEbmJ9yt%2FcnPC%2BGTmsvqQHSSgl242BL%2FJun72HfsA7FbNjkRtEBqk%2Bt6h21wsxQK8QhqDIIqmfTJrJ2mx9U5GqVxjrTwAN7FV%2B1scDOOOAA%2FHDaZafOWDoFyLK5r%2F6tkrd52QrB6%2FTPNVFiCRONyitJ663CIRADzklst8PzmWo2Z9Lcw7KYCtP6LOB9teEiwRMw7nektKT9vo3jPCKfhkbMGe9VDGbahwaxMNySy5OK02J%2BBaZjbfGAYiDgoMijB%2FSlLdNzeAo2Sy
+Login TV:     https://www.netflix.com/tv2
+Source:       Basic_ID_san43147@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#7
+Email:        ritusaha814@gmail.com
+Name:         ritusaha814
+Country:      India (IN)
+Plan:         Mobile
+Price:        ₹149
+Member Since: October 2026
+Next Billing: 7 December 2026
+Free Trial:   No
+Quality:      SD 480p
+Max Streams:  1
+Extra Slots:  0
+Card Brand:   N/A
+Card Last 4:  N/A
+Pay Method:   N/A
+Phone:        070047 53980
+Phone Verif:  No
+Profiles:     ritusaha814
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAWn2K72gaZ3eiesBmsx4f4St%2FmscgNtWeyUkPZrRIC1jdTHU4LYQKntz5roO4UAXhuA63I86o120Jmfh2UCOllSLlkFKSPWObHnaxCqmywFuOUG6G4j2507XJIMUFXmHBQVrWeefTxGmU8hZPRNHEl7JZD%2Fc3cisYJ9mnI5objS%2BEHI9Qg13FQKsndD6CMbsHnqIwLTc7Q54o8EA1IkqPkxrHxmmJKaDFmroFWhw0HL5aZm0dbCE0Ym4%2FwopV50%2B6hLKGAYiDgoM%2B3Gui7OGFp80Dgxf
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAWn2K72gaZ3eiesBmsx4f4St%2FmscgNtWeyUkPZrRIC1jdTHU4LYQKntz5roO4UAXhuA63I86o120Jmfh2UCOllSLlkFKSPWObHnaxCqmywFuOUG6G4j2507XJIMUFXmHBQVrWeefTxGmU8hZPRNHEl7JZD%2Fc3cisYJ9mnI5objS%2BEHI9Qg13FQKsndD6CMbsHnqIwLTc7Q54o8EA1IkqPkxrHxmmJKaDFmroFWhw0HL5aZm0dbCE0Ym4%2FwopV50%2B6hLKGAYiDgoM%2B3Gui7OGFp80Dgxf
+Login TV:     https://www.netflix.com/tv2
+Source:       Basic_IN_ritusaha814@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#8
+Email:        N/A
+Name:         Children
+Country:      India (IN)
+Plan:         Mobile
+Price:        N/A
+Member Since: August 2026
+Next Billing: N/A
+Free Trial:   No
+Quality:      SD 480p
+Max Streams:  1
+Extra Slots:  0
+Card Brand:   N/A
+Card Last 4:  N/A
+Pay Method:   FLIPKART_BILLED
+Phone:        081607 14227
+Phone Verif:  No
+Profiles:     4227
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAaDTX0SOk7C%2BsLQy%2BVp1Ex0ubsbBKGh22Hr74w9Z19VwmKlzrxJKlWSE2ZgMkay2sdG0T8oIEe9t8eYHNS0Sm0Wc8O31woi8bFm76dKgX7AB7ArHW%2Bmt6h4aIviwgG7N2FLnhJv9O0lBQiVaOG4ayj0zzE8t2CAeHL9IpILppfh9GXSgRA%2BwekTVICRP0OnLgHd%2BPyw4YG8sV4iSNIPuVVc3MIuja0d%2F9WVXp21ICnUzF1vBjrSwasx7iZzeYNv1VIEBGAYiDgoMbmXLAml%2F89VDvTfL
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAaDTX0SOk7C%2BsLQy%2BVp1Ex0ubsbBKGh22Hr74w9Z19VwmKlzrxJKlWSE2ZgMkay2sdG0T8oIEe9t8eYHNS0Sm0Wc8O31woi8bFm76dKgX7AB7ArHW%2Bmt6h4aIviwgG7N2FLnhJv9O0lBQiVaOG4ayj0zzE8t2CAeHL9IpILppfh9GXSgRA%2BwekTVICRP0OnLgHd%2BPyw4YG8sV4iSNIPuVVc3MIuja0d%2F9WVXp21ICnUzF1vBjrSwasx7iZzeYNv1VIEBGAYiDgoMbmXLAml%2F89VDvTfL
+Login TV:     https://www.netflix.com/tv2
+Source:       Basic_IN_Children.txt
+──────────────────────────────────────────────────────────────────────
+
+#9
+Email:        kimboysingkit@gmail.com
+Name:         OYPAPS
+Country:      Philippines (PH)
+Plan:         Mobile
+Price:        ₱169
+Member Since: September 2026
+Next Billing: November 9, 2026
+Free Trial:   No
+Quality:      SD 480p
+Max Streams:  1
+Extra Slots:  0
+Card Brand:   GCASH
+Card Last 4:  63-9\x2A\x2A\x2A\x2A23552
+Pay Method:   MOBILE_WALLET
+Phone:        0927 362 3552
+Phone Verif:  No
+Profiles:     OYPAPS
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCASqQ9ieUvXGXR3Jfd9gE6cH%2BAWb4HWizXsA5PzrpzJ5tAbsxEDNplAp9USOLHUt7KF1YtydE8I%2Fd9UEhp1D3HB0FrJIVWWNprl4JxeHwC%2F3NXHY1YE5xAL%2BqP7uVFe6A7r8JTkxdVqGRauxzSvx0kd%2FnANp9EkSAU1IxvjT6ZLTzmXi1cxqHdfyyZkXFDQW86YstLoyfpo%2FwIKv4eOcyW9IHHpXEwbjh6q2CBR7C4bjf30zQJbQaMlFlIOkY7eJUSxgyGAYiDgoMnWCws2igXJBv2S3k
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCASqQ9ieUvXGXR3Jfd9gE6cH%2BAWb4HWizXsA5PzrpzJ5tAbsxEDNplAp9USOLHUt7KF1YtydE8I%2Fd9UEhp1D3HB0FrJIVWWNprl4JxeHwC%2F3NXHY1YE5xAL%2BqP7uVFe6A7r8JTkxdVqGRauxzSvx0kd%2FnANp9EkSAU1IxvjT6ZLTzmXi1cxqHdfyyZkXFDQW86YstLoyfpo%2FwIKv4eOcyW9IHHpXEwbjh6q2CBR7C4bjf30zQJbQaMlFlIOkY7eJUSxgyGAYiDgoMnWCws2igXJBv2S3k
+Login TV:     https://www.netflix.com/tv2
+Source:       Basic_PH_kimboysingkit@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#10
+Email:        ayushajneriya2004@gmail.com
+Name:         ayushajneriya2004
+Country:      India (IN)
+Plan:         Mobile
+Price:        ₹149
+Member Since: September 2026
+Next Billing: 26 November 2026
+Free Trial:   No
+Quality:      SD 480p
+Max Streams:  1
+Extra Slots:  0
+Card Brand:   N/A
+Card Last 4:  N/A
+Pay Method:   N/A
+Phone:        087562 26840
+Phone Verif:  No
+Profiles:     ayushajneriya2004
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAfbvjPCF6yKOsT%2BmKkczHRSQrLxbXw08Nd7K5dsFrd1tcx%2ByM%2F7lW0WmzegSdhh7da00ZSToOQrIljLldxqRpq9StwDh8YIKMt1HhFIVZ7oPbXVF1F35UuerIsnn8r5a%2BGj3B8XJYfh9WnL83wecKpNn7a2ot8GYYXbr2eTdxg1%2B24R%2BlnTPn%2FJUMrSf037Oh5a%2FvjjhJ0BpiY6Unk6nIPwOa9KxL9B%2BSnCGsMylavcWnse%2Bp2CEeqbrS%2FPCMqWnGmHmGAYiDgoMJJBU63EHdRQMqcnm
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAfbvjPCF6yKOsT%2BmKkczHRSQrLxbXw08Nd7K5dsFrd1tcx%2ByM%2F7lW0WmzegSdhh7da00ZSToOQrIljLldxqRpq9StwDh8YIKMt1HhFIVZ7oPbXVF1F35UuerIsnn8r5a%2BGj3B8XJYfh9WnL83wecKpNn7a2ot8GYYXbr2eTdxg1%2B24R%2BlnTPn%2FJUMrSf037Oh5a%2FvjjhJ0BpiY6Unk6nIPwOa9KxL9B%2BSnCGsMylavcWnse%2Bp2CEeqbrS%2FPCMqWnGmHmGAYiDgoMJJBU63EHdRQMqcnm
+Login TV:     https://www.netflix.com/tv2
+Source:       Basic_IN_ayushajneriya2004@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#11
+Email:        sundaram02448@gmail.com
+Name:         Sundaram
+Country:      India (IN)
+Plan:         Mobile
+Price:        N/A
+Member Since: October 2026
+Next Billing: N/A
+Free Trial:   No
+Quality:      SD 480p
+Max Streams:  1
+Extra Slots:  0
+Card Brand:   N/A
+Card Last 4:  N/A
+Pay Method:   FLIPKART_BILLED
+Phone:        095466 19276
+Phone Verif:  No
+Profiles:     Sundaram
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAT1Ff8Gspio4J6XpNbTfBj4RW58YwQODrWtH1fA6I6Wa6kUJRGBcljTkAwsfWZ0bLQimPmv9ylLJ6DoV%2B0uSxIPvriYHILyov50SaYfM%2Bb9j9KNwORD1CdERvUI5R7ZXn6NotmglnsqvkxfL6e7x%2FBACkTOEFP6HEtx4LLNcAfhwI%2BP9yRmpkS9yo0Q71pZOcyFXidhJMgj5wAEQOt6FQXL35Y7R3BB%2B%2FIJDEobNWGAY8duNG9Xa7xUbiLdtI5gsZy7ZGAYiDgoM3fMblgIZIgTQy2ti
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAT1Ff8Gspio4J6XpNbTfBj4RW58YwQODrWtH1fA6I6Wa6kUJRGBcljTkAwsfWZ0bLQimPmv9ylLJ6DoV%2B0uSxIPvriYHILyov50SaYfM%2Bb9j9KNwORD1CdERvUI5R7ZXn6NotmglnsqvkxfL6e7x%2FBACkTOEFP6HEtx4LLNcAfhwI%2BP9yRmpkS9yo0Q71pZOcyFXidhJMgj5wAEQOt6FQXL35Y7R3BB%2B%2FIJDEobNWGAY8duNG9Xa7xUbiLdtI5gsZy7ZGAYiDgoM3fMblgIZIgTQy2ti
+Login TV:     https://www.netflix.com/tv2
+Source:       Basic_IN_sundaram02448@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#12
+Email:        gbanarian@gmail.com
+Name:         gbanarian
+Country:      Nigeria (NG)
+Plan:         Mobile
+Price:        NGN 2,500
+Member Since: March 2026
+Next Billing: December 8, 2026
+Free Trial:   No
+Quality:      SD 480p
+Max Streams:  1
+Extra Slots:  0
+Card Brand:   VERVE
+Card Last 4:  9292
+Pay Method:   CC
+Phone:        0708 658 9724
+Phone Verif:  No
+Profiles:     gbanarian
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAZ1c1w33Gn0bOyBo0Uy1va4QAD9cIekj1dYAz7o4qMCsxH9UdCiAiQ3rtbW2KAJqBaKbr1Uf7rNykme61T5lVbLSt4pJ5dI9DFP2y2v28grS8BJtjFCNkMN20IuE7fUlvSDeEr89qvJ92Hbygewml6bQoUJ%2Btgl1Jjj4sTGLrVe7PHOU7YzWa%2B153S%2FRn5jdpyy8HVtVNmwiV76fqcthKlYdo7fgH54kKzFPoyWQqZkQnaZ5mBeD7fttLBQJAfd7bpfGGAYiDgoMWutbdn3YPwPNFF4H
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAZ1c1w33Gn0bOyBo0Uy1va4QAD9cIekj1dYAz7o4qMCsxH9UdCiAiQ3rtbW2KAJqBaKbr1Uf7rNykme61T5lVbLSt4pJ5dI9DFP2y2v28grS8BJtjFCNkMN20IuE7fUlvSDeEr89qvJ92Hbygewml6bQoUJ%2Btgl1Jjj4sTGLrVe7PHOU7YzWa%2B153S%2FRn5jdpyy8HVtVNmwiV76fqcthKlYdo7fgH54kKzFPoyWQqZkQnaZ5mBeD7fttLBQJAfd7bpfGGAYiDgoMWutbdn3YPwPNFF4H
+Login TV:     https://www.netflix.com/tv2
+Source:       Basic_NG_gbanarian@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#13
+Email:        Kulwantyadav299@gmail.com
+Name:         Kulwantyadav299
+Country:      India (IN)
+Plan:         Mobile
+Price:        ₹149
+Member Since: August 2026
+Next Billing: 24 November 2026
+Free Trial:   No
+Quality:      SD 480p
+Max Streams:  1
+Extra Slots:  0
+Card Brand:   N/A
+Card Last 4:  N/A
+Pay Method:   N/A
+Phone:        088139 89247
+Phone Verif:  No
+Profiles:     Kulwantyadav299
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCATLhidW6zNyV%2F4yy48wCOEPVjuG949AKB1p0a3HMxA9KgDSTVb08%2Fi0aBItvcTZ5Arxo1GHVNbYZR1C9gCyv%2FKAlDJYlUdXqloVdUYL25S2XciDwmmu2ns50bYW1d%2BPgoe7zmGRBqKhRip7nAmnGXIRM5%2B5ldEvLXYXJKj1gqEnqSXkAtLYRSIV7X202SXS7MoFBWGuEz3cgKnQtJS8Ce0VTY25JU6EH7iaou5XZd99Ne6PUBKBA5eEwcjn51pCDKiu%2FGAYiDgoMzTsgoBaQgkI%2B74xi
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCATLhidW6zNyV%2F4yy48wCOEPVjuG949AKB1p0a3HMxA9KgDSTVb08%2Fi0aBItvcTZ5Arxo1GHVNbYZR1C9gCyv%2FKAlDJYlUdXqloVdUYL25S2XciDwmmu2ns50bYW1d%2BPgoe7zmGRBqKhRip7nAmnGXIRM5%2B5ldEvLXYXJKj1gqEnqSXkAtLYRSIV7X202SXS7MoFBWGuEz3cgKnQtJS8Ce0VTY25JU6EH7iaou5XZd99Ne6PUBKBA5eEwcjn51pCDKiu%2FGAYiDgoMzTsgoBaQgkI%2B74xi
+Login TV:     https://www.netflix.com/tv2
+Source:       Basic_IN_Kulwantyadav299@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#14
+Email:        flameznoel@gmail.com
+Name:         Dalu
+Country:      Nigeria (NG)
+Plan:         Mobile
+Price:        NGN 2,500
+Member Since: June 2025
+Next Billing: November 27, 2026
+Free Trial:   No
+Quality:      SD 480p
+Max Streams:  1
+Extra Slots:  0
+Card Brand:   MASTERCARD
+Card Last 4:  3483
+Pay Method:   CC
+Phone:        0906 465 2299
+Phone Verif:  No
+Profiles:     Dalu
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAWJEILoo5cp7Hctu8QwwrHrUReN5aazlLbcqfRBfvZ8gIB0oLxfOL1ScDhMy7QbC2cceEIAY207iwGTkDTC7beFuu4qKS0WV5qg8AwGLkhbCIEJglbXzkUQVM%2BItAFu%2Fw%2BAIFdcj0Jc4MZOqTwh34%2Fzf9O2wLIHI5H9gmBMqDYlKGYmBSgy4WwIx%2BcpDSw2otAfwM1fLvm2LFg0CVG6W9C%2BocMi92pmIVnNHcrSxHIR2ekjumDxF72DoX17Ch1EaFTWLGAYiDgoMrCt%2FeIgGS7tZQHWp
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAWJEILoo5cp7Hctu8QwwrHrUReN5aazlLbcqfRBfvZ8gIB0oLxfOL1ScDhMy7QbC2cceEIAY207iwGTkDTC7beFuu4qKS0WV5qg8AwGLkhbCIEJglbXzkUQVM%2BItAFu%2Fw%2BAIFdcj0Jc4MZOqTwh34%2Fzf9O2wLIHI5H9gmBMqDYlKGYmBSgy4WwIx%2BcpDSw2otAfwM1fLvm2LFg0CVG6W9C%2BocMi92pmIVnNHcrSxHIR2ekjumDxF72DoX17Ch1EaFTWLGAYiDgoMrCt%2FeIgGS7tZQHWp
+Login TV:     https://www.netflix.com/tv2
+Source:       Basic_NG_flameznoel@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#15
+Email:        N/A
+Name:         1787
+Country:      India (IN)
+Plan:         Mobile
+Price:        ₹149
+Member Since: August 2026
+Next Billing: 9 December 2026
+Free Trial:   No
+Quality:      SD 480p
+Max Streams:  1
+Extra Slots:  0
+Card Brand:   N/A
+Card Last 4:  N/A
+Pay Method:   N/A
+Phone:        063604 71787
+Phone Verif:  No
+Profiles:     1787
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAbh2qnSanINaLn%2Fo6ZOmTAKDswhNqpHtIpmYPft%2FKAWwjiXhpcvL1fgOKKwhEUTQZrUTGPyn3MF8%2Frhe7JcjmS%2FfXAPkTRp90iCyB7oBHWUY6rQKftT7RH989NoDnx%2F0HcDJSXiJ6SRvvQWGdftWM83yEP4iTEp323P%2FLjtoPAG0c7na6M06SuVFwhbf5MSQ3hUhmzGbPxI1TWk9oCviC14jdJwNoAP0Tc3mvre5RO4kEPzOJZMqXzpo57X4ihgkMBSDGAYiDgoMWsGRsq4C3i5j3NvO
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAbh2qnSanINaLn%2Fo6ZOmTAKDswhNqpHtIpmYPft%2FKAWwjiXhpcvL1fgOKKwhEUTQZrUTGPyn3MF8%2Frhe7JcjmS%2FfXAPkTRp90iCyB7oBHWUY6rQKftT7RH989NoDnx%2F0HcDJSXiJ6SRvvQWGdftWM83yEP4iTEp323P%2FLjtoPAG0c7na6M06SuVFwhbf5MSQ3hUhmzGbPxI1TWk9oCviC14jdJwNoAP0Tc3mvre5RO4kEPzOJZMqXzpo57X4ihgkMBSDGAYiDgoMWsGRsq4C3i5j3NvO
+Login TV:     https://www.netflix.com/tv2
+Source:       Basic_IN_1787.txt
+──────────────────────────────────────────────────────────────────────
+
+#16
+Email:        melalisstok@gmail.com
+Name:         Melissa
+Country:      BJ (BJ)
+Plan:         Premium
+Price:        9,99 $US
+Member Since: avril 2021
+Next Billing: 23 novembre 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  3651
+Pay Method:   CC
+Phone:        97 97 07 06
+Phone Verif:  No
+Profiles:     Melissa
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAf%2Fs0lcyOTnlN3olD1igbLEb9qn1bJZLykPP4wprwRa3iDQXdoTQnBh%2BV%2FnT7cP9fbi1p7XYq2aXixE%2BRCsANcCBDWbSjdSCrLxSwnCq6k04qr0feajnYTgppHZIjFiPGm189rjtuL5n19lqEEOlbRh7fP%2BJSS5f90xGESTs0QGMdvBvSvnlYrs4Ov4T1oJyR43n%2FzJMs1%2FBaro7DQl1jywXAkIeJw7Tu270uhqk3Fl6GpRQa2fRx%2F6lDchP8HsocHnIGAYiDgoMztAnpPnKpqGB%2FMdF
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAf%2Fs0lcyOTnlN3olD1igbLEb9qn1bJZLykPP4wprwRa3iDQXdoTQnBh%2BV%2FnT7cP9fbi1p7XYq2aXixE%2BRCsANcCBDWbSjdSCrLxSwnCq6k04qr0feajnYTgppHZIjFiPGm189rjtuL5n19lqEEOlbRh7fP%2BJSS5f90xGESTs0QGMdvBvSvnlYrs4Ov4T1oJyR43n%2FzJMs1%2FBaro7DQl1jywXAkIeJw7Tu270uhqk3Fl6GpRQa2fRx%2F6lDchP8HsocHnIGAYiDgoMztAnpPnKpqGB%2FMdF
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_BJ_melalisstok@gmail.com_2.txt
+──────────────────────────────────────────────────────────────────────
+
+#17
+Email:        efinwindi@gmail.com
+Name:         WiL
+Country:      Indonesia (ID)
+Plan:         Ponsel
+Price:        Rp54.000
+Member Since: November 2022
+Next Billing: 30 November 2026
+Free Trial:   No
+Quality:      SD 480p
+Max Streams:  1
+Extra Slots:  0
+Card Brand:   GOPAY
+Card Last 4:  \x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A7871
+Pay Method:   MOBILE_WALLET
+Phone:        0898-0607-871
+Phone Verif:  No
+Profiles:     efinwindi
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAb%2BRwnw1WcZoaHADNjiq7d40CzoSwNQiTO40Trxmvsz6OYEwmdit9hT%2BJKVb73Hbdr0Rkom9rQsAbWVIDf8NU25C0OUZw%2FScvGXxrwoVtln3rELTSyhZqi4hNBjCASqT37a4LKhCW2BIvckDEJR6nktH73WTt1Rkt7OT8JJWS4FFJBedFnGJ%2F8aIuvKYNCPGTWhg3%2FrUU1flsL%2Fn1MiKb5qv3OTciaOpublAh7%2FuCHc%2FblQSsREy257HO5KLkizST1t5GAYiDgoMwz%2BenrKe8EVIP2L9
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAb%2BRwnw1WcZoaHADNjiq7d40CzoSwNQiTO40Trxmvsz6OYEwmdit9hT%2BJKVb73Hbdr0Rkom9rQsAbWVIDf8NU25C0OUZw%2FScvGXxrwoVtln3rELTSyhZqi4hNBjCASqT37a4LKhCW2BIvckDEJR6nktH73WTt1Rkt7OT8JJWS4FFJBedFnGJ%2F8aIuvKYNCPGTWhg3%2FrUU1flsL%2Fn1MiKb5qv3OTciaOpublAh7%2FuCHc%2FblQSsREy257HO5KLkizST1t5GAYiDgoMwz%2BenrKe8EVIP2L9
+Login TV:     https://www.netflix.com/tv2
+Source:       Basic_ID_efinwindi@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#18
+Email:        maryam.sabeel90@gmail.com
+Name:         Sara
+Country:      UAE (AE)
+Plan:         Premium
+Price:        AED 71
+Member Since: February 2019
+Next Billing: 26 November 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   MASTERCARD
+Card Last 4:  4990
+Pay Method:   CC
+Phone:        052 629 9967
+Phone Verif:  No
+Profiles:     Mo
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAd108hNa%2Fg%2FCM4PiMR7Jn1DWJ1D%2FY0h3DjrDbqBCZ1uMCxWuzGuHep%2B5lR%2B7lk2ynyan%2BL8W0q1G%2FX%2BI8cZbYR6DCl2fYYpDZ06ZexQohP%2B1YaRmX6CJ60mk6Rj%2F8GlQBFyXyeK25zjA1nOhyTfhAcn%2FPZx1%2Bp8mtoi9g8WqltomQ02FLVUrmL7cyxbzyQzy34q%2BE2EksWiABJtqtuJ4RlOsb6QwsAqBlXUkRt%2F28jjrcDNecS43D6NlQK8%2FLRRosC0bGAYiDgoMLFj9fpT1voGB3k8r
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAd108hNa%2Fg%2FCM4PiMR7Jn1DWJ1D%2FY0h3DjrDbqBCZ1uMCxWuzGuHep%2B5lR%2B7lk2ynyan%2BL8W0q1G%2FX%2BI8cZbYR6DCl2fYYpDZ06ZexQohP%2B1YaRmX6CJ60mk6Rj%2F8GlQBFyXyeK25zjA1nOhyTfhAcn%2FPZx1%2Bp8mtoi9g8WqltomQ02FLVUrmL7cyxbzyQzy34q%2BE2EksWiABJtqtuJ4RlOsb6QwsAqBlXUkRt%2F28jjrcDNecS43D6NlQK8%2FLRRosC0bGAYiDgoMLFj9fpT1voGB3k8r
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_AE_maryam.sabeel90@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#19
+Email:        swetasinghrajput26@gmail.com
+Name:         swetasinghrajput26
+Country:      India (IN)
+Plan:         Mobile
+Price:        N/A
+Member Since: April 2026
+Next Billing: N/A
+Free Trial:   No
+Quality:      SD 480p
+Max Streams:  1
+Extra Slots:  0
+Card Brand:   N/A
+Card Last 4:  N/A
+Pay Method:   FLIPKART_BILLED
+Phone:        093155 50248
+Phone Verif:  No
+Profiles:     swetasinghrajput26
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAVkMYdrSo4RqxoE631OZGGaH8Hj2eCqK3gxM3NdjFLPZuWyT4B4zvUabWpfPmZ63N605DK0xWReV3U8y1t%2F2Jkl4rmd3OcjQVWmkN6Zc%2BpiqEBdhfvROKYn43pZ2bM1JwpWtvNKpPTpt4AEQRRxE%2BHoXFvdIcTuZ%2FlwcAHhw7ogYH9IBOfPxvwgWn%2Fx%2FovpHWqLaNspxClScLyJLSJ1AuoxcblgIPRy5U2afB5IvJ01Cvu7TpIrsSQwGz6qWbBDN2wOsGAYiDgoMpugudf5yDrs56dCK
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAVkMYdrSo4RqxoE631OZGGaH8Hj2eCqK3gxM3NdjFLPZuWyT4B4zvUabWpfPmZ63N605DK0xWReV3U8y1t%2F2Jkl4rmd3OcjQVWmkN6Zc%2BpiqEBdhfvROKYn43pZ2bM1JwpWtvNKpPTpt4AEQRRxE%2BHoXFvdIcTuZ%2FlwcAHhw7ogYH9IBOfPxvwgWn%2Fx%2FovpHWqLaNspxClScLyJLSJ1AuoxcblgIPRy5U2afB5IvJ01Cvu7TpIrsSQwGz6qWbBDN2wOsGAYiDgoMpugudf5yDrs56dCK
+Login TV:     https://www.netflix.com/tv2
+Source:       Basic_IN_swetasinghrajput26@gmail.com_2.txt
+──────────────────────────────────────────────────────────────────────
+
+#20
+Email:        grim125999@gmail.com
+Name:         Darryl
+Country:      Nigeria (NG)
+Plan:         Mobile
+Price:        ₦2,500
+Member Since: October 2025
+Next Billing: N/A
+Free Trial:   No
+Quality:      SD 480p
+Max Streams:  1
+Extra Slots:  0
+Card Brand:   MASTERCARD
+Card Last 4:  2387
+Pay Method:   CC
+Phone:        0704 215 7895
+Phone Verif:  No
+Profiles:     Darryl
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAcHSwkYqSwUTcuYhqqZHStBZTHTOZph8igPjeeDGG56Zaurge9fPWNHJdAqLZ0%2BFsD0soYhRaeZD54kldtmElhDjegJyC3wd73LbLkzZE1lhxHRjGyaLkvw1KkHlbX69V6i8QZrji9zaodDg09%2BugxRfxVyl5CNbEoDYHJsNwUpQ1Vh24NdQ4m6Kt%2BWBcs2R1ki7lCsqyKcv0HnsF%2BFyBV5KBkGO191ijhrMeEzHf2E10hA7yFDfheZBx2WsFIe1B63wGAYiDgoMC6j5F8hflEHiKkKt
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAcHSwkYqSwUTcuYhqqZHStBZTHTOZph8igPjeeDGG56Zaurge9fPWNHJdAqLZ0%2BFsD0soYhRaeZD54kldtmElhDjegJyC3wd73LbLkzZE1lhxHRjGyaLkvw1KkHlbX69V6i8QZrji9zaodDg09%2BugxRfxVyl5CNbEoDYHJsNwUpQ1Vh24NdQ4m6Kt%2BWBcs2R1ki7lCsqyKcv0HnsF%2BFyBV5KBkGO191ijhrMeEzHf2E10hA7yFDfheZBx2WsFIe1B63wGAYiDgoMC6j5F8hflEHiKkKt
+Login TV:     https://www.netflix.com/tv2
+Source:       Basic_NG_grim125999@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#21
+Email:        shivom8610@gmail.com
+Name:         shiv Om
+Country:      India (IN)
+Plan:         Mobile
+Price:        ₹149
+Member Since: September 2026
+Next Billing: 22 November 2026
+Free Trial:   No
+Quality:      SD 480p
+Max Streams:  1
+Extra Slots:  0
+Card Brand:   N/A
+Card Last 4:  N/A
+Pay Method:   N/A
+Phone:        089504 53207
+Phone Verif:  No
+Profiles:     shiv Om
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAdzrWK27syY6nSLHV9PVCaIlFRz%2Fy3SU7cCwCpk7pP3q3a4Lk1Q3jtxRHXf9Asc2xBLKoeVhrCra9n1Gv8sk9FZhgTMqeo15k2IUraT3a%2Bo7FK45WMTS2dHovpW%2BUJWN74nF3wVHtjrqNm%2B8Y3lFXjAwW%2FcwVyv23I9gTt2XBOymyNU21rnP1tAFO5BGQLyn8%2BCML8p95FZpMr0dVA3o5X8mwKDFFqQxVtglteRmx71TLwjGFsJnPH6%2B4qzOphaug1HJGAYiDgoMMEkosQz%2BY8nAzHAu
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAdzrWK27syY6nSLHV9PVCaIlFRz%2Fy3SU7cCwCpk7pP3q3a4Lk1Q3jtxRHXf9Asc2xBLKoeVhrCra9n1Gv8sk9FZhgTMqeo15k2IUraT3a%2Bo7FK45WMTS2dHovpW%2BUJWN74nF3wVHtjrqNm%2B8Y3lFXjAwW%2FcwVyv23I9gTt2XBOymyNU21rnP1tAFO5BGQLyn8%2BCML8p95FZpMr0dVA3o5X8mwKDFFqQxVtglteRmx71TLwjGFsJnPH6%2B4qzOphaug1HJGAYiDgoMMEkosQz%2BY8nAzHAu
+Login TV:     https://www.netflix.com/tv2
+Source:       Basic_IN_shivom8610@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#22
+Email:        sundaram02448@gmail.com
+Name:         Sundaram
+Country:      India (IN)
+Plan:         Mobile
+Price:        N/A
+Member Since: October 2026
+Next Billing: N/A
+Free Trial:   No
+Quality:      SD 480p
+Max Streams:  1
+Extra Slots:  0
+Card Brand:   N/A
+Card Last 4:  N/A
+Pay Method:   FLIPKART_BILLED
+Phone:        095466 19276
+Phone Verif:  No
+Profiles:     Sundaram
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAa7X249PnDNXnyCkc5gI3JXr9aoCoKXvZSqiKwj8%2FQjFciYJiDnWXGGjpC02AGGhcsSSzaZjYlkMTa2KnesTHNWHitKnv3if6APTysdd6u%2BzIzCLrGsxmVdX8jbMIdKl9weJQ0%2BdmFmZieCc7dhgAWueppT5clsIWTFUZtqi5RJWjUhLe4QhC2oZLukH0OyV2OXTpSFOU08%2FqROJWKWiPf93oG%2FbRX7CuMK3N0RBt4SOOoze3eBmFZMBmBD1gSBnTD%2FvGAYiDgoMEh8ed%2FscsIdGRgNb
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAa7X249PnDNXnyCkc5gI3JXr9aoCoKXvZSqiKwj8%2FQjFciYJiDnWXGGjpC02AGGhcsSSzaZjYlkMTa2KnesTHNWHitKnv3if6APTysdd6u%2BzIzCLrGsxmVdX8jbMIdKl9weJQ0%2BdmFmZieCc7dhgAWueppT5clsIWTFUZtqi5RJWjUhLe4QhC2oZLukH0OyV2OXTpSFOU08%2FqROJWKWiPf93oG%2FbRX7CuMK3N0RBt4SOOoze3eBmFZMBmBD1gSBnTD%2FvGAYiDgoMEh8ed%2FscsIdGRgNb
+Login TV:     https://www.netflix.com/tv2
+Source:       Basic_IN_sundaram02448@gmail.com_2.txt
+──────────────────────────────────────────────────────────────────────
+
+#23
+Email:        mayarasrosa273@gmail.com
+Name:         Mayara
+Country:      Brazil (BR)
+Plan:         Premium
+Price:        R$ 59,90
+Member Since: dezembro de 2024
+Next Billing: 19 de outubro de 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   MASTERCARD
+Card Last 4:  8850
+Pay Method:   CC
+Phone:        (19) 99481-8325
+Phone Verif:  No
+Profiles:     Mayara
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAYapyWQCmI3CrY%2B%2FR65DGbDvJYUisU0TAcKWiyseTI1BbXaBG6XEOzdQLEa4ILrbAihHrwBCZ6WCyHUNDJutTcv17JlVPeq%2FHvi8ygRM217CHCyNrux0E6n%2Fo8CTyVPwd1PlArBpi%2FLylrAhWD6Lrn3f96CHDD6CEbgZtcxeg6xVWecUCDum8YMpW2bNvP7FqWu3Br4OngC%2FCx2sceRW18vwx8erdxCKyIVh1ctgQ7vSsR4qBuWSs1rzaWkz5iVvIsqFGAYiDgoMigdf1uo6B%2By9wQWP
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAYapyWQCmI3CrY%2B%2FR65DGbDvJYUisU0TAcKWiyseTI1BbXaBG6XEOzdQLEa4ILrbAihHrwBCZ6WCyHUNDJutTcv17JlVPeq%2FHvi8ygRM217CHCyNrux0E6n%2Fo8CTyVPwd1PlArBpi%2FLylrAhWD6Lrn3f96CHDD6CEbgZtcxeg6xVWecUCDum8YMpW2bNvP7FqWu3Br4OngC%2FCx2sceRW18vwx8erdxCKyIVh1ctgQ7vSsR4qBuWSs1rzaWkz5iVvIsqFGAYiDgoMigdf1uo6B%2By9wQWP
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_BR_mayarasrosa273@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#24
+Email:        melalisstok@gmail.com
+Name:         Melissa
+Country:      BJ (BJ)
+Plan:         Premium
+Price:        9,99 $US
+Member Since: avril 2021
+Next Billing: 23 novembre 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  3651
+Pay Method:   CC
+Phone:        97 97 07 06
+Phone Verif:  No
+Profiles:     Melissa
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCASJr3Co%2B4VzLX0Zi%2FUJQ1L7%2Buifcx7G0vSYMHEuxVS5rt69vkHIFlqyKYyhb%2BQCI3K5mGqhOfBcDftbqUwxoSx2spMmqMwxs4JwiqbSm6PckhR70ajwUmbwRZALfqYbgpNKgRPFebuS%2BpZbTZQL9QVufZ60HM%2FDTO8dB1nVH%2Fi2FDetvGH6r50At4YLF4SvKrTTFjbF22%2BLCoxsvcfhZZ3zvoTrX%2F%2FldsqXCZVYo6UP4JoR5GZBjcpoZNTO%2FsDIYLZMgGAYiDgoMtPi7V4MkLz4Ob6hp
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCASJr3Co%2B4VzLX0Zi%2FUJQ1L7%2Buifcx7G0vSYMHEuxVS5rt69vkHIFlqyKYyhb%2BQCI3K5mGqhOfBcDftbqUwxoSx2spMmqMwxs4JwiqbSm6PckhR70ajwUmbwRZALfqYbgpNKgRPFebuS%2BpZbTZQL9QVufZ60HM%2FDTO8dB1nVH%2Fi2FDetvGH6r50At4YLF4SvKrTTFjbF22%2BLCoxsvcfhZZ3zvoTrX%2F%2FldsqXCZVYo6UP4JoR5GZBjcpoZNTO%2FsDIYLZMgGAYiDgoMtPi7V4MkLz4Ob6hp
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_BJ_melalisstok@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#25
+Email:        tay179825@gmail.com
+Name:         Ut
+Country:      India (IN)
+Plan:         Mobile
+Price:        ₹149
+Member Since: December 2024
+Next Billing: 13 December 2026
+Free Trial:   No
+Quality:      SD 480p
+Max Streams:  1
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  5373
+Pay Method:   CC
+Phone:        074269 94749
+Phone Verif:  No
+Profiles:     Ut
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAeJN51dua76gniOsPyeEZjS5f%2BrhoZX8osa%2BKCS%2FLpJOL02HeoEfl5z6Nj6MBaY7KWd6zbVSc5%2FPaCM3WXVAl5glrPKLOKmOTNorcALwjdPTXKfizYLwhZ1tLsZJPcIMPsCIo0P7zP8s2DsE65gW%2FWSNQjf5diC%2FylARcl%2FrmipBX0sgBNiYFJ0SOLmTdlJcKiayTHAokoa9PtiChH9QIR0yLVRn%2FtI5iN%2FlNpC1ir4TlaoZ4qN0LNdLHIVjYNBgjhQfGAYiDgoMp0KgBKJmONoY909d
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAeJN51dua76gniOsPyeEZjS5f%2BrhoZX8osa%2BKCS%2FLpJOL02HeoEfl5z6Nj6MBaY7KWd6zbVSc5%2FPaCM3WXVAl5glrPKLOKmOTNorcALwjdPTXKfizYLwhZ1tLsZJPcIMPsCIo0P7zP8s2DsE65gW%2FWSNQjf5diC%2FylARcl%2FrmipBX0sgBNiYFJ0SOLmTdlJcKiayTHAokoa9PtiChH9QIR0yLVRn%2FtI5iN%2FlNpC1ir4TlaoZ4qN0LNdLHIVjYNBgjhQfGAYiDgoMp0KgBKJmONoY909d
+Login TV:     https://www.netflix.com/tv2
+Source:       Basic_IN_tay179825@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#26
+Email:        cjunyakul@gmail.com
+Name:         JENG
+Country:      Thailand (TH)
+Plan:         มือถือ
+Price:        99 บาท
+Member Since: กรกฎาคม 2569
+Next Billing: 8 ธันวาคม 2026
+Free Trial:   No
+Quality:      SD 480p
+Max Streams:  1
+Extra Slots:  0
+Card Brand:   TRUE_MONEY
+Card Last 4:  \x2B66\x2A\x2A\x2A\x2A\x2A3546
+Pay Method:   MOBILE_WALLET
+Phone:        080 415 3546
+Phone Verif:  No
+Profiles:     Chanchai_888
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAZ9WXV7Ir7AQVenrtoaU143lvzZA%2FeOisCTPGORse7zAiBAZyrGF1trnJegSoxuDe9%2FZyaynG%2F0vC3ov0nrFS2tRLhVaOgDVp8GJbe8eh%2FoSuJmBUxxMJYvwQMUdfRTqGo%2Fv38FA159bgULIBZQlR791yMwP8h0A5unEAdZUkb8xyT%2BmmhLO9V6tjyhsH3WPRfBVyqIg%2FI9Z8qXK4x8yhmaWiXgZGyaQ0Pkuor2buSsBySGnPIkXrJS9kT9w8Yx5A1jtGAYiDgoMEsyZzYBOTSGfDr1Z
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAZ9WXV7Ir7AQVenrtoaU143lvzZA%2FeOisCTPGORse7zAiBAZyrGF1trnJegSoxuDe9%2FZyaynG%2F0vC3ov0nrFS2tRLhVaOgDVp8GJbe8eh%2FoSuJmBUxxMJYvwQMUdfRTqGo%2Fv38FA159bgULIBZQlR791yMwP8h0A5unEAdZUkb8xyT%2BmmhLO9V6tjyhsH3WPRfBVyqIg%2FI9Z8qXK4x8yhmaWiXgZGyaQ0Pkuor2buSsBySGnPIkXrJS9kT9w8Yx5A1jtGAYiDgoMEsyZzYBOTSGfDr1Z
+Login TV:     https://www.netflix.com/tv2
+Source:       Basic_TH_cjunyakul@gmail.com_2.txt
+──────────────────────────────────────────────────────────────────────
+
+#27
+Email:        mandre1969@hotmail.com
+Name:         ch1no
+Country:      Brazil (BR)
+Plan:         Premium
+Price:        BRL 59.90
+Member Since: August 2014
+Next Billing: December 14, 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   MASTERCARD
+Card Last 4:  2135
+Pay Method:   CC
+Phone:        N/A
+Phone Verif:  No
+Profiles:     a
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAb5BM8avacYipWnmR%2BkS5r85cMfcq5QNN5Dw%2BZx2t8HqfBG14x1WsiU7qIJ3URwsOxVJhDnPLzlfKJZAUVEaxAjB%2BGeXWhqrzdvNWM2g1PG5h6ZVRpH1xgTv%2FXrKjC9aeL2M9zoYSz1fRuDzjCZVuzlwRigxvbuCWK5SnAAKATYZDAKLzx2E2iBFHf1rWCOejpckVg6mCrGa28DyGMLUVIyGlThNABhlmoc%2Bl9L%2Bb2pMKNf64coHWkBCvyDvxzMln1EGGAYiDgoMeO7Dy4NJgYMbnLJh
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAb5BM8avacYipWnmR%2BkS5r85cMfcq5QNN5Dw%2BZx2t8HqfBG14x1WsiU7qIJ3URwsOxVJhDnPLzlfKJZAUVEaxAjB%2BGeXWhqrzdvNWM2g1PG5h6ZVRpH1xgTv%2FXrKjC9aeL2M9zoYSz1fRuDzjCZVuzlwRigxvbuCWK5SnAAKATYZDAKLzx2E2iBFHf1rWCOejpckVg6mCrGa28DyGMLUVIyGlThNABhlmoc%2Bl9L%2Bb2pMKNf64coHWkBCvyDvxzMln1EGGAYiDgoMeO7Dy4NJgYMbnLJh
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_BR_mandre1969@hotmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#28
+Email:        satyamkumar67891@gmail.com
+Name:         Satyam
+Country:      India (IN)
+Plan:         Mobile
+Price:        N/A
+Member Since: August 2026
+Next Billing: N/A
+Free Trial:   No
+Quality:      SD 480p
+Max Streams:  1
+Extra Slots:  0
+Card Brand:   N/A
+Card Last 4:  N/A
+Pay Method:   FLIPKART_BILLED
+Phone:        073208 99170
+Phone Verif:  No
+Profiles:     satyamkumar67891
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAaNSCpB2Po9U2fzyLXtzdmoO5gmFBYM1JtMlwu3%2FUkCQukq7ue%2F2Uwoz8h%2Bn9qORcAYLoNH9vT%2BCo5ayWgXW69xw%2FG4amLLsrWNgrjYyP2YhtdrrR89eHER9rpn3zegyr7ML9jmyB4UBc1QN5zJqwErt4vP%2FkDfC8edrJAAKNrDv0OKzo0LOWCPB8jCOpcWiqLUuHHB4Yrh5exE%2BEXvJrjg02QFTDYc72nIUvBZcjSgRg4Uo442%2BoZca4c3V36syvypdGAYiDgoMTQCI3%2BK2Y46koRU6
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAaNSCpB2Po9U2fzyLXtzdmoO5gmFBYM1JtMlwu3%2FUkCQukq7ue%2F2Uwoz8h%2Bn9qORcAYLoNH9vT%2BCo5ayWgXW69xw%2FG4amLLsrWNgrjYyP2YhtdrrR89eHER9rpn3zegyr7ML9jmyB4UBc1QN5zJqwErt4vP%2FkDfC8edrJAAKNrDv0OKzo0LOWCPB8jCOpcWiqLUuHHB4Yrh5exE%2BEXvJrjg02QFTDYc72nIUvBZcjSgRg4Uo442%2BoZca4c3V36syvypdGAYiDgoMTQCI3%2BK2Y46koRU6
+Login TV:     https://www.netflix.com/tv2
+Source:       Basic_IN_satyamkumar67891@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#29
+Email:        cjunyakul@gmail.com
+Name:         JENG
+Country:      Thailand (TH)
+Plan:         มือถือ
+Price:        99 บาท
+Member Since: กรกฎาคม 2569
+Next Billing: 8 ธันวาคม 2026
+Free Trial:   No
+Quality:      SD 480p
+Max Streams:  1
+Extra Slots:  0
+Card Brand:   TRUE_MONEY
+Card Last 4:  \x2B66\x2A\x2A\x2A\x2A\x2A3546
+Pay Method:   MOBILE_WALLET
+Phone:        080 415 3546
+Phone Verif:  No
+Profiles:     Chanchai_888
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAR04TDBCWXyCNXtcTL34rYTgHHWAUvAPA9UbjpLcTXy01vcZJUPkCeEqS9Yy2foystk%2FXzh7vKp4fDAkjX1HBJWJs9EOE10YstNOgoefD1r%2FWZ5MhK6qqAW1quPml3T269KPQdsODsIy8%2F4Pdtre9RSpWIMt9BF3yiExWp2MypWhdUaw0uHqrqCjBNIOMtFdp0NH9gIP6%2B4mKa0C7DI7mGHoR3h9SE7yzMizv4N%2FczjD%2FUW8tpT7jdO52lYdMw2EyJuNGAYiDgoMl5HP0Upj5gFXvZWi
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAR04TDBCWXyCNXtcTL34rYTgHHWAUvAPA9UbjpLcTXy01vcZJUPkCeEqS9Yy2foystk%2FXzh7vKp4fDAkjX1HBJWJs9EOE10YstNOgoefD1r%2FWZ5MhK6qqAW1quPml3T269KPQdsODsIy8%2F4Pdtre9RSpWIMt9BF3yiExWp2MypWhdUaw0uHqrqCjBNIOMtFdp0NH9gIP6%2B4mKa0C7DI7mGHoR3h9SE7yzMizv4N%2FczjD%2FUW8tpT7jdO52lYdMw2EyJuNGAYiDgoMl5HP0Upj5gFXvZWi
+Login TV:     https://www.netflix.com/tv2
+Source:       Basic_TH_cjunyakul@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#30
+Email:        eikoitodasilva15@gmail.com
+Name:         say
+Country:      Brazil (BR)
+Plan:         Premium
+Price:        R$ 59,90
+Member Since: março de 2024
+Next Billing: 6 de dezembro de 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   MASTERCARD
+Card Last 4:  5028
+Pay Method:   CC
+Phone:        (11) 98228-6030
+Phone Verif:  No
+Profiles:     Mamãe
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAYv0Irf8EwgBqgjdprFh3f1DfkD3gUrLhQEjo6TFuFckbDOIZkfBMsAKZDzcG%2BtM%2B5hwM9iq63v4i8KS1gCBJf4BXGAKPiGn1PANklIuMMRmgW3cChUnaApXiPkeuAQzivUSvoKt55SPyTBi5CzVLphMfywbCWVmlAqnSfc1ctxOpyL69nNn86GlDnIVdXRi4UaNIFJotUSwFzCGM%2BxVPdgO%2BlU94VffaX4tmFiwUczg1kEJoliSt1OMjtkHVfRddUPpGAYiDgoM1%2FdZD5BbVlpq46Qe
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAYv0Irf8EwgBqgjdprFh3f1DfkD3gUrLhQEjo6TFuFckbDOIZkfBMsAKZDzcG%2BtM%2B5hwM9iq63v4i8KS1gCBJf4BXGAKPiGn1PANklIuMMRmgW3cChUnaApXiPkeuAQzivUSvoKt55SPyTBi5CzVLphMfywbCWVmlAqnSfc1ctxOpyL69nNn86GlDnIVdXRi4UaNIFJotUSwFzCGM%2BxVPdgO%2BlU94VffaX4tmFiwUczg1kEJoliSt1OMjtkHVfRddUPpGAYiDgoM1%2FdZD5BbVlpq46Qe
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_BR_eikoitodasilva15@gmail.com_2.txt
+──────────────────────────────────────────────────────────────────────
+
+#31
+Email:        eikoitodasilva15@gmail.com
+Name:         say
+Country:      Brazil (BR)
+Plan:         Premium
+Price:        R$ 59,90
+Member Since: março de 2024
+Next Billing: 6 de dezembro de 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   MASTERCARD
+Card Last 4:  5028
+Pay Method:   CC
+Phone:        (11) 98228-6030
+Phone Verif:  No
+Profiles:     Mamãe
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAcjy6RNskl3Yl2f0tgGcI8l7Q1T0Y2eFviRN90uiflRkUxzPj2tvnI1vlYP7pv%2BXnQ1ndUynMEr2%2Fh9A2oIi7j9qQjS9ZpRrPwlMVIVgS0F6wNKyI%2BtFc2ZX%2FwtcyYh8wmiRa0kzUqxqjm3pLp5p1sjZgkVqRQOJIWMuq0DV3mJiRv7YY3ctT%2F37d4Eh5yJF53naKJaDjIjVcTN8hLNA%2Fmq4lQhA9x3iHsCbtSv%2FuAfWhkw2tzIiRY9OwVXLzPWEVYBnGAYiDgoMVvum1tiBikMyblHF
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAcjy6RNskl3Yl2f0tgGcI8l7Q1T0Y2eFviRN90uiflRkUxzPj2tvnI1vlYP7pv%2BXnQ1ndUynMEr2%2Fh9A2oIi7j9qQjS9ZpRrPwlMVIVgS0F6wNKyI%2BtFc2ZX%2FwtcyYh8wmiRa0kzUqxqjm3pLp5p1sjZgkVqRQOJIWMuq0DV3mJiRv7YY3ctT%2F37d4Eh5yJF53naKJaDjIjVcTN8hLNA%2Fmq4lQhA9x3iHsCbtSv%2FuAfWhkw2tzIiRY9OwVXLzPWEVYBnGAYiDgoMVvum1tiBikMyblHF
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_BR_eikoitodasilva15@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#32
+Email:        mayarasrosa273@gmail.com
+Name:         Mayara
+Country:      Brazil (BR)
+Plan:         Premium
+Price:        R$ 59,90
+Member Since: dezembro de 2024
+Next Billing: 19 de outubro de 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   MASTERCARD
+Card Last 4:  8850
+Pay Method:   CC
+Phone:        (19) 99481-8325
+Phone Verif:  No
+Profiles:     Mayara
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCATOZwty4kPE%2B0ydLEOub3KGWegSyGCw5AuoE5Suk3M%2FbfAVFJaohRXvDurXOchIvNC8MY1QIbHIwproM%2BUQcaVg6fX3DMu6M%2B8PfRCj1WHS3Td6TA%2BgJ4FkFdnuuqIJM6rFRhCtJDeDaDo0v8c9O5MGy8dOh3ygzWSgx8%2BKsEHxfvDdTacDvvXQkEst8GxlIHdgsTSweAlyWr7Q5G%2FGacPjqEP76Ts9VRtNLpIB44RyGneOhcflSaIQTCdr84hwKbWqgGAYiDgoMvTgfk4SZA6Bgv9yM
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCATOZwty4kPE%2B0ydLEOub3KGWegSyGCw5AuoE5Suk3M%2FbfAVFJaohRXvDurXOchIvNC8MY1QIbHIwproM%2BUQcaVg6fX3DMu6M%2B8PfRCj1WHS3Td6TA%2BgJ4FkFdnuuqIJM6rFRhCtJDeDaDo0v8c9O5MGy8dOh3ygzWSgx8%2BKsEHxfvDdTacDvvXQkEst8GxlIHdgsTSweAlyWr7Q5G%2FGacPjqEP76Ts9VRtNLpIB44RyGneOhcflSaIQTCdr84hwKbWqgGAYiDgoMvTgfk4SZA6Bgv9yM
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_BR_mayarasrosa273@gmail.com_2.txt
+──────────────────────────────────────────────────────────────────────
+
+#33
+Email:        roseajabjir@gmail.com
+Name:         G1 (Netflix 9)
+Country:      Brazil (BR)
+Plan:         Premium
+Price:        BRL 59,90
+Member Since: Januari 2026
+Next Billing: 14 Desember 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  9285
+Pay Method:   DC
+Phone:        N/A
+Phone Verif:  No
+Profiles:     G1 (Netflix 9)
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAQyyauwwTpMsM8VLjqxoPWO2ZTx0AbagSwlDa9qKpMDgBKPItes00%2BfCcBet846SMGCJAvpcvG9H8jryHtyLK58F76sMjh%2B5%2BQkvz24WyWIznLrbsFtKxYPEsKmNSdRP81Qip3qUZgTzF%2B3jPPxItr6HQ1YhvPexdAljMINd1g9w0DmdPyGa39iKxncmhL443doKdczUuRuNIJwyjjQdXxJIzLL%2B4jeBXvxqpARi6vTlEBhRv0PRYIubtMkdTjM8dLiyGAYiDgoM54PyGy6NZZPFL8%2B5
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAQyyauwwTpMsM8VLjqxoPWO2ZTx0AbagSwlDa9qKpMDgBKPItes00%2BfCcBet846SMGCJAvpcvG9H8jryHtyLK58F76sMjh%2B5%2BQkvz24WyWIznLrbsFtKxYPEsKmNSdRP81Qip3qUZgTzF%2B3jPPxItr6HQ1YhvPexdAljMINd1g9w0DmdPyGa39iKxncmhL443doKdczUuRuNIJwyjjQdXxJIzLL%2B4jeBXvxqpARi6vTlEBhRv0PRYIubtMkdTjM8dLiyGAYiDgoM54PyGy6NZZPFL8%2B5
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_BR_roseajabjir@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#34
+Email:        stanleymed2017@gmail.com
+Name:         Nar
+Country:      Chile (CL)
+Plan:         Premium
+Price:        $12.990
+Member Since: septiembre de 2023
+Next Billing: 30 de noviembre de 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   MASTERCARD
+Card Last 4:  1868
+Pay Method:   CC
+Phone:        9 3711 3104
+Phone Verif:  No
+Profiles:     Stan
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAT%2BPdIEa%2FUqEiQylJg0%2BLNzb9l3Yrph4HGyIRbAxyBMcyPhOL6jFRUuniApcYiUxJ7PuipAi1qPSd2zmM58he%2FvNT9M3HZhztpGw4PGSyRuWvtaaJNt%2Fr5bJQUkJYGh3zzgt5xoqN9A2A81R6oO2x%2F%2Fa%2FyZXRSJakEdPfuoCmAk%2FK2RmXPZSvIlqJHWQnpNzn%2BqzgcZl%2BY1jRTmd1eqlPcbLMJ1JZeWPtntcz8Rk%2BGgERe0icTbbBMsXfCQ%2FXNA2IH5CGAYiDgoMEroHz0QmQ%2FZrusIj
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAT%2BPdIEa%2FUqEiQylJg0%2BLNzb9l3Yrph4HGyIRbAxyBMcyPhOL6jFRUuniApcYiUxJ7PuipAi1qPSd2zmM58he%2FvNT9M3HZhztpGw4PGSyRuWvtaaJNt%2Fr5bJQUkJYGh3zzgt5xoqN9A2A81R6oO2x%2F%2Fa%2FyZXRSJakEdPfuoCmAk%2FK2RmXPZSvIlqJHWQnpNzn%2BqzgcZl%2BY1jRTmd1eqlPcbLMJ1JZeWPtntcz8Rk%2BGgERe0icTbbBMsXfCQ%2FXNA2IH5CGAYiDgoMEroHz0QmQ%2FZrusIj
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_CL_stanleymed2017@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#35
+Email:        davidgraficos75+1@gmail.com
+Name:         David
+Country:      Colombia (CO)
+Plan:         Premium (Extra Member)
+Price:        N/A
+Member Since: June 2026
+Next Billing: N/A
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  1
+Extra Slots:  0
+Card Brand:   N/A
+Card Last 4:  N/A
+Pay Method:   N/A
+Phone:        N/A
+Phone Verif:  No
+Profiles:     David
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAVMslYfPdfTWffV66IsF7hiGRnAQjNpHCkD4Bf2BS4JSRCHbQlkomNFy9DYoA1GjwvrWKe%2Fz2DuBL2WG5PIZNfKnZkaBpQhqDFM5b2WIeUrZbRk%2Bhfnd%2BPHR4EDfFq4mHUPsuYlK%2BgWBwhWSR6LGm98DtgrQWCCG%2B0V9xlc5ztf%2B1eE%2F6k4mOznKk9hS5cgblO%2B8u0F7QeGn5d2PdJTcnS7jViKMd6XLLjNM%2BtCa81ebqCCuE3SHwrm2mE45y8TcndbfGAYiDgoMcauxEZVwCh7rbq0G
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAVMslYfPdfTWffV66IsF7hiGRnAQjNpHCkD4Bf2BS4JSRCHbQlkomNFy9DYoA1GjwvrWKe%2Fz2DuBL2WG5PIZNfKnZkaBpQhqDFM5b2WIeUrZbRk%2Bhfnd%2BPHR4EDfFq4mHUPsuYlK%2BgWBwhWSR6LGm98DtgrQWCCG%2B0V9xlc5ztf%2B1eE%2F6k4mOznKk9hS5cgblO%2B8u0F7QeGn5d2PdJTcnS7jViKMd6XLLjNM%2BtCa81ebqCCuE3SHwrm2mE45y8TcndbfGAYiDgoMcauxEZVwCh7rbq0G
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_CO_davidgraficos75_1@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#36
+Email:        danitzaederhormazabal@gmail.com
+Name:         Kevinymena
+Country:      Chile (CL)
+Plan:         Premium
+Price:        $12.990
+Member Since: julio de 2021
+Next Billing: 30 de noviembre de 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  1318
+Pay Method:   CC
+Phone:        9 5515 5070
+Phone Verif:  No
+Profiles:     dani, netflix
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLDAQgk4oBOATmMehBuPh7TyoSNX8FNPdRYro0sW4SW%2B5XOXbWGN2QlFieoXjddZfn7j50nuqDjX%2B29xKQcCvxrQ1FqFZtcRWVDlszrt%2BjQLpyVK4Ny5Jar7fYhHqTtu%2FtRbLq2RqNujxXptLEW03VoHDZ4SMYRhVBVMQXtWa0PpWNC1UZtSimCZdmDjXmz1EG3YJ2w0trYQ6Qbr6LtebhDgNueFYKcIgbKhglcnsxXrCqVdI4N%2FqLT3wXjNORbDE2oQRH9OhgGIg4KDAMhmwzF4T%2F05IhX5A%3D%3D
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLDAQgk4oBOATmMehBuPh7TyoSNX8FNPdRYro0sW4SW%2B5XOXbWGN2QlFieoXjddZfn7j50nuqDjX%2B29xKQcCvxrQ1FqFZtcRWVDlszrt%2BjQLpyVK4Ny5Jar7fYhHqTtu%2FtRbLq2RqNujxXptLEW03VoHDZ4SMYRhVBVMQXtWa0PpWNC1UZtSimCZdmDjXmz1EG3YJ2w0trYQ6Qbr6LtebhDgNueFYKcIgbKhglcnsxXrCqVdI4N%2FqLT3wXjNORbDE2oQRH9OhgGIg4KDAMhmwzF4T%2F05IhX5A%3D%3D
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_CL_danitzaederhormazabal@gmail.com_2.txt
+──────────────────────────────────────────────────────────────────────
+
+#37
+Email:        camilagerman4@gmail.com
+Name:         Camm
+Country:      DO (DO)
+Plan:         Premium (Extra Member)
+Price:        N/A
+Member Since: January 2026
+Next Billing: N/A
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  1
+Extra Slots:  0
+Card Brand:   N/A
+Card Last 4:  N/A
+Pay Method:   N/A
+Phone:        N/A
+Phone Verif:  No
+Profiles:     Camm
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLDAU%2F1GmX0utSPdYxsKzGTV3%2BxJizoU62tE79XiG%2Buy%2B%2FKgHz24%2FFbqcLlZkx%2FeRY1sAZsEmE%2B%2BwXoSsFYgMlqCXhcH1a6Yjpf2qIiA4FD1iYlWAfKmKmf3nAz88%2FOixMvD75ni6em6ENiS%2BzYh%2FyS1dMCKfRUjURPDxbB5nMyvqQSZf5wLEvyYi0t6FQ71cdj0aw03%2FUAy7mCv%2B4K7hUhiYC01hkQkYXkz%2B04B8oMHAZIwLmKU2Psuh1jZ5TVN7PAVG%2F7ThgGIg4KDG8IPcbtETU7GLOyxg%3D%3D
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLDAU%2F1GmX0utSPdYxsKzGTV3%2BxJizoU62tE79XiG%2Buy%2B%2FKgHz24%2FFbqcLlZkx%2FeRY1sAZsEmE%2B%2BwXoSsFYgMlqCXhcH1a6Yjpf2qIiA4FD1iYlWAfKmKmf3nAz88%2FOixMvD75ni6em6ENiS%2BzYh%2FyS1dMCKfRUjURPDxbB5nMyvqQSZf5wLEvyYi0t6FQ71cdj0aw03%2FUAy7mCv%2B4K7hUhiYC01hkQkYXkz%2B04B8oMHAZIwLmKU2Psuh1jZ5TVN7PAVG%2F7ThgGIg4KDG8IPcbtETU7GLOyxg%3D%3D
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_DO_camilagerman4@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#38
+Email:        jopriur@gmail.com
+Name:         Infantil
+Country:      Colombia (CO)
+Plan:         Premium
+Price:        44.900 COP
+Member Since: septiembre de 2024
+Next Billing: 16 de noviembre de 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  2722
+Pay Method:   CC
+Phone:        314 5040546
+Phone Verif:  No
+Profiles:     Joaquin
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAXVmIQZ7Nqr2KJ3dEP1gLqgacbzkCRBvh41vWcdGinEUn1OU%2FJYB399upjZEtS5NMV7OFcEuAcWLQTlJnNOp7tQAKP1q8AsTVIntqY2Ox5vDvWnmv4j18CalZXUj3h5w34HffyBMwfkKMi4zSY50JOiMIrLlW%2FNL6fGujzM8QKPAhVgiOQG94%2BV7ST2GcMH0CAl1DZ56oyOv5Ie2X96T0PTnaCFfhNpfDFRIH79Wj6QfZrpqhKu4Fu2%2Fdvf%2BA%2F8Rd25IGAYiDgoMnxL5O%2Fp1sE24R3SG
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAXVmIQZ7Nqr2KJ3dEP1gLqgacbzkCRBvh41vWcdGinEUn1OU%2FJYB399upjZEtS5NMV7OFcEuAcWLQTlJnNOp7tQAKP1q8AsTVIntqY2Ox5vDvWnmv4j18CalZXUj3h5w34HffyBMwfkKMi4zSY50JOiMIrLlW%2FNL6fGujzM8QKPAhVgiOQG94%2BV7ST2GcMH0CAl1DZ56oyOv5Ie2X96T0PTnaCFfhNpfDFRIH79Wj6QfZrpqhKu4Fu2%2Fdvf%2BA%2F8Rd25IGAYiDgoMnxL5O%2Fp1sE24R3SG
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_CO_jopriur@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#39
+Email:        coty912@gmail.com
+Name:         kmilo E
+Country:      Colombia (CO)
+Plan:         Premium
+Price:        $ 44.900
+Member Since: abril de 2024
+Next Billing: 30 de noviembre de 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   MASTERCARD
+Card Last 4:  9968
+Pay Method:   CC
+Phone:        302 3745538
+Phone Verif:  No
+Profiles:     kmilo E
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAeJViDbawACvvDb36fi64u%2FirCFr56QCo9YlbIPcDQuVXt1IlCx9HhqgaCruaa5zOvnQ04SQ8vin1z4Xs7e7dG6iS44MbJgjdHBmwKUrAHX4BvKlEEN%2FXSSwf6n2uBF3L5MlS7YGfW2OhBIoJraBlnaDc40%2F8JVoawxHM90soK2k%2F1qFjN2wT6MLv3U3R2qQxpxamtOSdDCXkG5d80RrCgbOWk27QBa39TtF4d3qGl0LAXPZqwG3e5iMAFJAlYRQAP%2BHGAYiDgoMTETaEA%2FVDpc%2BnITF
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAeJViDbawACvvDb36fi64u%2FirCFr56QCo9YlbIPcDQuVXt1IlCx9HhqgaCruaa5zOvnQ04SQ8vin1z4Xs7e7dG6iS44MbJgjdHBmwKUrAHX4BvKlEEN%2FXSSwf6n2uBF3L5MlS7YGfW2OhBIoJraBlnaDc40%2F8JVoawxHM90soK2k%2F1qFjN2wT6MLv3U3R2qQxpxamtOSdDCXkG5d80RrCgbOWk27QBa39TtF4d3qGl0LAXPZqwG3e5iMAFJAlYRQAP%2BHGAYiDgoMTETaEA%2FVDpc%2BnITF
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_CO_coty912@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#40
+Email:        harlinsonperez@gmail.com
+Name:         Hari
+Country:      Colombia (CO)
+Plan:         Premium
+Price:        $ 44.900
+Member Since: julio de 2026
+Next Billing: 7 de diciembre de 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  2548
+Pay Method:   CC
+Phone:        300 4974550
+Phone Verif:  No
+Profiles:     Hari
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLDAXkxsMOUf%2B46NgKUQKd4H6x49v1ZaukW0CwqER4EyACntTHMgUVwbGgO0B0EHC%2BK%2B7xpC8SUL%2Fgf1dM03V2IXuvmRNQdoCcR9Y6C9OsyyTfPr%2BkQZprdcDwPa9CRkzf5v2%2B398P371mB6%2BYWC4dPoVvilqwXaah3Zt4Rz4tl6bFcV8HrFRK%2B5LZYo4snt6UXIuY%2FqZYLTGY%2Br47y78RvqAD%2FmvhotQ8Z9H0unFJ8n1EBLdHhi%2F3E%2FAr4CvqwAWG8xhOrYxgGIg4KDJCYpilfNWCMqtKhYw%3D%3D
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLDAXkxsMOUf%2B46NgKUQKd4H6x49v1ZaukW0CwqER4EyACntTHMgUVwbGgO0B0EHC%2BK%2B7xpC8SUL%2Fgf1dM03V2IXuvmRNQdoCcR9Y6C9OsyyTfPr%2BkQZprdcDwPa9CRkzf5v2%2B398P371mB6%2BYWC4dPoVvilqwXaah3Zt4Rz4tl6bFcV8HrFRK%2B5LZYo4snt6UXIuY%2FqZYLTGY%2Br47y78RvqAD%2FmvhotQ8Z9H0unFJ8n1EBLdHhi%2F3E%2FAr4CvqwAWG8xhOrYxgGIg4KDJCYpilfNWCMqtKhYw%3D%3D
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_CO_harlinsonperez@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#41
+Email:        flixmacaco@gmail.com
+Name:         W&M
+Country:      DO (DO)
+Plan:         Premium
+Price:        US$13.99
+Member Since: February 2026
+Next Billing: 2 December 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  2377
+Pay Method:   CC
+Phone:        (849) 402-1973
+Phone Verif:  No
+Profiles:     W&M
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAdsVsgJ1%2FUDq384mmJ31u07O8Sy9DUs04eXIR5rhj3ZcsOYQv7SbZ2mL2iEqpKOZTxQQdwmdoQH3hIsrJqNpMv1V6da7meL1B3PsknMYI9wRPR8WKYcbAa0%2FGSj10EExY5cbxf40xNn6GL6Th32pezK784ZdM8LuxNsU6iJH2O1NWdObu7J9iVg3l3bjR5K%2FhVCMY0tp5qeywVyzCQprAGASL3T3Uz42097xQBE5P01G4P5mIwAqPgI2PtPDGS0GipvkGAYiDgoMxxHrGY9qcIeqAOql
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAdsVsgJ1%2FUDq384mmJ31u07O8Sy9DUs04eXIR5rhj3ZcsOYQv7SbZ2mL2iEqpKOZTxQQdwmdoQH3hIsrJqNpMv1V6da7meL1B3PsknMYI9wRPR8WKYcbAa0%2FGSj10EExY5cbxf40xNn6GL6Th32pezK784ZdM8LuxNsU6iJH2O1NWdObu7J9iVg3l3bjR5K%2FhVCMY0tp5qeywVyzCQprAGASL3T3Uz42097xQBE5P01G4P5mIwAqPgI2PtPDGS0GipvkGAYiDgoMxxHrGY9qcIeqAOql
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_DO_flixmacaco@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#42
+Email:        danitzaederhormazabal@gmail.com
+Name:         Kevinymena
+Country:      Chile (CL)
+Plan:         Premium
+Price:        $12.990
+Member Since: julio de 2021
+Next Billing: 30 de noviembre de 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  1318
+Pay Method:   CC
+Phone:        9 5515 5070
+Phone Verif:  No
+Profiles:     dani, netflix
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLDAXV3V%2FLgifIkrOxgzET7sDVL2v5l53mFBUlMzEqJF2D7I6HuuTTAGJesjJy0vB%2FhNXzpb16K0xMCq11ulTksRJhI7dL9oBj53CtmRpKQzM81Er3y8UAn12rqdvdemADtdgc8ma4UFfqjGtprHZOtjeBcq3GdvylyLkyKDGIE4lc%2Fz7e%2Bd8sA3WJO8WE2bo2QKd8l7Gr3x3nhVwGYgF%2BHVwWsyQmhJOGb1oLhSDZSWbyJU%2FcvsFVY6jYN35jnHaye%2FfC9axgGIg4KDEQ1VTX%2BlZsYWv1BWw%3D%3D
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLDAXV3V%2FLgifIkrOxgzET7sDVL2v5l53mFBUlMzEqJF2D7I6HuuTTAGJesjJy0vB%2FhNXzpb16K0xMCq11ulTksRJhI7dL9oBj53CtmRpKQzM81Er3y8UAn12rqdvdemADtdgc8ma4UFfqjGtprHZOtjeBcq3GdvylyLkyKDGIE4lc%2Fz7e%2Bd8sA3WJO8WE2bo2QKd8l7Gr3x3nhVwGYgF%2BHVwWsyQmhJOGb1oLhSDZSWbyJU%2FcvsFVY6jYN35jnHaye%2FfC9axgGIg4KDEQ1VTX%2BlZsYWv1BWw%3D%3D
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_CL_danitzaederhormazabal@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#43
+Email:        hurka38jistebnice@gmail.com
+Name:         Vítek
+Country:      Czech Republic (CZ)
+Plan:         Premium
+Price:        419 Kč
+Member Since: listopad 2024
+Next Billing: 21. listopadu 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  5318
+Pay Method:   CC
+Phone:        724 310 606
+Phone Verif:  No
+Profiles:     Pavel
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAZ8lu%2BGHqCycshO8fSA5M97UYwCogFUT0eRsYBHfk1acEfxdwuy%2BvNdQ9xAvFwix%2B8DKjRHBOaUG4IbOr6wX0yPAf0vsGEICtGHBnTlqMU%2FJGmgd98FwqUUYb%2FranoWkNAqJeQgkvBRCG2ggb3DM9N%2FBsqfB58DVjfoZItiFGHerxjUVnOtekiKNcE5ucr8UrXI8b7NB5E2PKvedKUiClzeihz5y%2FHqojqD9k2ZYKCOOu3igtAA1J%2B%2Bup94kck%2B5txQ9GAYiDgoMHmsLnTB4YH3rOzY4
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAZ8lu%2BGHqCycshO8fSA5M97UYwCogFUT0eRsYBHfk1acEfxdwuy%2BvNdQ9xAvFwix%2B8DKjRHBOaUG4IbOr6wX0yPAf0vsGEICtGHBnTlqMU%2FJGmgd98FwqUUYb%2FranoWkNAqJeQgkvBRCG2ggb3DM9N%2FBsqfB58DVjfoZItiFGHerxjUVnOtekiKNcE5ucr8UrXI8b7NB5E2PKvedKUiClzeihz5y%2FHqojqD9k2ZYKCOOu3igtAA1J%2B%2Bup94kck%2B5txQ9GAYiDgoMHmsLnTB4YH3rOzY4
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_CZ_hurka38jistebnice@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#44
+Email:        Jcpeguerobatista@gmail.com
+Name:         Emi
+Country:      DO (DO)
+Plan:         Premium
+Price:        US$13.99
+Member Since: julio de 2024
+Next Billing: 3 de diciembre de 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  6527
+Pay Method:   CC
+Phone:        (829) 574-0615
+Phone Verif:  No
+Profiles:     JC
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAQvAtqfdCZdmhFaktVvDcX9Hxwr5Fkxn9GCeCyH2MUw0BVPJjwDv2wdbF91NuQdse%2FzR6b1RDPzUqj%2FgJTcD%2FAagY3RbNDURqYvpVFgj7V3EiBDS2rRPZL0VNa2McCPNjmR8IgnLnZTnLKD0YjX4PJLKtqCCKcVeM6FD9x6uOGkTpUJ5vGH1TXq5O%2BmdT5np65LB4%2BXOmATfO%2FcOXS4TIUkEqeP1C9g%2Fxil3tIwXxcpq%2FkI5x9zAEnzJXvynmxUHO7E%2BGAYiDgoMmSoeHdYMKines0Uq
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAQvAtqfdCZdmhFaktVvDcX9Hxwr5Fkxn9GCeCyH2MUw0BVPJjwDv2wdbF91NuQdse%2FzR6b1RDPzUqj%2FgJTcD%2FAagY3RbNDURqYvpVFgj7V3EiBDS2rRPZL0VNa2McCPNjmR8IgnLnZTnLKD0YjX4PJLKtqCCKcVeM6FD9x6uOGkTpUJ5vGH1TXq5O%2BmdT5np65LB4%2BXOmATfO%2FcOXS4TIUkEqeP1C9g%2Fxil3tIwXxcpq%2FkI5x9zAEnzJXvynmxUHO7E%2BGAYiDgoMmSoeHdYMKines0Uq
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_DO_Jcpeguerobatista@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#45
+Email:        creativepixels@gmail.com
+Name:         Marcos
+Country:      EC (EC)
+Plan:         Premium
+Price:        11,99 US$
+Member Since: diciembre de 2025
+Next Billing: 24 de noviembre de 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  8689
+Pay Method:   CC
+Phone:        099 436 7034
+Phone Verif:  No
+Profiles:     Marcos
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLDAY%2FXAe36Y5KDNV33%2FQBuGzPTE8pZLBpL2Y%2FAy1FNUOZhZ1sQ3t9819Sdaqdc6xq0jmeh9WD7wYwgNylFNQQrTA%2BXwJ3nbX%2FEveDGq06l7OIsC84QdEJAH%2BY3YyNyL%2By5pOIZjcMTtybBpA6e0%2F25sz%2Fequ8jtBdJHdbP%2BmW0P20BG6qPzEEcsgIo0Rvwf1%2FsMEZWJo%2F4gO4vSALi%2Fitc54cn7Bb9%2B3lWnybbcTV092RXJhzDiPlRQ5SDqllVOapDjCzy6hgGIg4KDCOa9ilNbs3QWXMdpA%3D%3D
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLDAY%2FXAe36Y5KDNV33%2FQBuGzPTE8pZLBpL2Y%2FAy1FNUOZhZ1sQ3t9819Sdaqdc6xq0jmeh9WD7wYwgNylFNQQrTA%2BXwJ3nbX%2FEveDGq06l7OIsC84QdEJAH%2BY3YyNyL%2By5pOIZjcMTtybBpA6e0%2F25sz%2Fequ8jtBdJHdbP%2BmW0P20BG6qPzEEcsgIo0Rvwf1%2FsMEZWJo%2F4gO4vSALi%2Fitc54cn7Bb9%2B3lWnybbcTV092RXJhzDiPlRQ5SDqllVOapDjCzy6hgGIg4KDCOa9ilNbs3QWXMdpA%3D%3D
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_EC_creativepixels@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#46
+Email:        100240801am@gmail.com
+Name:         100240801am
+Country:      DO (DO)
+Plan:         Premium (miembro extra)
+Price:        N/A
+Member Since: julio de 2023
+Next Billing: N/A
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  1
+Extra Slots:  0
+Card Brand:   N/A
+Card Last 4:  N/A
+Pay Method:   N/A
+Phone:        N/A
+Phone Verif:  No
+Profiles:     100240801am
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAd5HdW7PUhQHInPCwdVKDsvuyyY92k8juSZuwtD6FESSF%2Fhv%2FKPW7VBexjreAtx%2BB1Cg7JjRY%2Fii4Sy3y8u9RKzEG%2BqqnaeOjUP9P3cpL0jtwBKHF%2Ffb7%2F2omZM6Q5VnwXux7euf0IgYheulEGCHktFqRFJLEmfDnHWZE%2BFpbO00rOQcFrL%2BTPsFGWdk7g%2B0W8Wy%2Fw9pgyTkMdR55C3HqDRGas9fjZ51DyiLhu9ZzShPTX1zknGUW%2FAau97tmrVGHrWzGAYiDgoMe4GnquXnWpVdA48N
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAd5HdW7PUhQHInPCwdVKDsvuyyY92k8juSZuwtD6FESSF%2Fhv%2FKPW7VBexjreAtx%2BB1Cg7JjRY%2Fii4Sy3y8u9RKzEG%2BqqnaeOjUP9P3cpL0jtwBKHF%2Ffb7%2F2omZM6Q5VnwXux7euf0IgYheulEGCHktFqRFJLEmfDnHWZE%2BFpbO00rOQcFrL%2BTPsFGWdk7g%2B0W8Wy%2Fw9pgyTkMdR55C3HqDRGas9fjZ51DyiLhu9ZzShPTX1zknGUW%2FAau97tmrVGHrWzGAYiDgoMe4GnquXnWpVdA48N
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_DO_100240801am@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#47
+Email:        rs09sn@byterflys.com
+Name:         MARIO
+Country:      DO (DO)
+Plan:         Premium
+Price:        US$13.99
+Member Since: enero de 2024
+Next Billing: 9 de diciembre de 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  1796
+Pay Method:   CC
+Phone:        N/A
+Phone Verif:  No
+Profiles:     MARIO
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLDAQNW%2FtC95kZaV0NUMkpjKdZGJ70GyzJaXsZPbKjrPq%2F%2FBrBdqogwajkhKy%2Bdh8PSBklXiCnwA4jJXZqZItz6%2FryG8PfFxk%2FkdIhsxvZPVoTwRIjNs21Fk3PNi5BnmE3e1TZBrufNzIJZ1wpKwmKhGJjCjYdYBNOVs3XSECDllGWZH0I5eCdxMkojGE%2Bn0SWsX72C40mued0xlJGVkRqee%2ByuLy7q4PSSqBi%2BvRaqsFsTHQppVy%2BgFTBnvr9bqC2aCdH8axgGIg4KDO3psScLFy%2BkhZmaYQ%3D%3D
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLDAQNW%2FtC95kZaV0NUMkpjKdZGJ70GyzJaXsZPbKjrPq%2F%2FBrBdqogwajkhKy%2Bdh8PSBklXiCnwA4jJXZqZItz6%2FryG8PfFxk%2FkdIhsxvZPVoTwRIjNs21Fk3PNi5BnmE3e1TZBrufNzIJZ1wpKwmKhGJjCjYdYBNOVs3XSECDllGWZH0I5eCdxMkojGE%2Bn0SWsX72C40mued0xlJGVkRqee%2ByuLy7q4PSSqBi%2BvRaqsFsTHQppVy%2BgFTBnvr9bqC2aCdH8axgGIg4KDO3psScLFy%2BkhZmaYQ%3D%3D
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_DO_rs09sn@byterflys.com_2.txt
+──────────────────────────────────────────────────────────────────────
+
+#48
+Email:        rosarioaguilera.raul@gmail.com
+Name:         Milky
+Country:      DO (DO)
+Plan:         Premium
+Price:        USD 13.99
+Member Since: February 2021
+Next Billing: December 3, 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  8518
+Pay Method:   CC
+Phone:        (809) 399-1192
+Phone Verif:  No
+Profiles:     Milky
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAQJXian4ca0l%2F3zOLjDCKSCJFyUstJDDOxPWgREKjDmTiFfh2yinKefuroSbY%2F9BAvTOTsPxzdiwHfiJ1DP7CqGe2DwU9pBdzqdCemiBWSrZ5hmmvdo0ug4%2B5WmusLyzFCyh9HwW1MFn4l3xGRRzqxBIoBiBjd9WYSRfAVXZu%2BuwUaPGi8VxKKey7Uh%2FUekcJXw8bLRsmKm%2BuUkW7%2FVM21BLUatxO3TUXI3k6ywU7O6%2F9wCgbP1FCZj9iRaSw%2FQrXgtwGAYiDgoMymzPhkN0Td0mt%2B6o
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAQJXian4ca0l%2F3zOLjDCKSCJFyUstJDDOxPWgREKjDmTiFfh2yinKefuroSbY%2F9BAvTOTsPxzdiwHfiJ1DP7CqGe2DwU9pBdzqdCemiBWSrZ5hmmvdo0ug4%2B5WmusLyzFCyh9HwW1MFn4l3xGRRzqxBIoBiBjd9WYSRfAVXZu%2BuwUaPGi8VxKKey7Uh%2FUekcJXw8bLRsmKm%2BuUkW7%2FVM21BLUatxO3TUXI3k6ywU7O6%2F9wCgbP1FCZj9iRaSw%2FQrXgtwGAYiDgoMymzPhkN0Td0mt%2B6o
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_DO_rosarioaguilera.raul@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#49
+Email:        leninaraujo52@gmail.com
+Name:         Lenin Araujo Luciano
+Country:      DO (DO)
+Plan:         Premium
+Price:        USD 13.99
+Member Since: April 2026
+Next Billing: December 13, 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  3967
+Pay Method:   CC
+Phone:        (829) 924-4567
+Phone Verif:  No
+Profiles:     Lenin Araujo Luciano
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAQE4Cb8ftpu4UkewxSrShC2pCqLNJHGvPdiQ%2Bh%2FumdmeqrZ6l1TmW3AK6bsxoQNkOviExSmndO2YML6LzQRsdMUSy%2BQsR78fLgYCeU5We3nbC%2BLv8dx%2FLibuKRN0uAJB0oDtRLDoWX1H%2Frts9GwwQq5UOYEn3zuGRHSCvfA%2BwxFa5EnG%2FwpXD%2FHimFouDuOFlBXS%2FEtNVXk1XPac72SsAMjns2tXfNTpN2fMQ0nQ7k4up4dv3erPo8FYZVwu5z3%2BBgNQGAYiDgoMvrQcZ7FyI%2BdSijkV
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAQE4Cb8ftpu4UkewxSrShC2pCqLNJHGvPdiQ%2Bh%2FumdmeqrZ6l1TmW3AK6bsxoQNkOviExSmndO2YML6LzQRsdMUSy%2BQsR78fLgYCeU5We3nbC%2BLv8dx%2FLibuKRN0uAJB0oDtRLDoWX1H%2Frts9GwwQq5UOYEn3zuGRHSCvfA%2BwxFa5EnG%2FwpXD%2FHimFouDuOFlBXS%2FEtNVXk1XPac72SsAMjns2tXfNTpN2fMQ0nQ7k4up4dv3erPo8FYZVwu5z3%2BBgNQGAYiDgoMvrQcZ7FyI%2BdSijkV
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_DO_leninaraujo52@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#50
+Email:        thonny_star@outlook.com
+Name:         ThonnyMk
+Country:      DO (DO)
+Plan:         Premium
+Price:        USD 13.99
+Member Since: April 2026
+Next Billing: December 16, 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   MASTERCARD
+Card Last 4:  6642
+Pay Method:   CC
+Phone:        (849) 401-3016
+Phone Verif:  No
+Profiles:     ThonnyMk
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCATXRi8bOJjIqqxwyDtkPL25TQwqAMyvBPThEC7wLAUm41QysVQWfA7%2B0rWH5vDjd%2BsUImXWpVg45sX4EuiLfaHHxaV2ZWg3ya2FkVbLbwVZBVf6JkO4yGdwCydI%2Ba2O9LnTGh75UrGBABTufntYSbq0YNe3XF7cd63hN%2BN3HbXvV%2ByFLtquhLVJoB4juZYxCeYjFfSpmub1H7wFuH%2BWfNlEQBXi9FGjB8U%2F12ypGnK9hk%2FSDK5B5fV8FaUtM1eN%2BTil0GAYiDgoMD3WPKM2giodXvkg6
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCATXRi8bOJjIqqxwyDtkPL25TQwqAMyvBPThEC7wLAUm41QysVQWfA7%2B0rWH5vDjd%2BsUImXWpVg45sX4EuiLfaHHxaV2ZWg3ya2FkVbLbwVZBVf6JkO4yGdwCydI%2Ba2O9LnTGh75UrGBABTufntYSbq0YNe3XF7cd63hN%2BN3HbXvV%2ByFLtquhLVJoB4juZYxCeYjFfSpmub1H7wFuH%2BWfNlEQBXi9FGjB8U%2F12ypGnK9hk%2FSDK5B5fV8FaUtM1eN%2BTil0GAYiDgoMD3WPKM2giodXvkg6
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_DO_thonny_star@outlook.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#51
+Email:        61bb@gmx.de
+Name:         BB61
+Country:      Germany (DE)
+Plan:         Premium
+Price:        EUR 21,99
+Member Since: maio de 2019
+Next Billing: 13 de dezembro de 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   N/A
+Card Last 4:  61\x2A\x2A\x2A\x40gmx.de
+Pay Method:   PAYPAL
+Phone:        0172 5806795
+Phone Verif:  No
+Profiles:     BB61
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAVPiwGU46SxGia9HXGRxO8tfFHDN79d79WEROdkKG8jHP%2B2AI29pYt%2FM7dj5%2BZpjdUKhdLnbIVkVFFPXxu%2B86zlqNBLVvU7op17jz36TUvkI2RLWRXk1V42pm0zcBDq%2BWEjz1OBa79bb8o8xlhW0R0eTGgtlxOijgH2fvUxQ9unrYRY38w8Xoi5x6Q6jqb%2B4ZmGnrYGtgcabfFXeNlzUwNOJ4r1u%2FV2k7ljdZZHW3EWfo4GnOciSgsn%2BEEWV3pkeJSxlGAYiDgoMdXsOddeODapK7oW5
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAVPiwGU46SxGia9HXGRxO8tfFHDN79d79WEROdkKG8jHP%2B2AI29pYt%2FM7dj5%2BZpjdUKhdLnbIVkVFFPXxu%2B86zlqNBLVvU7op17jz36TUvkI2RLWRXk1V42pm0zcBDq%2BWEjz1OBa79bb8o8xlhW0R0eTGgtlxOijgH2fvUxQ9unrYRY38w8Xoi5x6Q6jqb%2B4ZmGnrYGtgcabfFXeNlzUwNOJ4r1u%2FV2k7ljdZZHW3EWfo4GnOciSgsn%2BEEWV3pkeJSxlGAYiDgoMdXsOddeODapK7oW5
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_DE_61bb@gmx.de.txt
+──────────────────────────────────────────────────────────────────────
+
+#52
+Email:        r-gomez-12@hotmail.com
+Name:         Robin
+Country:      Colombia (CO)
+Plan:         Premium
+Price:        $ 44.900
+Member Since: septiembre de 2024
+Next Billing: 22 de noviembre de 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  2355
+Pay Method:   CC
+Phone:        315 4668457
+Phone Verif:  No
+Profiles:     Robin
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAd%2B9B6Rn9qXN4UaCBqx7ZI4e1lgylq2z8JZ36IBLcWnnmmg1mjNe73SlZG0wW7coA7%2FOrSbwDm5GfMDbfkbKa7isnKD0TdhG5xoMHodat20AaO5ykwAOangzCw8hzJmW6lsjQux3iOSiM5rKo63V6q8YVnVbo%2BVR3VEfufExUPCN2tHuvmnpACEk7XVlmU5JhUDlSDGiEu%2Bdd%2BHWTyNs67MhnF8DHQv9AP4WSGCrHmqEv23CR6USgR4z7mr%2FRdMm0eBPGAYiDgoMBzijo9KpinYplpCC
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAd%2B9B6Rn9qXN4UaCBqx7ZI4e1lgylq2z8JZ36IBLcWnnmmg1mjNe73SlZG0wW7coA7%2FOrSbwDm5GfMDbfkbKa7isnKD0TdhG5xoMHodat20AaO5ykwAOangzCw8hzJmW6lsjQux3iOSiM5rKo63V6q8YVnVbo%2BVR3VEfufExUPCN2tHuvmnpACEk7XVlmU5JhUDlSDGiEu%2Bdd%2BHWTyNs67MhnF8DHQv9AP4WSGCrHmqEv23CR6USgR4z7mr%2FRdMm0eBPGAYiDgoMBzijo9KpinYplpCC
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_CO_r-gomez-12@hotmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#53
+Email:        ariasgrullon48@gmail.com
+Name:         Javier
+Country:      DO (DO)
+Plan:         Premium
+Price:        13,99 US$
+Member Since: septiembre de 2025
+Next Billing: 25 de noviembre de 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   MASTERCARD
+Card Last 4:  9060
+Pay Method:   CC
+Phone:        (849) 271-0431
+Phone Verif:  No
+Profiles:     Javier
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLDASY0V9mHsGNLOL5Oy%2Fgjar8PecXXOSVvAXMJUhLsDys5P%2FV%2BaBi01eN6zQ2EmNDpbqz0I29z4M1N%2Bn4%2BZpoIbKn%2BPTXcevugN7kg485hF0EKAV18tUy8KAQ2RJJlby8rDyg1udG4W1CY%2Bn1Rmdwpxc%2BVhFqA42d%2FBJg%2Bz38T4eyzuJOKSRQUNfi8io%2FqOf9Kfzm7OurNJw9AxvxPvlnOAABNjxOjrXRndi%2F84VIUZeFg2XV5ES2tIwTS3jb5%2BxECDrz6dBgGIg4KDBqfpQ01htjSNOf3sw%3D%3D
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLDASY0V9mHsGNLOL5Oy%2Fgjar8PecXXOSVvAXMJUhLsDys5P%2FV%2BaBi01eN6zQ2EmNDpbqz0I29z4M1N%2Bn4%2BZpoIbKn%2BPTXcevugN7kg485hF0EKAV18tUy8KAQ2RJJlby8rDyg1udG4W1CY%2Bn1Rmdwpxc%2BVhFqA42d%2FBJg%2Bz38T4eyzuJOKSRQUNfi8io%2FqOf9Kfzm7OurNJw9AxvxPvlnOAABNjxOjrXRndi%2F84VIUZeFg2XV5ES2tIwTS3jb5%2BxECDrz6dBgGIg4KDBqfpQ01htjSNOf3sw%3D%3D
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_DO_ariasgrullon48@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#54
+Email:        tvrd3167@gmail.com
+Name:         Leonela
+Country:      DO (DO)
+Plan:         Premium
+Price:        US$13.99
+Member Since: junio de 2023
+Next Billing: 27 de noviembre de 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   MASTERCARD
+Card Last 4:  8832
+Pay Method:   CC
+Phone:        (829) 882-5915
+Phone Verif:  No
+Profiles:     Leonela
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAWbgA48KsTSXu5zsxKHOsHlVKAHgSR2QH3rIAeEToRZJShTq9dNa%2Bt5JhS3OdfWyq6DdWM27h1Jq81of8uB1JYfy2ngluLyhzrnjf5qW7CIPQLPdntqiLot4drUjmftfX2PqFF3zNQ7t2mW2YQdMILcJUjJmaOmHS%2FeX9ad3lBUMkD%2FzgHbNVfvtqjZvp%2B0xU72AoPo4MuB8qVGQgwwoki9Vh90Zz4tjIlpIxAic%2F1B6C8ouon6vbshspIgiuXefXGOQGAYiDgoMLiFE8Lef%2FhCP76XF
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAWbgA48KsTSXu5zsxKHOsHlVKAHgSR2QH3rIAeEToRZJShTq9dNa%2Bt5JhS3OdfWyq6DdWM27h1Jq81of8uB1JYfy2ngluLyhzrnjf5qW7CIPQLPdntqiLot4drUjmftfX2PqFF3zNQ7t2mW2YQdMILcJUjJmaOmHS%2FeX9ad3lBUMkD%2FzgHbNVfvtqjZvp%2B0xU72AoPo4MuB8qVGQgwwoki9Vh90Zz4tjIlpIxAic%2F1B6C8ouon6vbshspIgiuXefXGOQGAYiDgoMLiFE8Lef%2FhCP76XF
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_DO_tvrd3167@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#55
+Email:        aglandry09@hotmail.com
+Name:         Gatien's World
+Country:      Egypt (EG)
+Plan:         Premium
+Price:        270 EGP
+Member Since: juin 2026
+Next Billing: 3 décembre 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   MASTERCARD
+Card Last 4:  8982
+Pay Method:   CC
+Phone:        015 52854747
+Phone Verif:  No
+Profiles:     Gatien's World
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAcgW8iKEjXv4Myo8uo%2B4or1HoIJYq6F0U7geYEAQCBr2NN6yR%2FcH7ieG4aR7rn5DYwnW88RlMHmGfX1rtlPuUahGQ2KH8H8MuD6kIFP9MU4BY6jNeeXWKQTZA1biOHM%2BuTrIyLML%2Fu8vIJI5gy%2BMCmQNXtuUJz9mog3t0ue2o4k5u4Xj2R9gsJ7e5%2BlNRnN1ovpX1NXb3sUtsI6xav4Jk6Q53T06d%2B5%2BrS7KaV%2Fsp6xeESvspQs%2FNHmQzx1B7WKRgaDkGAYiDgoMFacIeRt6mMTj%2Bn%2B5
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAcgW8iKEjXv4Myo8uo%2B4or1HoIJYq6F0U7geYEAQCBr2NN6yR%2FcH7ieG4aR7rn5DYwnW88RlMHmGfX1rtlPuUahGQ2KH8H8MuD6kIFP9MU4BY6jNeeXWKQTZA1biOHM%2BuTrIyLML%2Fu8vIJI5gy%2BMCmQNXtuUJz9mog3t0ue2o4k5u4Xj2R9gsJ7e5%2BlNRnN1ovpX1NXb3sUtsI6xav4Jk6Q53T06d%2B5%2BrS7KaV%2Fsp6xeESvspQs%2FNHmQzx1B7WKRgaDkGAYiDgoMFacIeRt6mMTj%2Bn%2B5
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_EG_aglandry09@hotmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#56
+Email:        Xarbop@gmail.com
+Name:         Xar bop
+Country:      EC (EC)
+Plan:         Premium
+Price:        $11.99
+Member Since: junio de 2025
+Next Billing: 16 de diciembre de 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   MASTERCARD
+Card Last 4:  0316
+Pay Method:   CC
+Phone:        098 201 9437
+Phone Verif:  No
+Profiles:     Xar bop
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAbtbvnRvBjJyXbDrG5KMaDeyxVgfBhNaR9if2d8Na2qD5i7xwUnbva1KlL3%2FhV1joDR3jlX0VtPzj0G5%2BamJh6TVWUbRIPIBi7PPbrioJgH5bv3AwOcjD4hZpnks3c1QNtYiNFiGTUv9ieCEa57EhKdHZTMfnmpI0jfrO1BOp1xSl5hBahOfuRK6wwT6rr5M6g1oiqxVIFf1cMy6wv29W1YK5152FfLQH27hle%2BYuwiOf%2BGMTTWjocYglwWRLbe2iViQGAYiDgoM7pA%2F6GJHWVsRQVVM
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAbtbvnRvBjJyXbDrG5KMaDeyxVgfBhNaR9if2d8Na2qD5i7xwUnbva1KlL3%2FhV1joDR3jlX0VtPzj0G5%2BamJh6TVWUbRIPIBi7PPbrioJgH5bv3AwOcjD4hZpnks3c1QNtYiNFiGTUv9ieCEa57EhKdHZTMfnmpI0jfrO1BOp1xSl5hBahOfuRK6wwT6rr5M6g1oiqxVIFf1cMy6wv29W1YK5152FfLQH27hle%2BYuwiOf%2BGMTTWjocYglwWRLbe2iViQGAYiDgoM7pA%2F6GJHWVsRQVVM
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_EC_Xarbop@gmail.com_2.txt
+──────────────────────────────────────────────────────────────────────
+
+#57
+Email:        Xarbop@gmail.com
+Name:         Xar bop
+Country:      EC (EC)
+Plan:         Premium
+Price:        $11.99
+Member Since: junio de 2025
+Next Billing: 16 de diciembre de 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   MASTERCARD
+Card Last 4:  0316
+Pay Method:   CC
+Phone:        098 201 9437
+Phone Verif:  No
+Profiles:     Xar bop
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAYSZQH7ER1fdlafHclCc2KJ82u0iszMBa%2BN9YUMSXfjO5dQk0BwJu%2FcBscBGxOsyNh7elz%2BmOyfNDTjz4Re4vatcmrIJ8hnIlh1qNCKBfj87HbuKr%2BSSTluvDHmH51u0DdEzTXPV1MgnwJO5PD5ZjlC0AJQVjyyhMBS6dLdEVvTn2jfEU3C5Kzy3tENwROmOSPqS35YXErWd0LFDMLBwbs26ggXYBYFk5OPS7RJoQGZO9b5AvIAzcrlY6T1%2BBz000zpgGAYiDgoMrwcLeSGozjbtss8e
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAYSZQH7ER1fdlafHclCc2KJ82u0iszMBa%2BN9YUMSXfjO5dQk0BwJu%2FcBscBGxOsyNh7elz%2BmOyfNDTjz4Re4vatcmrIJ8hnIlh1qNCKBfj87HbuKr%2BSSTluvDHmH51u0DdEzTXPV1MgnwJO5PD5ZjlC0AJQVjyyhMBS6dLdEVvTn2jfEU3C5Kzy3tENwROmOSPqS35YXErWd0LFDMLBwbs26ggXYBYFk5OPS7RJoQGZO9b5AvIAzcrlY6T1%2BBz000zpgGAYiDgoMrwcLeSGozjbtss8e
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_EC_Xarbop@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#58
+Email:        yaciramatos@gmail.com
+Name:         Alejandro
+Country:      DO (DO)
+Plan:         Premium
+Price:        US$13.99
+Member Since: diciembre de 2023
+Next Billing: 23 de noviembre de 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   MASTERCARD
+Card Last 4:  7979
+Pay Method:   CC
+Phone:        (829) 797-4254
+Phone Verif:  No
+Profiles:     Yacira
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLDAU2AuJvKWNIqRLlsqRSX3%2FMkTT8yxSPY7teipJuizL3jeP6Ilc%2Fjly%2BYIzyQSutggjM2KoxSASmVPHsnGLbFNZnOj%2FH1kNwoljrDOEK%2BaqsszEzeQp4WVfYDNHnBMIhyYiPJjrTYbQ1X7lcHC7%2BZCcwsurPIKec94pju40gra7DOGILJ5FHFf%2FEZlYxRlDb9goldHrtxlz5HMnkq47ZQub03o43%2B6LBwY%2FgdZUidQcuHMPqSQ%2F2FfKJLBg%2BVqjsenCGtohgGIg4KDJFZ%2BM7IFEp9gD2vJg%3D%3D
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLDAU2AuJvKWNIqRLlsqRSX3%2FMkTT8yxSPY7teipJuizL3jeP6Ilc%2Fjly%2BYIzyQSutggjM2KoxSASmVPHsnGLbFNZnOj%2FH1kNwoljrDOEK%2BaqsszEzeQp4WVfYDNHnBMIhyYiPJjrTYbQ1X7lcHC7%2BZCcwsurPIKec94pju40gra7DOGILJ5FHFf%2FEZlYxRlDb9goldHrtxlz5HMnkq47ZQub03o43%2B6LBwY%2FgdZUidQcuHMPqSQ%2F2FfKJLBg%2BVqjsenCGtohgGIg4KDJFZ%2BM7IFEp9gD2vJg%3D%3D
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_DO_yaciramatos@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#59
+Email:        rs09sn@byterflys.com
+Name:         MARIO
+Country:      DO (DO)
+Plan:         Premium
+Price:        US$13.99
+Member Since: enero de 2024
+Next Billing: 9 de diciembre de 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  1796
+Pay Method:   CC
+Phone:        N/A
+Phone Verif:  No
+Profiles:     MARIO
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLDAcLEnfY21j0hJ9xYjjTxgixpEElsHsA43dSQxJh5ciZP5G%2BnPdNpWT0Vj82poz5TEJb9hhacDnP6eaSKBVOo03BZiOueuYyjYBD8%2B0ujuU0iUijViLwh9EyJiFwG0bPXggw2c342h0CdkihBZ%2F6nO6sUNmFnAAOLrLw6iVjnQivMKEeLB4gKZDanKW2C2TUqGQnQ%2FzifnplCxXv7i6HUvs98wD7OZZghWEwoMfRMKQtjONYWzHFxlQoUpdM1CdOu7NW9xBgGIg4KDP8FFDV%2BEhT%2FamsLig%3D%3D
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLDAcLEnfY21j0hJ9xYjjTxgixpEElsHsA43dSQxJh5ciZP5G%2BnPdNpWT0Vj82poz5TEJb9hhacDnP6eaSKBVOo03BZiOueuYyjYBD8%2B0ujuU0iUijViLwh9EyJiFwG0bPXggw2c342h0CdkihBZ%2F6nO6sUNmFnAAOLrLw6iVjnQivMKEeLB4gKZDanKW2C2TUqGQnQ%2FzifnplCxXv7i6HUvs98wD7OZZghWEwoMfRMKQtjONYWzHFxlQoUpdM1CdOu7NW9xBgGIg4KDP8FFDV%2BEhT%2FamsLig%3D%3D
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_DO_rs09sn@byterflys.com_3.txt
+──────────────────────────────────────────────────────────────────────
+
+#60
+Email:        rs09sn@byterflys.com
+Name:         MARIO
+Country:      DO (DO)
+Plan:         Premium
+Price:        US$13.99
+Member Since: enero de 2024
+Next Billing: 9 de diciembre de 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  1796
+Pay Method:   CC
+Phone:        N/A
+Phone Verif:  No
+Profiles:     MARIO
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLDAeDbqhscWOy0Kw1EplFnMHnIfhOQ6paabAwblS2j%2FG7kgrHNICchMaEXIvEuE%2FoSuZfrzQRgjbFKdbj1SvB4%2FEzPOMVAwvEvuVLVgY7%2BFcPH4d%2Fe91odIp%2BJv%2Bv77KPG2xPL6oYClJJR%2BEVUQutC6h56AFYS4nk7BEhSN3NhWmjGPoOJPCR1zTydkzG%2F6hJ2bsD3HqWVGIgEonOk6f87iZcEGPNG7OgUwk4cRye45M2630s1F%2B2AM1gguJj9qDPyReLOABgGIg4KDBuQidMPyX%2BhVc%2BYSQ%3D%3D
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLDAeDbqhscWOy0Kw1EplFnMHnIfhOQ6paabAwblS2j%2FG7kgrHNICchMaEXIvEuE%2FoSuZfrzQRgjbFKdbj1SvB4%2FEzPOMVAwvEvuVLVgY7%2BFcPH4d%2Fe91odIp%2BJv%2Bv77KPG2xPL6oYClJJR%2BEVUQutC6h56AFYS4nk7BEhSN3NhWmjGPoOJPCR1zTydkzG%2F6hJ2bsD3HqWVGIgEonOk6f87iZcEGPNG7OgUwk4cRye45M2630s1F%2B2AM1gguJj9qDPyReLOABgGIg4KDBuQidMPyX%2BhVc%2BYSQ%3D%3D
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_DO_rs09sn@byterflys.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#61
+Email:        patyaldana36@hotmail.com
+Name:         Panda
+Country:      EC (EC)
+Plan:         Premium
+Price:        $11,99
+Member Since: febrero de 2022
+Next Billing: 17 de noviembre de 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  6719
+Pay Method:   CC
+Phone:        096 018 7574
+Phone Verif:  No
+Profiles:     Gato
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCATPUB1SsYmdSahi5mjbPl3w4UESyUL1%2BPm6JwFWDFYLrA2wOdYmgrbnZDZGM%2FlpvYGBrIruAqj20rOt6UMWufpOmbjpBTbP7C5OrS6S2xxV%2Fc2z1yWP7UXBBig%2BQxkFaWYLRRLwrSpjKAer00uS0kMbzvMaNcGmWFqsw5yQY7ZbLhxgrLLVEzE%2B7LIpXRoaM2EEyhrUEFbWbJOhQFrcch%2BoLOgiwmwOO7KW%2BQNGxfdPohQVarlWAf%2FQV0kbcEO5d7fVPGAYiDgoMPtfJHIxW0Upm2sq7
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCATPUB1SsYmdSahi5mjbPl3w4UESyUL1%2BPm6JwFWDFYLrA2wOdYmgrbnZDZGM%2FlpvYGBrIruAqj20rOt6UMWufpOmbjpBTbP7C5OrS6S2xxV%2Fc2z1yWP7UXBBig%2BQxkFaWYLRRLwrSpjKAer00uS0kMbzvMaNcGmWFqsw5yQY7ZbLhxgrLLVEzE%2B7LIpXRoaM2EEyhrUEFbWbJOhQFrcch%2BoLOgiwmwOO7KW%2BQNGxfdPohQVarlWAf%2FQV0kbcEO5d7fVPGAYiDgoMPtfJHIxW0Upm2sq7
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_EC_patyaldana36@hotmail.com_2.txt
+──────────────────────────────────────────────────────────────────────
+
+#62
+Email:        patyaldana36@hotmail.com
+Name:         Panda
+Country:      EC (EC)
+Plan:         Premium
+Price:        $11,99
+Member Since: febrero de 2022
+Next Billing: 17 de noviembre de 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  6719
+Pay Method:   CC
+Phone:        096 018 7574
+Phone Verif:  No
+Profiles:     Gato
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAXkwQ1Av89pWRzUwTufeg%2BwS2F%2BtW%2BSeqZqf4cmmjGDy3ZBqPcp7EbdoNCNXCxhv%2F8E7TOKxmDDZIaA1sp43ELuf01kqUO1ggNWKDANzokZEx8zYIF5oOTzN2B9HxQdfu64qrfq7Y0pNpQxshBgjRTHuUtzPNyU%2B3xjdchcAeivvUZrvniA7jisZRFVeLvxtEV47wQNTv%2FiCxbEWndLuy3AGKB8t1QqI3XrInUAsnEL0BVTtxRzc9DAIE%2F0m2zq7t1ceGAYiDgoM%2FzsjwqgPI9J1yWdu
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAXkwQ1Av89pWRzUwTufeg%2BwS2F%2BtW%2BSeqZqf4cmmjGDy3ZBqPcp7EbdoNCNXCxhv%2F8E7TOKxmDDZIaA1sp43ELuf01kqUO1ggNWKDANzokZEx8zYIF5oOTzN2B9HxQdfu64qrfq7Y0pNpQxshBgjRTHuUtzPNyU%2B3xjdchcAeivvUZrvniA7jisZRFVeLvxtEV47wQNTv%2FiCxbEWndLuy3AGKB8t1QqI3XrInUAsnEL0BVTtxRzc9DAIE%2F0m2zq7t1ceGAYiDgoM%2FzsjwqgPI9J1yWdu
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_EC_patyaldana36@hotmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#63
+Email:        david.loor@outlook.es
+Name:         David
+Country:      EC (EC)
+Plan:         Premium
+Price:        $11,99
+Member Since: mayo de 2018
+Next Billing: 22 de noviembre de 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  6404
+Pay Method:   CC
+Phone:        098 932 8050
+Phone Verif:  No
+Profiles:     David, Edson
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAbdtiJENzIIUm9O6rwbPs%2F5f4bMnvrMiK5KCjNvE9Me6tdihl4wFvOnMOaVukRC0eDNUR4T5qDJhPV4V6KiT8Yv4z6XTH69W49jwZOsiO554FGjx0iy4LsVN2gE4ll7lC%2FG6C%2FOP7X9iGjb7UTUYoN5TIcwRrzkqmf44F5mWRYbDBIsjl8iJ9py7ZelX%2BjpMG%2BbqqPtsNx1epFxNQREg4NHOTA1Ksq8mmqscb9inJ4VscO6v5PnXPRdO9uph4wy0eN2MGAYiDgoM5E%2FC8VW7a8YvdmOo
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAbdtiJENzIIUm9O6rwbPs%2F5f4bMnvrMiK5KCjNvE9Me6tdihl4wFvOnMOaVukRC0eDNUR4T5qDJhPV4V6KiT8Yv4z6XTH69W49jwZOsiO554FGjx0iy4LsVN2gE4ll7lC%2FG6C%2FOP7X9iGjb7UTUYoN5TIcwRrzkqmf44F5mWRYbDBIsjl8iJ9py7ZelX%2BjpMG%2BbqqPtsNx1epFxNQREg4NHOTA1Ksq8mmqscb9inJ4VscO6v5PnXPRdO9uph4wy0eN2MGAYiDgoM5E%2FC8VW7a8YvdmOo
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_EC_david.loor@outlook.es.txt
+──────────────────────────────────────────────────────────────────────
+
+#64
+Email:        ahmad_ab_10@icloud.com
+Name:         AGUY JR
+Country:      Egypt (EG)
+Plan:         Premium
+Price:        EGP 270
+Member Since: Ogos 2025
+Next Billing: 14 Disember 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  3419
+Pay Method:   CC
+Phone:        011 45166811
+Phone Verif:  No
+Profiles:     AGUY JR
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAavRUgB%2Fk9h%2BxliP4lyMEbJgh73S0qn4GpfhCIP9mK0PAFH4HXy%2BQqZsN5Cw%2BVW9Y5dMxWSe7YEr0OU64TRrjyvib2cTQOGUXoOVgQMcKvOPIrIKlLryatPWibyJrX2xii6rxbS0G34%2FAP9CaTZ%2Bpzs4zbePrzX8IYbMQy4K%2FOlIM4t2Cdho%2F3rjcy%2BiYaKhH3PhRu4jV59WArPe7fI%2FTDDbcLWoyax%2BwIPkRf88Xh2NOLVKaLsSsCOxCPx2ZyDpzFjmGAYiDgoM9HwS%2BtFwkkxf2713
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAavRUgB%2Fk9h%2BxliP4lyMEbJgh73S0qn4GpfhCIP9mK0PAFH4HXy%2BQqZsN5Cw%2BVW9Y5dMxWSe7YEr0OU64TRrjyvib2cTQOGUXoOVgQMcKvOPIrIKlLryatPWibyJrX2xii6rxbS0G34%2FAP9CaTZ%2Bpzs4zbePrzX8IYbMQy4K%2FOlIM4t2Cdho%2F3rjcy%2BiYaKhH3PhRu4jV59WArPe7fI%2FTDDbcLWoyax%2BwIPkRf88Xh2NOLVKaLsSsCOxCPx2ZyDpzFjmGAYiDgoM9HwS%2BtFwkkxf2713
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_EG_ahmad_ab_10@icloud.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#65
+Email:        habiba.wael3@msa.edu.eg
+Name:         Menna
+Country:      Egypt (EG)
+Plan:         Premium
+Price:        EGP 270
+Member Since: January 2025
+Next Billing: November 18, 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   MASTERCARD
+Card Last 4:  9010
+Pay Method:   CC
+Phone:        011 17724384
+Phone Verif:  No
+Profiles:     Wael
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAU9wQKiDquBd04zONwFiI8W9lgxHYAXYvhwkjgz92%2BwJ3q99z%2BNhxkhs5sSRI5E3sET%2FIkb3XHzptWZtI3fmSvmbDDaoS8h7ESZNo6TaBCsgvgmMo6NuzPusTMb2AfXkXUexJL1p8QmoJFp8mIwWP7wKeWeo3X6JCJV%2BfqLURlC0XyFezajLugvXocEiVBhpzIGN8wNXDRfYFv5SKqEZMJ7TCEMwySIAOaHhIXK4EKpmnQmo4dfquoUv1j77fBe1rNV0GAYiDgoMIP%2FTdUsVxDNdspos
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAU9wQKiDquBd04zONwFiI8W9lgxHYAXYvhwkjgz92%2BwJ3q99z%2BNhxkhs5sSRI5E3sET%2FIkb3XHzptWZtI3fmSvmbDDaoS8h7ESZNo6TaBCsgvgmMo6NuzPusTMb2AfXkXUexJL1p8QmoJFp8mIwWP7wKeWeo3X6JCJV%2BfqLURlC0XyFezajLugvXocEiVBhpzIGN8wNXDRfYFv5SKqEZMJ7TCEMwySIAOaHhIXK4EKpmnQmo4dfquoUv1j77fBe1rNV0GAYiDgoMIP%2FTdUsVxDNdspos
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_EG_habiba.wael3@msa.edu.eg.txt
+──────────────────────────────────────────────────────────────────────
+
+#66
+Email:        hanan.shiko@yahoo.com
+Name:         smsm
+Country:      Egypt (EG)
+Plan:         Premium
+Price:        EGP 270
+Member Since: March 2026
+Next Billing: November 28, 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   MASTERCARD
+Card Last 4:  2745
+Pay Method:   CC
+Phone:        011 17041480
+Phone Verif:  No
+Profiles:     smsm
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAbu1qSRFSd6OlNnyB2E20%2FhnoSX25L%2B3jcBH4TUMZrlbEdsoXijB9AIhmQBgSe2cp1T%2FZvjAH8eetfnqoMWGEgmrLxOtsUYKnkK9OCBeEcbhUWkKX810Um8Pd4EwbB6HemTUSEQNUsiuUzN2MD7YKu9KyvAYiHGcO1EbER8q6qcuM2BSmTrMTzI6qBYGoVhU5tc79AUHKg1raiC2mWMu%2FyL%2BUHcjwwWVBk%2FRFL6d38b6QF2HJUX2l5%2FfITUsnYkq88gFGAYiDgoM%2BMuxg3MR8E7ravNi
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAbu1qSRFSd6OlNnyB2E20%2FhnoSX25L%2B3jcBH4TUMZrlbEdsoXijB9AIhmQBgSe2cp1T%2FZvjAH8eetfnqoMWGEgmrLxOtsUYKnkK9OCBeEcbhUWkKX810Um8Pd4EwbB6HemTUSEQNUsiuUzN2MD7YKu9KyvAYiHGcO1EbER8q6qcuM2BSmTrMTzI6qBYGoVhU5tc79AUHKg1raiC2mWMu%2FyL%2BUHcjwwWVBk%2FRFL6d38b6QF2HJUX2l5%2FfITUsnYkq88gFGAYiDgoM%2BMuxg3MR8E7ravNi
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_EG_hanan.shiko@yahoo.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#67
+Email:        mohamed.adel1978@yahoo.com
+Name:         carlos
+Country:      Egypt (EG)
+Plan:         Premium
+Price:        EGP 270
+Member Since: October 2025
+Next Billing: December 15, 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   MASTERCARD
+Card Last 4:  0603
+Pay Method:   CC
+Phone:        012 08003398
+Phone Verif:  No
+Profiles:     carlos
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAaThEgud2gKIvJL0iSj6Ak1%2F8DPZ2qHJNVQKnkUwCmrLjD84RjPqh88EThP6e3bVXpePdI9ScWiynvmN1xOorlYkKRBOSUvvi%2FtWkmzNGgI10xtWNGbi1%2Bq0jad5N4CM%2BuAp1LFsav%2Fz%2FaDuQsAKGU4xq3HLLTqaGd0EOBr9PkGrWrgNQqHki90LnkUjzcq9ggOUow6BZ3X9lOiLbW%2BW%2FUNU2IBl6g0gSNy97IC9sTwmidE5oEAbPVgvFKNwYKdaVAWmGAYiDgoMMaBuUEl%2BCpb3wT%2BO
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAaThEgud2gKIvJL0iSj6Ak1%2F8DPZ2qHJNVQKnkUwCmrLjD84RjPqh88EThP6e3bVXpePdI9ScWiynvmN1xOorlYkKRBOSUvvi%2FtWkmzNGgI10xtWNGbi1%2Bq0jad5N4CM%2BuAp1LFsav%2Fz%2FaDuQsAKGU4xq3HLLTqaGd0EOBr9PkGrWrgNQqHki90LnkUjzcq9ggOUow6BZ3X9lOiLbW%2BW%2FUNU2IBl6g0gSNy97IC9sTwmidE5oEAbPVgvFKNwYKdaVAWmGAYiDgoMMaBuUEl%2BCpb3wT%2BO
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_EG_mohamed.adel1978@yahoo.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#68
+Email:        omarhabib905@gmail.com
+Name:         Omar
+Country:      Egypt (EG)
+Plan:         Premium
+Price:        EGP 270
+Member Since: August 2026
+Next Billing: November 18, 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   MASTERCARD
+Card Last 4:  4624
+Pay Method:   CC
+Phone:        N/A
+Phone Verif:  No
+Profiles:     Omar H
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAYaRDjDNsArt0bPt8zvRMDt3E91ue49gCkb9AMD%2BCeo%2BwscfPS9%2Bej%2BTEph9JXYOOX3aiBhHk055y2sD2%2FnYbp1onnABMdMX9rb%2BHmCAUDuMBSzB7SbIiGoKqlBJPHsNKaPhPhYHE5IQX63sReU7N9qTwwOKW3FZ%2BX0lt%2BRYTpM9zZVuFkEdV4LULiHYNHpGC9YS8dpIZRwyubK2gT2eR%2BwGJtE4wU%2FahIBj4FaHCvoAhGL%2FkMHFLT5EgHj1gNOVgsakGAYiDgoMIhgcV7pMCZZPbjuR
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAYaRDjDNsArt0bPt8zvRMDt3E91ue49gCkb9AMD%2BCeo%2BwscfPS9%2Bej%2BTEph9JXYOOX3aiBhHk055y2sD2%2FnYbp1onnABMdMX9rb%2BHmCAUDuMBSzB7SbIiGoKqlBJPHsNKaPhPhYHE5IQX63sReU7N9qTwwOKW3FZ%2BX0lt%2BRYTpM9zZVuFkEdV4LULiHYNHpGC9YS8dpIZRwyubK2gT2eR%2BwGJtE4wU%2FahIBj4FaHCvoAhGL%2FkMHFLT5EgHj1gNOVgsakGAYiDgoMIhgcV7pMCZZPbjuR
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_EG_omarhabib905@gmail.com_2.txt
+──────────────────────────────────────────────────────────────────────
+
+#69
+Email:        manuel.rojas@eringenieria.com
+Name:         Mari Cari
+Country:      Spain (ES)
+Plan:         Premium
+Price:        21,99 €
+Member Since: diciembre de 2023
+Next Billing: 30 de noviembre de 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  2500
+Pay Method:   CC
+Phone:        629 14 18 52
+Phone Verif:  No
+Profiles:     Manuel
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAa1EzRJzII47MvFMRAPYNeFnVpXK3RchBuYVh%2BIPeXbh8yJXjQrwwhNxvBEqJD%2Fu1V%2Fba7zJLgfoXUgMgGVpTNT4%2F6X2WYmWhJDoEMuIogCiWFidXlYt%2BOPBFu4uWReTOcXFM%2FPhJ2%2FMBXKDrOmNfQwGOTOJHfHP9Ba14VrDkwu96B%2BEHhSs97yHGYiHR3OiYqM8Rons92P70N9%2FRTDhhk8yDUE1fesk8333F%2BsKf9Ynxbsksx3YvNi0eqwrkp3VfVRtGAYiDgoM73GSDuudLsZEDJEe
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAa1EzRJzII47MvFMRAPYNeFnVpXK3RchBuYVh%2BIPeXbh8yJXjQrwwhNxvBEqJD%2Fu1V%2Fba7zJLgfoXUgMgGVpTNT4%2F6X2WYmWhJDoEMuIogCiWFidXlYt%2BOPBFu4uWReTOcXFM%2FPhJ2%2FMBXKDrOmNfQwGOTOJHfHP9Ba14VrDkwu96B%2BEHhSs97yHGYiHR3OiYqM8Rons92P70N9%2FRTDhhk8yDUE1fesk8333F%2BsKf9Ynxbsksx3YvNi0eqwrkp3VfVRtGAYiDgoM73GSDuudLsZEDJEe
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_ES_manuel.rojas@eringenieria.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#70
+Email:        omarhabib905@gmail.com
+Name:         Omar
+Country:      Egypt (EG)
+Plan:         Premium
+Price:        EGP 270
+Member Since: August 2026
+Next Billing: November 18, 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   MASTERCARD
+Card Last 4:  4624
+Pay Method:   CC
+Phone:        N/A
+Phone Verif:  No
+Profiles:     Omar H
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAU98R7JxmDVKpKPo7iM1DxOzH9CGQui4XQmVWxQ9e%2Bbd%2F2bUAhsYe%2B3gMOjLPHNTAwIJxX4GtJfhwdI5BSz70k9C9cMth05Q1FYLn7oVbCVutsd0rj8emepC%2Bq8eOJzjU5PdzGBoXXywqJp5Kwe7p6qY38JiKPN0IzbrzW%2FmDtMMLYvBFc1ZibsFrtqkjRuuuw0QzCWfUpdIN7rgYSZz%2BJJMaJblpUgnRcr0Klzl8HFxF%2FEjtD93xMYFodAZzFqsft5TGAYiDgoMLi2YsiFKNft8bN5K
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAU98R7JxmDVKpKPo7iM1DxOzH9CGQui4XQmVWxQ9e%2Bbd%2F2bUAhsYe%2B3gMOjLPHNTAwIJxX4GtJfhwdI5BSz70k9C9cMth05Q1FYLn7oVbCVutsd0rj8emepC%2Bq8eOJzjU5PdzGBoXXywqJp5Kwe7p6qY38JiKPN0IzbrzW%2FmDtMMLYvBFc1ZibsFrtqkjRuuuw0QzCWfUpdIN7rgYSZz%2BJJMaJblpUgnRcr0Klzl8HFxF%2FEjtD93xMYFodAZzFqsft5TGAYiDgoMLi2YsiFKNft8bN5K
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_EG_omarhabib905@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#71
+Email:        mohamed.adel1978@yahoo.com
+Name:         carlos
+Country:      Egypt (EG)
+Plan:         Premium
+Price:        EGP 270
+Member Since: October 2025
+Next Billing: December 15, 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   MASTERCARD
+Card Last 4:  0603
+Pay Method:   CC
+Phone:        012 08003398
+Phone Verif:  No
+Profiles:     carlos
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAfk1%2B7nNS0qDcZ0B9AzefnrOpGs3QCN8rpmi7G0%2FU0fvCfpzWQrNkWWES36ysl5vn68dQVUFPKHsJXSEpL9TdoGRUgUqjie7SmglTx7V6odf0XgT7S%2FUlaswvS8PYoz2k3gefw0qDhbFw13842KfgLAXuiSkP7SvpDHQR1uD7MHuLg24S9ahT5E%2BJDggL4VxrBLgV%2FE63zWb0ZIKF9rYgmyg%2FNptubMn%2BM7HclwrJrOmyuQhc7Oy2i%2BhWxck2E9L2MgEGAYiDgoMqXX0WLlhQqR%2BagOB
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAfk1%2B7nNS0qDcZ0B9AzefnrOpGs3QCN8rpmi7G0%2FU0fvCfpzWQrNkWWES36ysl5vn68dQVUFPKHsJXSEpL9TdoGRUgUqjie7SmglTx7V6odf0XgT7S%2FUlaswvS8PYoz2k3gefw0qDhbFw13842KfgLAXuiSkP7SvpDHQR1uD7MHuLg24S9ahT5E%2BJDggL4VxrBLgV%2FE63zWb0ZIKF9rYgmyg%2FNptubMn%2BM7HclwrJrOmyuQhc7Oy2i%2BhWxck2E9L2MgEGAYiDgoMqXX0WLlhQqR%2BagOB
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_EG_mohamed.adel1978@yahoo.com_2.txt
+──────────────────────────────────────────────────────────────────────
+
+#72
+Email:        manuel.rojas@eringenieria.com
+Name:         Mari Cari
+Country:      Spain (ES)
+Plan:         Premium
+Price:        21,99 €
+Member Since: diciembre de 2023
+Next Billing: 30 de noviembre de 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  2500
+Pay Method:   CC
+Phone:        629 14 18 52
+Phone Verif:  No
+Profiles:     Manuel
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAad4mFbEI2GWB73caIJiLNMUawUqjIr%2FVQuSbPI3aa9CuTmdBikkyFzFKnlikIK5q4QLrycqdMozDLQojvWV%2B2vjzL6KWqt1E9%2BkYgsKmCdwomgYDZ4oF0ptpwYDRVrfW6IFJg5gRlqWI7qTxv7Zxb9imCseThhqNsp1fmX3RabXZe1DgASjsk93PHg5iRSN3N9Dvvyor8INjerztS5dn3Yag%2FFzCTvBDmCQ2Qi%2B%2FMJDt8uaWphJGsPQ8oo3NOybhqmFGAYiDgoM5u87fU8A052FvWTi
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAad4mFbEI2GWB73caIJiLNMUawUqjIr%2FVQuSbPI3aa9CuTmdBikkyFzFKnlikIK5q4QLrycqdMozDLQojvWV%2B2vjzL6KWqt1E9%2BkYgsKmCdwomgYDZ4oF0ptpwYDRVrfW6IFJg5gRlqWI7qTxv7Zxb9imCseThhqNsp1fmX3RabXZe1DgASjsk93PHg5iRSN3N9Dvvyor8INjerztS5dn3Yag%2FFzCTvBDmCQ2Qi%2B%2FMJDt8uaWphJGsPQ8oo3NOybhqmFGAYiDgoM5u87fU8A052FvWTi
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_ES_manuel.rojas@eringenieria.com_2.txt
+──────────────────────────────────────────────────────────────────────
+
+#73
+Email:        achiapas0@gmail.com
+Name:         André
+Country:      GT (GT)
+Plan:         Premium (miembro extra)
+Price:        N/A
+Member Since: abril de 2024
+Next Billing: N/A
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  1
+Extra Slots:  0
+Card Brand:   N/A
+Card Last 4:  N/A
+Pay Method:   N/A
+Phone:        N/A
+Phone Verif:  No
+Profiles:     André
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAQu0%2BOTXrCMq9i750cOmiPnpbNTKoNMeajrafDrSIYAurAbc9TqgkRl%2B3Pk9c8aGxkm6k7Ip%2BDSSQcRTH1VnemYj5J3jWFPDHwuSkQ16Jq2eDfTkKtr9k4ZvGAabOLi6sTPYcZdPSgxdNLncPlVfwQxvCyZxSfs7PcQTvNqqMTYKY5BzdXWggvnPx9jReI0N8FDpIDbHpkQNjs2Un9EHtCQ8x%2FUtXlNotCD12VnsJjfuEhVE8MKIYZotV5UoU5DDMrHbGAYiDgoMyECTj8GkDtZSv%2FZm
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAQu0%2BOTXrCMq9i750cOmiPnpbNTKoNMeajrafDrSIYAurAbc9TqgkRl%2B3Pk9c8aGxkm6k7Ip%2BDSSQcRTH1VnemYj5J3jWFPDHwuSkQ16Jq2eDfTkKtr9k4ZvGAabOLi6sTPYcZdPSgxdNLncPlVfwQxvCyZxSfs7PcQTvNqqMTYKY5BzdXWggvnPx9jReI0N8FDpIDbHpkQNjs2Un9EHtCQ8x%2FUtXlNotCD12VnsJjfuEhVE8MKIYZotV5UoU5DDMrHbGAYiDgoMyECTj8GkDtZSv%2FZm
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_GT_achiapas0@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#74
+Email:        mariefoncer.mouiller@free.fr
+Name:         Anne
+Country:      France (FR)
+Plan:         Premium
+Price:        N/A
+Member Since: juillet 2021
+Next Billing: N/A
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   N/A
+Card Last 4:  N/A
+Pay Method:   FREE_ILIAD_BILLED
+Phone:        N/A
+Phone Verif:  No
+Profiles:     Thomas
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAec0kVsG6%2F3gerSgbGWi%2Fr9kVKzbhCn8ps2LJKc0RuSobZ0JdH8pCxspPpDXyd9iituLPt%2BZwknvaWikA9A8rceWkDDroclBOgzX4u3hOvdBpCgJ9oD50axsuaW3w%2BkYYIN8xE5bOdJGZXwl6qpaKqzlN5MXmzC1ecpZO6iOAA0DMlTPEYSxN7P4XAkaM26zG%2BPJhl1e1XQJ2wUY87KWWGRWoLiiH%2FJwNLF%2B0vP%2Fo%2BmYVLUZPnp1KFWd%2FklNd%2BNJ%2BwcBGAYiDgoMfZUlonfALBdZJ%2Fp4
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAec0kVsG6%2F3gerSgbGWi%2Fr9kVKzbhCn8ps2LJKc0RuSobZ0JdH8pCxspPpDXyd9iituLPt%2BZwknvaWikA9A8rceWkDDroclBOgzX4u3hOvdBpCgJ9oD50axsuaW3w%2BkYYIN8xE5bOdJGZXwl6qpaKqzlN5MXmzC1ecpZO6iOAA0DMlTPEYSxN7P4XAkaM26zG%2BPJhl1e1XQJ2wUY87KWWGRWoLiiH%2FJwNLF%2B0vP%2Fo%2BmYVLUZPnp1KFWd%2FklNd%2BNJ%2BwcBGAYiDgoMfZUlonfALBdZJ%2Fp4
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_FR_mariefoncer.mouiller@free.fr.txt
+──────────────────────────────────────────────────────────────────────
+
+#75
+Email:        tolisantoniouhzjzjxhhhxhxhxh@gmail.com
+Name:         Nasia
+Country:      GR (GR)
+Plan:         Premium
+Price:        €15.99
+Member Since: July 2026
+Next Billing: December 2, 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   MASTERCARD
+Card Last 4:  1467
+Pay Method:   CC
+Phone:        690 840 3286
+Phone Verif:  No
+Profiles:     tolisantoniouhzjzjxhhhxhxhxh
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAeOwCs6a1jZOtrGB6LQOC1pStIc6iZaH34RCb0Gx9WE%2BYUNujzm5o4WYM1RkXlz6mxFSL%2BYk7zwC6OUHbTJQ2lMLMzjTIi6HMZ%2FtUXvgDOvQM%2BBLBjenPle5S%2BGCbynE1uZQUUPCgPya7eghUBauXsOqIzQZlZg3W3jw84Zaf%2BzW68SZu511Kz3b24lhaElFZdi21LIv7Z9U%2BtxN7Rt7tpotdsKgpAN9lF%2B6AxHVYUUu%2BBLMIgmeom%2BvvOZV6uXTnFIuGAYiDgoMQtqK1THaQJU5NL9U
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAeOwCs6a1jZOtrGB6LQOC1pStIc6iZaH34RCb0Gx9WE%2BYUNujzm5o4WYM1RkXlz6mxFSL%2BYk7zwC6OUHbTJQ2lMLMzjTIi6HMZ%2FtUXvgDOvQM%2BBLBjenPle5S%2BGCbynE1uZQUUPCgPya7eghUBauXsOqIzQZlZg3W3jw84Zaf%2BzW68SZu511Kz3b24lhaElFZdi21LIv7Z9U%2BtxN7Rt7tpotdsKgpAN9lF%2B6AxHVYUUu%2BBLMIgmeom%2BvvOZV6uXTnFIuGAYiDgoMQtqK1THaQJU5NL9U
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_GR_tolisantoniouhzjzjxhhhxhxhxh@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#76
+Email:        benedictaenyan91@gmail.com
+Name:         Mac Loyal
+Country:      Ghana (GH)
+Plan:         Premium
+Price:        US$9.99
+Member Since: August 2025
+Next Billing: 4 December 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   MASTERCARD
+Card Last 4:  8812
+Pay Method:   CC
+Phone:        053 713 1299
+Phone Verif:  No
+Profiles:     Benedicta
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAQdmuroXj4GxdhISo%2Bt6szfjE7viANMUcqbuPaoRFJNxSawS9UITaZmNY5Z%2FAtmR%2B5Vc05Siwdg%2ByO9HVocyLFOg9%2BvxYOFZAawqqgFzY5ilkMtp33ZmDLfW077iTJyn24ogXfZxplZxn9RMuvk2RON36NRqVM2mFww1XajwMXp5TjLmWAoUFs6VEWKuXZczEc74r8nrtAjpdE74kxaH0%2FH1p2FvOffHY3PGLLLwcat%2FExUkCGAeksGF1Exp%2FviD3d1eGAYiDgoMJQ7FeUC%2FacEVjvu1
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAQdmuroXj4GxdhISo%2Bt6szfjE7viANMUcqbuPaoRFJNxSawS9UITaZmNY5Z%2FAtmR%2B5Vc05Siwdg%2ByO9HVocyLFOg9%2BvxYOFZAawqqgFzY5ilkMtp33ZmDLfW077iTJyn24ogXfZxplZxn9RMuvk2RON36NRqVM2mFww1XajwMXp5TjLmWAoUFs6VEWKuXZczEc74r8nrtAjpdE74kxaH0%2FH1p2FvOffHY3PGLLLwcat%2FExUkCGAeksGF1Exp%2FviD3d1eGAYiDgoMJQ7FeUC%2FacEVjvu1
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_GH_benedictaenyan91@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#77
+Email:        karathanasis.stav@gmail.com
+Name:         SUNNY
+Country:      GR (GR)
+Plan:         Premium
+Price:        EUR 15.99
+Member Since: July 2025
+Next Billing: December 13, 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  7977
+Pay Method:   CC
+Phone:        697 291 4185
+Phone Verif:  No
+Profiles:     STAVROS
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAQ%2B0myLhryUZW6CCP14lSVJa%2FIx4UkqgwtQY292TQMeEY5ad8KzHZ%2BHlmL%2FFpQXuE4BcOke24utHN2wZals%2BTDqt6mWJWa%2F8D3T%2FVB%2FZSJ%2Fn0Qd1NdwANgbtsmnem4HP4bM2tlCGvcPik%2FmNBDmyxOj9BDxC1%2BXOn9aMl2bxy3N8bvA%2BkIsAxYvpQeW%2BkACWOUfGFjb7l2AkpIVVFEpxydzYRQteZrcs5Nf92IMxC2tATwhI%2FXxIR10COBiQS45HKfTTGAYiDgoMdjnh2YxN%2Bz7WcKh%2B
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAQ%2B0myLhryUZW6CCP14lSVJa%2FIx4UkqgwtQY292TQMeEY5ad8KzHZ%2BHlmL%2FFpQXuE4BcOke24utHN2wZals%2BTDqt6mWJWa%2F8D3T%2FVB%2FZSJ%2Fn0Qd1NdwANgbtsmnem4HP4bM2tlCGvcPik%2FmNBDmyxOj9BDxC1%2BXOn9aMl2bxy3N8bvA%2BkIsAxYvpQeW%2BkACWOUfGFjb7l2AkpIVVFEpxydzYRQteZrcs5Nf92IMxC2tATwhI%2FXxIR10COBiQS45HKfTTGAYiDgoMdjnh2YxN%2Bz7WcKh%2B
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_GR_karathanasis.stav@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#78
+Email:        seth.allotey70@gmail.com
+Name:         Frances Adorkor
+Country:      Ghana (GH)
+Plan:         Premium
+Price:        US$9.99
+Member Since: October 2024
+Next Billing: 15 December 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  9656
+Pay Method:   CC
+Phone:        020 763 8524
+Phone Verif:  No
+Profiles:     Seth
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCATXGjcQhsp0pCLSmYJ6uPyuea29uFBKB3XCMKKzk%2FUXN%2F%2BD%2BseW1AFedN5w%2FJi2j8BwcE5tqNCvZePlaS7%2FNIFoMlpQjm%2FuWh89w4SEG6ew%2BW7mkcIU5KLldDgrTPe3E1h6J3sKBi8lFMa9oJeNviNJRrWXjpCBovz%2FrKmSHVeFuSpfCd8IsOZ%2FdiG2RGe7t47v2Gv2FeGPkjjDcU4OyiyK%2BMZ5u9VShYc1sIXWMSOeE%2BWXDv2TSFWxAbkSsKW1NuvHKGAYiDgoMD21VU%2FFJcl1WB3g5
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCATXGjcQhsp0pCLSmYJ6uPyuea29uFBKB3XCMKKzk%2FUXN%2F%2BD%2BseW1AFedN5w%2FJi2j8BwcE5tqNCvZePlaS7%2FNIFoMlpQjm%2FuWh89w4SEG6ew%2BW7mkcIU5KLldDgrTPe3E1h6J3sKBi8lFMa9oJeNviNJRrWXjpCBovz%2FrKmSHVeFuSpfCd8IsOZ%2FdiG2RGe7t47v2Gv2FeGPkjjDcU4OyiyK%2BMZ5u9VShYc1sIXWMSOeE%2BWXDv2TSFWxAbkSsKW1NuvHKGAYiDgoMD21VU%2FFJcl1WB3g5
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_GH_seth.allotey70@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#79
+Email:        Lilianadjintettey@gmail.com
+Name:         Lilian
+Country:      Ghana (GH)
+Plan:         Premium
+Price:        US$9.99
+Member Since: December 2025
+Next Billing: 20 November 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  5659
+Pay Method:   CC
+Phone:        055 862 1145
+Phone Verif:  No
+Profiles:     Lemuel
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAQLFrVmEdRmRJESO7HXEo9G6xeu7Rg4JLMWemfXmD51m2aydLwGeQr2r24uvjHPlcsxkxqApOXYxjCEostCLtEGqBBUKfovPv1T2ECiLExbk3GD2c5iEw4f3BjVKHVVdEf74JVksRHM%2BkrES2KMib10AAaYwM6ALa8HcCYypoyUYfVbFK%2FYsJx13kleH6p4VIevyi1RLkIHSs%2Fbq63upxoMT7k1ac%2FwguLltHVvvArQaRh1yQYpa66AGSlAxAy0RRdluGAYiDgoMOsAKtU%2BwXhuRYWuT
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAQLFrVmEdRmRJESO7HXEo9G6xeu7Rg4JLMWemfXmD51m2aydLwGeQr2r24uvjHPlcsxkxqApOXYxjCEostCLtEGqBBUKfovPv1T2ECiLExbk3GD2c5iEw4f3BjVKHVVdEf74JVksRHM%2BkrES2KMib10AAaYwM6ALa8HcCYypoyUYfVbFK%2FYsJx13kleH6p4VIevyi1RLkIHSs%2Fbq63upxoMT7k1ac%2FwguLltHVvvArQaRh1yQYpa66AGSlAxAy0RRdluGAYiDgoMOsAKtU%2BwXhuRYWuT
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_GH_Lilianadjintettey@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#80
+Email:        amevorconstant@gmail.com
+Name:         Mhay
+Country:      Ghana (GH)
+Plan:         Premium
+Price:        US$9.99
+Member Since: March 2023
+Next Billing: 30 November 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  5862
+Pay Method:   CC
+Phone:        054 275 1558
+Phone Verif:  No
+Profiles:     Constant
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAVhnuAHxk4OJt%2FG7uGnzv1J8LiuPV4kZKpaCPwI8Y%2BEVO4BlQafsqUsWzRmJIP5cX3QRkABxxkr4SbzGukKBeOsBQNDfnJOtz1esaX0yhU0hrDpsisqy%2F8nNZDkhggBnkWJnuG%2BxU4MmdriLHVP2zcDgZkPDZ%2B2UsqWsJjatGj0rCHDJKb3leuU%2FxWUFYIHm4eZWjNSoxvbPTkIJFWqjq59GwV87RdonYI5wHBeJ68%2B5XEco%2FhYWZtlhbeLqmVHAnXDCGAYiDgoM6HnYBqp6KmZ5bSIp
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAVhnuAHxk4OJt%2FG7uGnzv1J8LiuPV4kZKpaCPwI8Y%2BEVO4BlQafsqUsWzRmJIP5cX3QRkABxxkr4SbzGukKBeOsBQNDfnJOtz1esaX0yhU0hrDpsisqy%2F8nNZDkhggBnkWJnuG%2BxU4MmdriLHVP2zcDgZkPDZ%2B2UsqWsJjatGj0rCHDJKb3leuU%2FxWUFYIHm4eZWjNSoxvbPTkIJFWqjq59GwV87RdonYI5wHBeJ68%2B5XEco%2FhYWZtlhbeLqmVHAnXDCGAYiDgoM6HnYBqp6KmZ5bSIp
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_GH_amevorconstant@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#81
+Email:        benyibueso@gmail.com
+Name:         benyi
+Country:      GT (GT)
+Plan:         Premium
+Price:        USD 13.99
+Member Since: junio de 2024
+Next Billing: 1 de diciembre de 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  3651
+Pay Method:   CC
+Phone:        4716 9206
+Phone Verif:  No
+Profiles:     benyi
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLDAUALviXBEGRaiGcvaC5y0x66IeebIh6Qrzai2OWHrBZ4osCrgCDBDvu0wZfAQec2WSG%2Bbxs06Z3wEwStnBh6lV1pU48CoI1MSkZLJcDzx0bxvMh3d2uyv5d6saPabHHg5Uii6vAon9exKk9iZF%2FvShgfgDomwetj%2Fw%2Fkt86QoXd8heGso%2FcO9d8kfnKxh7wKA3ELf6Ge2wGqDSeaQJM%2BB6PLO7osxdwtOBO6hVQ0iRiDjHWvrQejDGnwCYt5DSsryTalOBgGIg4KDO69iIwk6pWy9h0eJg%3D%3D
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLDAUALviXBEGRaiGcvaC5y0x66IeebIh6Qrzai2OWHrBZ4osCrgCDBDvu0wZfAQec2WSG%2Bbxs06Z3wEwStnBh6lV1pU48CoI1MSkZLJcDzx0bxvMh3d2uyv5d6saPabHHg5Uii6vAon9exKk9iZF%2FvShgfgDomwetj%2Fw%2Fkt86QoXd8heGso%2FcO9d8kfnKxh7wKA3ELf6Ge2wGqDSeaQJM%2BB6PLO7osxdwtOBO6hVQ0iRiDjHWvrQejDGnwCYt5DSsryTalOBgGIg4KDO69iIwk6pWy9h0eJg%3D%3D
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_GT_benyibueso@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#82
+Email:        josefernandocanomendez@gmail.com
+Name:         Primo
+Country:      GT (GT)
+Plan:         Premium
+Price:        USD 13.99
+Member Since: febrero de 2019
+Next Billing: 21 de noviembre de 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  7031
+Pay Method:   CC
+Phone:        5535 3835
+Phone Verif:  No
+Profiles:     Jose
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAeOxVsFyJuzj2UNdck2PW8Gz5vBi3BDIFlpKeHbhVWxSPZilhtdkkc2KTnRvDw%2BRhOFIEr8HQVXXK3zep4dlJqLKRwGCWKfX%2FqtefqC2d2zq9n5vMT5PtaL1hQYeA3X%2Bc0UUBsICKRAfA5tjuKn4Vl3663wd0Hwau9EWWxEURXwALNSuIyrkjWMjQu1kHo7y1sYs7Miw4ORTFqfr43wD4sWYHad2DzeTqNHoiDlcJZWpKnxdVe49nm3jj6eQheV4aKGpGAYiDgoMY1M3IT3Lkb4qfaC8
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAeOxVsFyJuzj2UNdck2PW8Gz5vBi3BDIFlpKeHbhVWxSPZilhtdkkc2KTnRvDw%2BRhOFIEr8HQVXXK3zep4dlJqLKRwGCWKfX%2FqtefqC2d2zq9n5vMT5PtaL1hQYeA3X%2Bc0UUBsICKRAfA5tjuKn4Vl3663wd0Hwau9EWWxEURXwALNSuIyrkjWMjQu1kHo7y1sYs7Miw4ORTFqfr43wD4sWYHad2DzeTqNHoiDlcJZWpKnxdVe49nm3jj6eQheV4aKGpGAYiDgoMY1M3IT3Lkb4qfaC8
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_GT_josefernandocanomendez@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#83
+Email:        Netflixfer8@gmail.com
+Name:         Fer
+Country:      GT (GT)
+Plan:         Premium
+Price:        USD 13.99
+Member Since: abril de 2026
+Next Billing: 13 de diciembre de 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  0327
+Pay Method:   CC
+Phone:        4516 3413
+Phone Verif:  No
+Profiles:     Fer
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCARRJ%2F4%2FSiygip6vIrrDLsU7yobHNu90TSxUE%2FXVAVqKwRIJDnJSdDlcy%2FjhNJCLxKKsR5ZhkQq0L7VPJd6Y6QO8qO315rJYhVwQzEZQWHylYiX6UNLiT6i18qJGYwSEcSsaWA0kCB7i8N4mleSAxzJMUOd6GH47ApEE7WCaO%2BGwBnhH24sDF6LgYSzDsKerQ%2BvFTBo8nPBrocAb48dWJ9RqDgs%2BiJ9kMos9izwx0CwYs%2BWIJshP0VKVR1dXgrBibF%2BCYGAYiDgoM8iskCLnDup9BKVc0
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCARRJ%2F4%2FSiygip6vIrrDLsU7yobHNu90TSxUE%2FXVAVqKwRIJDnJSdDlcy%2FjhNJCLxKKsR5ZhkQq0L7VPJd6Y6QO8qO315rJYhVwQzEZQWHylYiX6UNLiT6i18qJGYwSEcSsaWA0kCB7i8N4mleSAxzJMUOd6GH47ApEE7WCaO%2BGwBnhH24sDF6LgYSzDsKerQ%2BvFTBo8nPBrocAb48dWJ9RqDgs%2BiJ9kMos9izwx0CwYs%2BWIJshP0VKVR1dXgrBibF%2BCYGAYiDgoM8iskCLnDup9BKVc0
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_GT_Netflixfer8@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#84
+Email:        psoculares@gmail.com
+Name:         Fa
+Country:      GT (GT)
+Plan:         Premium
+Price:        USD 13,99
+Member Since: Juli 2021
+Next Billing: 11 Desember 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  1263
+Pay Method:   CC
+Phone:        4106 4403
+Phone Verif:  No
+Profiles:     Ceci
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAbDfxQuv0OijPVMVI2jPFW2JaR11JK6KJmRMwhNLFchK96HWEsnzpEd4tJOd1%2FS5BKgUyCkGAiMCIdWGHhR5jP1Y9qndXTsP9uOujwy2SD%2BdJ7OVbAfToxQq55SrEut8blGhetiPtkA93FJvxk2VfBaXkKhxltdcv%2BMn1Hsx13xSqFxgQTTpdHJ6NRjCxeVeU90qDcyrZV3eFIRqprwBITCFZ5lxFD%2BLGjc%2F1KxLCgocsMoCEiNGVmBrVRNAkwXadVr9GAYiDgoMzD3Vm%2B5H6oDwIahO
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAbDfxQuv0OijPVMVI2jPFW2JaR11JK6KJmRMwhNLFchK96HWEsnzpEd4tJOd1%2FS5BKgUyCkGAiMCIdWGHhR5jP1Y9qndXTsP9uOujwy2SD%2BdJ7OVbAfToxQq55SrEut8blGhetiPtkA93FJvxk2VfBaXkKhxltdcv%2BMn1Hsx13xSqFxgQTTpdHJ6NRjCxeVeU90qDcyrZV3eFIRqprwBITCFZ5lxFD%2BLGjc%2F1KxLCgocsMoCEiNGVmBrVRNAkwXadVr9GAYiDgoMzD3Vm%2B5H6oDwIahO
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_GT_psoculares@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#85
+Email:        mpolyd1@gmail.com
+Name:         John
+Country:      GR (GR)
+Plan:         Premium
+Price:        EUR 15.99
+Member Since: April 2020
+Next Billing: December 16, 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  6468
+Pay Method:   CC
+Phone:        694 549 0901
+Phone Verif:  No
+Profiles:     288200
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCASNqN%2FYmS7nx9TNW4yWx7zUdHdEMaQhqja5GK9P7eqb222lfBB3LNA1galZh%2FMAGd4kyy7gdSqhp%2BXmzlqn4IgBIl%2FAQe%2FqaEGDHu%2BlG9eDxoFdtEVcX81FLrvzX1EkfzD1u7ozzHGgz2qzof0aSCpkH34Z%2Ba2w%2FZbdpMbXHpZPnv6lyBuJZaDLMnihFoS%2F2mPzELg%2Bq5XB4OYn%2F%2FnfkX302W3Rj%2B9AH3WYNb2CWn%2BNF73LZ%2FJjvFx801hRhTpymGXI5GAYiDgoMP69i17bebk3Ir8Em
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCASNqN%2FYmS7nx9TNW4yWx7zUdHdEMaQhqja5GK9P7eqb222lfBB3LNA1galZh%2FMAGd4kyy7gdSqhp%2BXmzlqn4IgBIl%2FAQe%2FqaEGDHu%2BlG9eDxoFdtEVcX81FLrvzX1EkfzD1u7ozzHGgz2qzof0aSCpkH34Z%2Ba2w%2FZbdpMbXHpZPnv6lyBuJZaDLMnihFoS%2F2mPzELg%2Bq5XB4OYn%2F%2FnfkX302W3Rj%2B9AH3WYNb2CWn%2BNF73LZ%2FJjvFx801hRhTpymGXI5GAYiDgoMP69i17bebk3Ir8Em
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_GR_mpolyd1@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#86
+Email:        S3B4ST14NS3V1LL4@gmail.com
+Name:         Sebastian
+Country:      GT (GT)
+Plan:         Premium
+Price:        USD 13.99
+Member Since: junio de 2024
+Next Billing: 10 de diciembre de 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  2409
+Pay Method:   CC
+Phone:        5566 6719
+Phone Verif:  No
+Profiles:     Sebastian
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAQ7ZTQCIh3CK%2Bb7UAxTh2jDwwSsorBkKNa6VrusRlK5N1FNr%2BJj4deoadztdvb8xXBJXo5k1gTqyJo7rX8eAKnfN7j%2FuO%2FkHGSlWn%2F7ZlfDFsk%2FgWCW1RLmO0frB%2F0mFNPkDlt9GG9aSP7ED9OBzklNRTjgFi3PEcZJzGjiNxsXdDfgqS%2B77%2BLS0T2zeX6KyqCFAjadCaWPj%2B5RLcu9zqJHmYOnQfKxo1Dc706SPSHM25bjjgHuZBB7WD%2FYYbztQBvPIGAYiDgoM55IaIKTG8lXHj8%2FD
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAQ7ZTQCIh3CK%2Bb7UAxTh2jDwwSsorBkKNa6VrusRlK5N1FNr%2BJj4deoadztdvb8xXBJXo5k1gTqyJo7rX8eAKnfN7j%2FuO%2FkHGSlWn%2F7ZlfDFsk%2FgWCW1RLmO0frB%2F0mFNPkDlt9GG9aSP7ED9OBzklNRTjgFi3PEcZJzGjiNxsXdDfgqS%2B77%2BLS0T2zeX6KyqCFAjadCaWPj%2B5RLcu9zqJHmYOnQfKxo1Dc706SPSHM25bjjgHuZBB7WD%2FYYbztQBvPIGAYiDgoM55IaIKTG8lXHj8%2FD
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_GT_S3B4ST14NS3V1LL4@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#87
+Email:        jeremysteven350@gmail.com
+Name:         Yop
+Country:      GT (GT)
+Plan:         Premium
+Price:        USD 13.99
+Member Since: julio de 2024
+Next Billing: 6 de diciembre de 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  7583
+Pay Method:   CC
+Phone:        4740 8702
+Phone Verif:  No
+Profiles:     Steven
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLDAeOTjmkNKusvhU%2B86JqssuZnpPmEE8Luzxa6HA3OE46g0ROHr1wiDqCmhtTV95A%2BsWwimiPz4ZDt8%2BReSZyUOVpC0AgKzGEYvcrsNAtCawV6Me2GuMgIZstYrTtlKEmvliO5kEpQ0fY%2Fbb6FHCSp6HF0Dc%2Fj829jkNetR4UBeAOzrxV42qkhCnd0QuoHfb4CWm%2F3iFFZkkfQxKzW%2Fyu5XuRW9S1Rpa%2FBb1CKP6YX3f2kJrJjF0nRQTsUQHDAykuYZYnG%2FxgGIg4KDFCspblPWUsbDsyqlA%3D%3D
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLDAeOTjmkNKusvhU%2B86JqssuZnpPmEE8Luzxa6HA3OE46g0ROHr1wiDqCmhtTV95A%2BsWwimiPz4ZDt8%2BReSZyUOVpC0AgKzGEYvcrsNAtCawV6Me2GuMgIZstYrTtlKEmvliO5kEpQ0fY%2Fbb6FHCSp6HF0Dc%2Fj829jkNetR4UBeAOzrxV42qkhCnd0QuoHfb4CWm%2F3iFFZkkfQxKzW%2Fyu5XuRW9S1Rpa%2FBb1CKP6YX3f2kJrJjF0nRQTsUQHDAykuYZYnG%2FxgGIg4KDFCspblPWUsbDsyqlA%3D%3D
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_GT_jeremysteven350@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#88
+Email:        psoculares@gmail.com
+Name:         Fa
+Country:      GT (GT)
+Plan:         Premium
+Price:        USD 13,99
+Member Since: Juli 2021
+Next Billing: 11 Desember 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  1263
+Pay Method:   CC
+Phone:        4106 4403
+Phone Verif:  No
+Profiles:     Ceci
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAW0H1NmfynFk6tdJEO5MsqWv8AoSmYi%2BQZY%2FFQR3aygxYR9T90hLHiL8lISg6%2FhRfILx1%2BP2Hgu6d%2FJ3G7EamfS8LS6VzoVxiGLAl249LBVWUoQVn2CvN6yf%2BA7QsqfhiOiMIu7nwFUVeVGJDqCwNMBcFWfJbKUdsJML%2BIr0F%2FGBhQzdwClucobX4uG9RO7RMYMOUe5q8Om7DiCyBlgcvrWeyMmW1unSm5qDV9iGhR1y4Ibk6sQofPctT3Y4VrTnWm0QGAYiDgoMXtgCBjMEf08nCbi7
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAW0H1NmfynFk6tdJEO5MsqWv8AoSmYi%2BQZY%2FFQR3aygxYR9T90hLHiL8lISg6%2FhRfILx1%2BP2Hgu6d%2FJ3G7EamfS8LS6VzoVxiGLAl249LBVWUoQVn2CvN6yf%2BA7QsqfhiOiMIu7nwFUVeVGJDqCwNMBcFWfJbKUdsJML%2BIr0F%2FGBhQzdwClucobX4uG9RO7RMYMOUe5q8Om7DiCyBlgcvrWeyMmW1unSm5qDV9iGhR1y4Ibk6sQofPctT3Y4VrTnWm0QGAYiDgoMXtgCBjMEf08nCbi7
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_GT_psoculares@gmail.com_2.txt
+──────────────────────────────────────────────────────────────────────
+
+#89
+Email:        emmanuelle.larzilliere@outlook.fr
+Name:         Raphiki
+Country:      France (FR)
+Plan:         Premium
+Price:        N/A
+Member Since: juillet 2018
+Next Billing: N/A
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   N/A
+Card Last 4:  N/A
+Pay Method:   ORANGE_V2_BILLED
+Phone:        06 33 85 67 70
+Phone Verif:  No
+Profiles:     Emmanuelle
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAb0hj%2BiS2SXHJV7HpNkXbpIz%2F92aSJpalVGOUi9BRlG01niWo8E1FXSvaBHd2t%2BVjTxR4ie01ojoAZba7Iox%2BTsm%2FFesAS%2Fmtij3QBgfeCya%2BThF2oYgMDfTnsdkbC2XhWqomV6ATJD7StnlREEbXKL7you%2B10tPqgeldBTK6LnVV%2FsKHWyOCpZJiE7ZeEGcLtDrHlQotw3UIJ07x4AQXzwPPaLjRVDA5jYAnKG%2FbaflvWBTshdO6E8U0Yh0Q6tG8TXWGAYiDgoMc9q8otkzZjyXwjZF
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAb0hj%2BiS2SXHJV7HpNkXbpIz%2F92aSJpalVGOUi9BRlG01niWo8E1FXSvaBHd2t%2BVjTxR4ie01ojoAZba7Iox%2BTsm%2FFesAS%2Fmtij3QBgfeCya%2BThF2oYgMDfTnsdkbC2XhWqomV6ATJD7StnlREEbXKL7you%2B10tPqgeldBTK6LnVV%2FsKHWyOCpZJiE7ZeEGcLtDrHlQotw3UIJ07x4AQXzwPPaLjRVDA5jYAnKG%2FbaflvWBTshdO6E8U0Yh0Q6tG8TXWGAYiDgoMc9q8otkzZjyXwjZF
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_FR_emmanuelle.larzilliere@outlook.fr.txt
+──────────────────────────────────────────────────────────────────────
+
+#90
+Email:        jorgelarios.taxbusiness@yahoo.com
+Name:         Andrea
+Country:      GT (GT)
+Plan:         Premium
+Price:        USD 13.99
+Member Since: July 2018
+Next Billing: November 27, 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  9075
+Pay Method:   CC
+Phone:        5410 5156
+Phone Verif:  No
+Profiles:     Mami
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAfvzX1PsrycwQOaL8Dao35MFr1pqXWrt2PS%2Fo65s9nNlOF1G9nT1%2BPdc2AfQ%2BwZX453tM2N5vjoJG4QmAr%2F9vMLIi0SfOeCqBp%2B4s%2FQzqbfw8RawFGR9iXjbg3RLR%2BTWbsnor6409l1Mi0OHEYbkroRupONoLrFI6Zq7M5e1HcfIypFMaOVgffnUl9QcAfuIkwTsyvoGRn22C6Q02R0nzpArkYh028nfGOjoLnh0PaAxEP9hIucjf6BiULy7VucdmwaYGAYiDgoMamu%2FFwkxqIEz3mbd
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAfvzX1PsrycwQOaL8Dao35MFr1pqXWrt2PS%2Fo65s9nNlOF1G9nT1%2BPdc2AfQ%2BwZX453tM2N5vjoJG4QmAr%2F9vMLIi0SfOeCqBp%2B4s%2FQzqbfw8RawFGR9iXjbg3RLR%2BTWbsnor6409l1Mi0OHEYbkroRupONoLrFI6Zq7M5e1HcfIypFMaOVgffnUl9QcAfuIkwTsyvoGRn22C6Q02R0nzpArkYh028nfGOjoLnh0PaAxEP9hIucjf6BiULy7VucdmwaYGAYiDgoMamu%2FFwkxqIEz3mbd
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_GT_jorgelarios.taxbusiness@yahoo.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#91
+Email:        josefernandocanomendez@gmail.com
+Name:         Primo
+Country:      GT (GT)
+Plan:         Premium
+Price:        USD 13.99
+Member Since: febrero de 2019
+Next Billing: 21 de noviembre de 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  7031
+Pay Method:   CC
+Phone:        5535 3835
+Phone Verif:  No
+Profiles:     Jose
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAZeiy4IDtL%2ByDotdJGoBSMKB9LvnqanjxIoUbVlvhTuYsn3sAYOB%2FVHl2wiHua%2BCrwb5j9fWWFccpOdQLzT02UjEQHXKMDGUX%2FQleLBBl8UdO%2BCDOzdgRv%2BfGTbIyiz0Sg6YJTki%2F4pEzl2liSWUVV%2FbG4tXb1VVXXehkM9%2FgoUzKkg4awmdPCn18TpxNsOAA3W4rWoujpbvoGWy4gK6C4HA3CW8NQX%2B5BS49CO6EcnyVDT3IzXt0Jokr8C8hjXEqTTHGAYiDgoM8dWeXXCFELv4%2B8od
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAZeiy4IDtL%2ByDotdJGoBSMKB9LvnqanjxIoUbVlvhTuYsn3sAYOB%2FVHl2wiHua%2BCrwb5j9fWWFccpOdQLzT02UjEQHXKMDGUX%2FQleLBBl8UdO%2BCDOzdgRv%2BfGTbIyiz0Sg6YJTki%2F4pEzl2liSWUVV%2FbG4tXb1VVXXehkM9%2FgoUzKkg4awmdPCn18TpxNsOAA3W4rWoujpbvoGWy4gK6C4HA3CW8NQX%2B5BS49CO6EcnyVDT3IzXt0Jokr8C8hjXEqTTHGAYiDgoM8dWeXXCFELv4%2B8od
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_GT_josefernandocanomendez@gmail.com_2.txt
+──────────────────────────────────────────────────────────────────────
+
+#92
+Email:        S3B4ST14NS3V1LL4@gmail.com
+Name:         Sebastian
+Country:      GT (GT)
+Plan:         Premium
+Price:        USD 13.99
+Member Since: junio de 2024
+Next Billing: 10 de diciembre de 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  2409
+Pay Method:   CC
+Phone:        5566 6719
+Phone Verif:  No
+Profiles:     Sebastian
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAWLUomV6ONnokn0Lwuxz0oqi4o1MnQHzqyQCGkXS7s4irJ2vJQcNVBMIZkOrdaEqZirtOIS2QwoQpcOYuymHJI9QZdHIGYnzITXwAIsfVJF5gphND2z%2BdcU7dEb1bnKZequ35EqClneEYJ0tyI5QglPV2RZCtHNWwdaOX%2BOKZHcVcXOqPuehbM26Y%2FMQpdr9Ag25c2UHTq8xp8ktgjT8Y6IC1EAqk283Krwb1G%2FWryaD1w0KDhHSjN8wA8gP1vDxzL4uGAYiDgoM0a8BTZyfCevTNyrF
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAWLUomV6ONnokn0Lwuxz0oqi4o1MnQHzqyQCGkXS7s4irJ2vJQcNVBMIZkOrdaEqZirtOIS2QwoQpcOYuymHJI9QZdHIGYnzITXwAIsfVJF5gphND2z%2BdcU7dEb1bnKZequ35EqClneEYJ0tyI5QglPV2RZCtHNWwdaOX%2BOKZHcVcXOqPuehbM26Y%2FMQpdr9Ag25c2UHTq8xp8ktgjT8Y6IC1EAqk283Krwb1G%2FWryaD1w0KDhHSjN8wA8gP1vDxzL4uGAYiDgoM0a8BTZyfCevTNyrF
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_GT_S3B4ST14NS3V1LL4@gmail.com_2.txt
+──────────────────────────────────────────────────────────────────────
+
+#93
+Email:        kyeiohene8@gmail.com
+Name:         Philemon
+Country:      Ghana (GH)
+Plan:         Premium
+Price:        $9.99
+Member Since: April 2026
+Next Billing: December 4, 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  7542
+Pay Method:   CC
+Phone:        053 152 4803
+Phone Verif:  No
+Profiles:     Philemon
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAer9Ro4%2FdaUqNELWZjWUnZQ9Q7ciV4uUVhwGfqRDH4NE8byKrpLSZVXUVZ4%2F9EWVdZxUzPFql05%2B7Gzutzy%2B7Fg0pW8mFBFY2cGNa9W2F4XujnMfVJUgwGP3G04LE55l4L6GQp7mJJLHewhr6KlMfJGxQXyfReHsFNe2qOU1q%2F%2BUW%2FywHQu86B30BL65sjktSQVqxvHhbmPdQPssneECnKZXejeRCUtPF0IM%2BOlZDqB1ihbDLmAQLmy9S9xVxlx0VANHGAYiDgoMgC9CBb90tuH%2FnG%2Fd
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAer9Ro4%2FdaUqNELWZjWUnZQ9Q7ciV4uUVhwGfqRDH4NE8byKrpLSZVXUVZ4%2F9EWVdZxUzPFql05%2B7Gzutzy%2B7Fg0pW8mFBFY2cGNa9W2F4XujnMfVJUgwGP3G04LE55l4L6GQp7mJJLHewhr6KlMfJGxQXyfReHsFNe2qOU1q%2F%2BUW%2FywHQu86B30BL65sjktSQVqxvHhbmPdQPssneECnKZXejeRCUtPF0IM%2BOlZDqB1ihbDLmAQLmy9S9xVxlx0VANHGAYiDgoMgC9CBb90tuH%2FnG%2Fd
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_GH_kyeiohene8@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#94
+Email:        kyeiohene8@gmail.com
+Name:         Philemon
+Country:      Ghana (GH)
+Plan:         Premium
+Price:        $9.99
+Member Since: April 2026
+Next Billing: December 4, 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  7542
+Pay Method:   CC
+Phone:        053 152 4803
+Phone Verif:  No
+Profiles:     Philemon
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAczQQ6qJy%2BDHBNPfSnUab62%2FdY%2FbtyMWDmgOytwTEUy3141LibgWlnUVdEM0kEVfvP9HbOoc0EKUuXtZuRSGwMUPLedmFPYxKQtCtZxrtxeLhm%2F1twezMhOfmjUc%2BEPK4iaqwmqF50lqmwTKZYYs%2BQXP8LbxKelc6xmD0J7y2dMBStWNZETmfNqBEEC25gkwvmiMWD2C2KA6YMEwN2mKjLdEN831CezSvNbBboZwmtTnq0QfylhA7tRh3Xow%2FV%2BHy5rJGAYiDgoMq9GqEe%2BgRE0YUZir
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAczQQ6qJy%2BDHBNPfSnUab62%2FdY%2FbtyMWDmgOytwTEUy3141LibgWlnUVdEM0kEVfvP9HbOoc0EKUuXtZuRSGwMUPLedmFPYxKQtCtZxrtxeLhm%2F1twezMhOfmjUc%2BEPK4iaqwmqF50lqmwTKZYYs%2BQXP8LbxKelc6xmD0J7y2dMBStWNZETmfNqBEEC25gkwvmiMWD2C2KA6YMEwN2mKjLdEN831CezSvNbBboZwmtTnq0QfylhA7tRh3Xow%2FV%2BHy5rJGAYiDgoMq9GqEe%2BgRE0YUZir
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_GH_kyeiohene8@gmail.com_2.txt
+──────────────────────────────────────────────────────────────────────
+
+#95
+Email:        aliatsa@gmail.com
+Name:         flora
+Country:      GR (GR)
+Plan:         Premium
+Price:        15,99 EUR
+Member Since: augusti 2018
+Next Billing: 30 november 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  6990
+Pay Method:   CC
+Phone:        693 619 1662
+Phone Verif:  No
+Profiles:     flora
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAZMtqtBxeJeuvi6ZIl%2BCFCq819nsw8hvybOr%2BHxI6DnrAp6%2B7MXD%2BbgxTv1Dfzj2lhj8K0u8KuX%2B261eBjm1pSC5bHFcfvjdJZge7E7PZG5agmoZ9eNkoyYYVByqeOB1Gs4i%2BaOU%2FkYRMCkh%2BezQjRm5LzbwkKoQpIPvQbTKhG4nyVNaULW9RAQmbO2TlLvKWqMAWubrhZxu0G%2FlKkM%2FWZFLd2plAC0d0Pdh4dPqmRYnC%2F%2F%2FpGth9wm2Rhe2FZpIRMvTGAYiDgoMcT1h%2BqyF5gI5L%2BMP
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAZMtqtBxeJeuvi6ZIl%2BCFCq819nsw8hvybOr%2BHxI6DnrAp6%2B7MXD%2BbgxTv1Dfzj2lhj8K0u8KuX%2B261eBjm1pSC5bHFcfvjdJZge7E7PZG5agmoZ9eNkoyYYVByqeOB1Gs4i%2BaOU%2FkYRMCkh%2BezQjRm5LzbwkKoQpIPvQbTKhG4nyVNaULW9RAQmbO2TlLvKWqMAWubrhZxu0G%2FlKkM%2FWZFLd2plAC0d0Pdh4dPqmRYnC%2F%2F%2FpGth9wm2Rhe2FZpIRMvTGAYiDgoMcT1h%2BqyF5gI5L%2BMP
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_GR_aliatsa@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#96
+Email:        ezekiel.mcdonald15@gmail.com
+Name:         PET
+Country:      GY (GY)
+Plan:         Premium
+Price:        US$7.99
+Member Since: July 2025
+Next Billing: 25 November 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  1604
+Pay Method:   CC
+Phone:        696 4003
+Phone Verif:  No
+Profiles:     EZEKIEL MC DONALD
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLDAWEzieGyCvYxO5qUYN6imvrZ1blep2rnNWCP%2BVPnXhuXT1FV2NiEt%2B2HPlCYtnnsh70MnCvsvA3Gg%2FsmRRyxTOg24dIOWuThv7HLnJNNaBBAw11OJKaREQLNudERK0AMRTA4q1il61JeLWP5g9ucjh9f2V6ReApTocI7HXYr%2FGdAIxvQtc4PBNs6247rqRmxpLG06jQ5DB7ZH62eNPwOCAiTbFCeXUrPO2dOdLC4FrZpC352pPYQLZWgsybZi0M223GgBBgGIg4KDASPJMdMdFpwtz%2BWqg%3D%3D
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLDAWEzieGyCvYxO5qUYN6imvrZ1blep2rnNWCP%2BVPnXhuXT1FV2NiEt%2B2HPlCYtnnsh70MnCvsvA3Gg%2FsmRRyxTOg24dIOWuThv7HLnJNNaBBAw11OJKaREQLNudERK0AMRTA4q1il61JeLWP5g9ucjh9f2V6ReApTocI7HXYr%2FGdAIxvQtc4PBNs6247rqRmxpLG06jQ5DB7ZH62eNPwOCAiTbFCeXUrPO2dOdLC4FrZpC352pPYQLZWgsybZi0M223GgBBgGIg4KDASPJMdMdFpwtz%2BWqg%3D%3D
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_GY_ezekiel.mcdonald15@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#97
+Email:        kfiyou@gmail.com
+Name:         Ra
+Country:      Hong Kong (HK)
+Plan:         高級
+Price:        HK$118
+Member Since: 2024年6月
+Next Billing: 2026年11月23日
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   ALIPAYHK
+Card Last 4:  852-91\x2A\x2A\x2A\x2A64
+Pay Method:   MOBILE_WALLET
+Phone:        9193 1364
+Phone Verif:  No
+Profiles:     kl
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAezFLsV1OzbFw8l4Wp4HYXN1nKuKyUPHdeXrpS4Szw6Q57PaK%2B5AcEeyZPqqiuzcj1wSP89vpyRSLxfktmr0%2FlTziFoFyeI%2F0wGLsgLrDFHFZ%2FI4mU2hZAj0%2F4LA3LEZk%2Bz9J8DhyZ2Zcb8holE2HqNdI9ZI5iYxY60V0UqWDZGzbBNpJLkQJ0qhPrUOm4bTpm10P13NyeIHc0d6iJHY08zoIlI9ogmAW4yjoA2FWFLdluTEQDlIEfpxzttbPnDhD2X0GAYiDgoMy5yDLJafi0SLDFNF
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAezFLsV1OzbFw8l4Wp4HYXN1nKuKyUPHdeXrpS4Szw6Q57PaK%2B5AcEeyZPqqiuzcj1wSP89vpyRSLxfktmr0%2FlTziFoFyeI%2F0wGLsgLrDFHFZ%2FI4mU2hZAj0%2F4LA3LEZk%2Bz9J8DhyZ2Zcb8holE2HqNdI9ZI5iYxY60V0UqWDZGzbBNpJLkQJ0qhPrUOm4bTpm10P13NyeIHc0d6iJHY08zoIlI9ogmAW4yjoA2FWFLdluTEQDlIEfpxzttbPnDhD2X0GAYiDgoMy5yDLJafi0SLDFNF
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_HK_kfiyou@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#98
+Email:        discua.andrik@proton.me
+Name:         main account
+Country:      HN (HN)
+Plan:         Premium
+Price:        $13.99
+Member Since: September 2026
+Next Billing: 18 November 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   MASTERCARD
+Card Last 4:  4372
+Pay Method:   CC
+Phone:        N/A
+Phone Verif:  No
+Profiles:     main account
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLDAcO6fAY8XqLRPyf6TnZiRKPLYvBHXbKEmvIEu%2FZRCMQUGNtnrFkZxgGTgRlnHRaSoSrE8gStY%2BckDC7xV5bNCbfS8ikSveDlyiUGmidxn3pC4eUy1MHv3mfU4C6mXoE3ui1D1xyGf4f7gyY7ue6dxFUm0QJvJ2h6lpaF8oJpXdsZmfyIlSUNj9JBsnNiCF2sfTx6YmvyGKK7mMJlwZDwdnjZmEOzeUqZevHIn5ubYMDGiEBygMNbkc0uJxtn7nC22XAqBxgGIg4KDG7KjLXeUqbVtsEJ3w%3D%3D
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLDAcO6fAY8XqLRPyf6TnZiRKPLYvBHXbKEmvIEu%2FZRCMQUGNtnrFkZxgGTgRlnHRaSoSrE8gStY%2BckDC7xV5bNCbfS8ikSveDlyiUGmidxn3pC4eUy1MHv3mfU4C6mXoE3ui1D1xyGf4f7gyY7ue6dxFUm0QJvJ2h6lpaF8oJpXdsZmfyIlSUNj9JBsnNiCF2sfTx6YmvyGKK7mMJlwZDwdnjZmEOzeUqZevHIn5ubYMDGiEBygMNbkc0uJxtn7nC22XAqBxgGIg4KDG7KjLXeUqbVtsEJ3w%3D%3D
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_HN_discua.andrik@proton.me.txt
+──────────────────────────────────────────────────────────────────────
+
+#99
+Email:        juancdubonh@gmail.com
+Name:         Eli
+Country:      HN (HN)
+Plan:         Premium
+Price:        USD 13.99
+Member Since: marzo de 2024
+Next Billing: 5 de diciembre de 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   MASTERCARD
+Card Last 4:  8678
+Pay Method:   CC
+Phone:        9718-8374
+Phone Verif:  No
+Profiles:     Juan Carlos
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCATLdJ8FgOnBFjGCfVQkOrLSVpPoPtMi09ZN6EVuPL3ts5mWGIWqV3kRJNAmeZdpNPcRsZfQLDqiEMV0jw1ZgvwMj8oxAITTqr2k2c3ObwpAWQOKAYMZjvZCWcji9Pp83i47IE4G%2B7kDWxIzNJG4kekGpH0MCrpe6XnpDGnGJIF%2FDgMwUxOBPbfCuXmtIa4lDwcVdW8RNG%2FcNwg%2Fcmag42LQKJfRbbtG%2B41j87ffGC%2BGqd%2B9JMN9BQGfoIf1d45cf%2Bp31GAYiDgoM7pY%2F7jvXAluQwqij
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCATLdJ8FgOnBFjGCfVQkOrLSVpPoPtMi09ZN6EVuPL3ts5mWGIWqV3kRJNAmeZdpNPcRsZfQLDqiEMV0jw1ZgvwMj8oxAITTqr2k2c3ObwpAWQOKAYMZjvZCWcji9Pp83i47IE4G%2B7kDWxIzNJG4kekGpH0MCrpe6XnpDGnGJIF%2FDgMwUxOBPbfCuXmtIa4lDwcVdW8RNG%2FcNwg%2Fcmag42LQKJfRbbtG%2B41j87ffGC%2BGqd%2B9JMN9BQGfoIf1d45cf%2Bp31GAYiDgoM7pY%2F7jvXAluQwqij
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_HN_juancdubonh@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#100
+Email:        rodrigueznicolle93@gmail.com
+Name:         Yennifer
+Country:      HN (HN)
+Plan:         Premium
+Price:        USD 13.99
+Member Since: diciembre de 2025
+Next Billing: 17 de noviembre de 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   MASTERCARD
+Card Last 4:  7827
+Pay Method:   CC
+Phone:        9803-8444
+Phone Verif:  No
+Profiles:     Yennifer
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCATwCY7ti7PLTVxzLND622pw3s36z3HXHjNtsQ%2BeYN1PSl%2BEilzIZefxR%2Fc5kUY40Je%2BD0LcUYripvni5Oa4msOT1v%2B6ezgopGfadXcwGcQzQ%2FVKqLwM6BTTNXGmm5yWEumEf5oGe6aULtYcFa8ONrlTQMsAfbc0ySYRhgtouqLLUx%2FrIb2iVL%2BZoAAjd7P02%2F1GtnTPwa3jjMDwiu3%2FJ54HjGibxOg0OvnyR%2FOkf5lR7EI9bjewr8SnMaJXVsy%2FkFE%2FoGAYiDgoMGgklVcEEfRlDEyPP
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCATwCY7ti7PLTVxzLND622pw3s36z3HXHjNtsQ%2BeYN1PSl%2BEilzIZefxR%2Fc5kUY40Je%2BD0LcUYripvni5Oa4msOT1v%2B6ezgopGfadXcwGcQzQ%2FVKqLwM6BTTNXGmm5yWEumEf5oGe6aULtYcFa8ONrlTQMsAfbc0ySYRhgtouqLLUx%2FrIb2iVL%2BZoAAjd7P02%2F1GtnTPwa3jjMDwiu3%2FJ54HjGibxOg0OvnyR%2FOkf5lR7EI9bjewr8SnMaJXVsy%2FkFE%2FoGAYiDgoMGgklVcEEfRlDEyPP
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_HN_rodrigueznicolle93@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#101
+Email:        radeczki@gmail.com
+Name:         RaCs
+Country:      Hungary (HU)
+Plan:         Premium
+Price:        5 690 Ft
+Member Since: September 2018
+Next Billing: November 26, 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  1555
+Pay Method:   CC
+Phone:        06 20 985 7705
+Phone Verif:  No
+Profiles:     RaCs
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCARb4dSisGXNRwBJb1bnfn9%2BHEwYGCGBFxRiW8Jr6QRN98d2O2rLjBvo3HMUT8n6mt8uIK00CyaljBFYNevmP6EHMZ7NGluzJ85R5j7YaZkRvQtMeH30gc79CYtRRbs4YGo2UNlH2xB55OHmWfoB2XjCVtI6pG4AqNrYAZG%2BdWRmyz7wQYlwp%2FDFG0S3Tc8B1yB%2FxwRn6eJfHw5JT9ZiwqwNYo9%2F8YGYjLQYXyFhi9DA9Sgt0YSN8eKegKx0Pvr0Qjvx8GAYiDgoM9T1324KvAxXVMV4P
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCARb4dSisGXNRwBJb1bnfn9%2BHEwYGCGBFxRiW8Jr6QRN98d2O2rLjBvo3HMUT8n6mt8uIK00CyaljBFYNevmP6EHMZ7NGluzJ85R5j7YaZkRvQtMeH30gc79CYtRRbs4YGo2UNlH2xB55OHmWfoB2XjCVtI6pG4AqNrYAZG%2BdWRmyz7wQYlwp%2FDFG0S3Tc8B1yB%2FxwRn6eJfHw5JT9ZiwqwNYo9%2F8YGYjLQYXyFhi9DA9Sgt0YSN8eKegKx0Pvr0Qjvx8GAYiDgoM9T1324KvAxXVMV4P
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_HU_radeczki@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#102
+Email:        animash280@gmail.com
+Name:         My BodyGuard
+Country:      Indonesia (ID)
+Plan:         Premium
+Price:        Rp186.000
+Member Since: Agustus 2024
+Next Billing: 30 November 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   GOPAY
+Card Last 4:  \x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A9963
+Pay Method:   MOBILE_WALLET
+Phone:        0812-7622-9963
+Phone Verif:  No
+Profiles:     ba
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAYPIKpakJ9tqif7JmfCFBJaAicq3p6dqrK4BPPDh4iIyPfJ%2BEJzXknaXvh6J8AxZxOAmNSN6f2whSHNePTLTckL%2FArlGIHjL2925q5nCjV3C7Olv1JRJTFq1XkAOOa8tiSIPIoKIdTeDJWp9V6w9xBhy1wx%2FM5Jg8bYtX6D1taMNGkxBFBoG4RlSkRmzBTql7L8z8PNCOSzA6kwfE3wZJxdZYQevWezryy3vzjoA5g%2F%2B%2BDWGiewWXF2Sm%2BauYre1M2%2FzGAYiDgoM%2FQoNRbxD7iFmR0I2
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAYPIKpakJ9tqif7JmfCFBJaAicq3p6dqrK4BPPDh4iIyPfJ%2BEJzXknaXvh6J8AxZxOAmNSN6f2whSHNePTLTckL%2FArlGIHjL2925q5nCjV3C7Olv1JRJTFq1XkAOOa8tiSIPIoKIdTeDJWp9V6w9xBhy1wx%2FM5Jg8bYtX6D1taMNGkxBFBoG4RlSkRmzBTql7L8z8PNCOSzA6kwfE3wZJxdZYQevWezryy3vzjoA5g%2F%2B%2BDWGiewWXF2Sm%2BauYre1M2%2FzGAYiDgoM%2FQoNRbxD7iFmR0I2
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_ID_animash280@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#103
+Email:        alvasavero98@gmail.com
+Name:         Lina
+Country:      Indonesia (ID)
+Plan:         Premium
+Price:        IDR 186,000
+Member Since: September 2024
+Next Billing: November 25, 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   GOPAY
+Card Last 4:  \x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A1217
+Pay Method:   MOBILE_WALLET
+Phone:        0856-9290-1460
+Phone Verif:  No
+Profiles:     alva
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLDAQm4DLo07Mwai2ZeBz88FYZFqRg%2F2pInWar4P%2BVKoA%2FTga97mpUbWRH%2FSNojuP6pa8MXTaCqEIZF8N3EJ5o1FHIUuOzwEX9Fb9SgC7q%2F4I1o1OpdS1zVhe8caWcTUjgoNAKO9waNOoL%2B67k4eJgmhqeuFU4gwy2u3xlL2X1ijAk6uGsyuS120Gz7pYlzmpzaDUbez7Rpg8az%2BbsScauOkbBYRjCEM%2FB3y5TytCXJVYu1QRhsezMMIx9N%2FNceXXqe4DFQCRgGIg4KDL9hp%2FReJrytbiXAQg%3D%3D
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLDAQm4DLo07Mwai2ZeBz88FYZFqRg%2F2pInWar4P%2BVKoA%2FTga97mpUbWRH%2FSNojuP6pa8MXTaCqEIZF8N3EJ5o1FHIUuOzwEX9Fb9SgC7q%2F4I1o1OpdS1zVhe8caWcTUjgoNAKO9waNOoL%2B67k4eJgmhqeuFU4gwy2u3xlL2X1ijAk6uGsyuS120Gz7pYlzmpzaDUbez7Rpg8az%2BbsScauOkbBYRjCEM%2FB3y5TytCXJVYu1QRhsezMMIx9N%2FNceXXqe4DFQCRgGIg4KDL9hp%2FReJrytbiXAQg%3D%3D
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_ID_alvasavero98@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#104
+Email:        armandaamrin@gmail.com
+Name:         Andhika Satria
+Country:      Indonesia (ID)
+Plan:         Premium
+Price:        IDR 186,000
+Member Since: May 2024
+Next Billing: 30 November 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   VISA
+Card Last 4:  5504
+Pay Method:   CC
+Phone:        0857-4379-8234
+Phone Verif:  No
+Profiles:     Armanda
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLDAa5v3PQPIvIBgmbc%2BnxXQ2%2Bxk0kEktB51a%2F9jqrVIPpgK8rC3zdA52p%2BdGbnbw3ax2bvWi8tDj7HEeEZ3X4gNKD%2BlU%2FXHkPbj13c7UGiDbCmFWbko6ZwRkP0%2B%2FBUmc64xmE6rdRLmdC%2Bddy%2BDrF32m9SeU819YNYNgK1QRPToGGgLQ4qCiwFyRKustfMnB1xR26lCTqmiQOtvws7q%2FNxsa8SzVToim53Ifwcp%2FBrEHPv6IL0W5CnbMmO9ebFUPeBRuJT%2FhgGIg4KDPUiX6cgm5F94Yoj1w%3D%3D
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLDAa5v3PQPIvIBgmbc%2BnxXQ2%2Bxk0kEktB51a%2F9jqrVIPpgK8rC3zdA52p%2BdGbnbw3ax2bvWi8tDj7HEeEZ3X4gNKD%2BlU%2FXHkPbj13c7UGiDbCmFWbko6ZwRkP0%2B%2FBUmc64xmE6rdRLmdC%2Bddy%2BDrF32m9SeU819YNYNgK1QRPToGGgLQ4qCiwFyRKustfMnB1xR26lCTqmiQOtvws7q%2FNxsa8SzVToim53Ifwcp%2FBrEHPv6IL0W5CnbMmO9ebFUPeBRuJT%2FhgGIg4KDPUiX6cgm5F94Yoj1w%3D%3D
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_ID_armandaamrin@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#105
+Email:        faouzi.zarrouki@hotmail.fr
+Name:         Inaya
+Country:      France (FR)
+Plan:         Premium
+Price:        N/A
+Member Since: juin 2023
+Next Billing: N/A
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   N/A
+Card Last 4:  N/A
+Pay Method:   CP_FR_BILLED
+Phone:        N/A
+Phone Verif:  No
+Profiles:     faouzi.zarrouki
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAaZAqCE24lkD04DqYwdjzLcAm6WGyFEJ5eoawF%2FKcwdHEoGtogOI6NciQCRHOdOUiqBQE5iZ%2FZQO0%2BjdHSpCyf2WH7ItivQM7jK%2FbkTOPW0MW0Fa4O%2BlGDe0CYX9pwKXw8DSJ81EYppnFa0IM4s6vpy2RC8eFTNKi%2FFhIkPGZ%2BvvK6P1fgdnkgIWTNIVzjtWKDxNWE9Rzpye%2BWh9eA4d4nSv9C3nksmbyCKBeSewwhmOKCU4BknmaiXA5dizPiWDITExGAYiDgoME87uZxbICxbvS0RI
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAaZAqCE24lkD04DqYwdjzLcAm6WGyFEJ5eoawF%2FKcwdHEoGtogOI6NciQCRHOdOUiqBQE5iZ%2FZQO0%2BjdHSpCyf2WH7ItivQM7jK%2FbkTOPW0MW0Fa4O%2BlGDe0CYX9pwKXw8DSJ81EYppnFa0IM4s6vpy2RC8eFTNKi%2FFhIkPGZ%2BvvK6P1fgdnkgIWTNIVzjtWKDxNWE9Rzpye%2BWh9eA4d4nSv9C3nksmbyCKBeSewwhmOKCU4BknmaiXA5dizPiWDITExGAYiDgoME87uZxbICxbvS0RI
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_FR_faouzi.zarrouki@hotmail.fr.txt
+──────────────────────────────────────────────────────────────────────
+
+#106
+Email:        asyauqi420@gmail.com
+Name:         16w62y
+Country:      Indonesia (ID)
+Plan:         Premium
+Price:        N/A
+Member Since: Mei 2025
+Next Billing: N/A
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   N/A
+Card Last 4:  N/A
+Pay Method:   TELKOMSEL_IN_PI_BILLED
+Phone:        0811-8111-150
+Phone Verif:  No
+Profiles:     asyauqi420
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAUQbL2UHp%2FEHY6gwbUsVJwvN1q0HzxlFw5VGs2Hp1mB65zifrb4S43oKaETYpsnLzLkYbRQcrHNz3%2BsHbuexpXpFD4z5Ip%2FrQuwwul9e7%2BdCDeBzrtFUomhMciQGtxYFX2%2FEVw3sULIAh6ximAnpVVpLo3ZfFPIB61zoA35v8g%2BqExjyxG4D1FwlIKaq7qlS619Cgd0t84M5TRRaMRpEjRSFM5Uh0uDvmEq30gpKVy0voiQVdXNIfKTNb1kaZ4qlbKoYGAYiDgoMvy6q3yLdoCV7bkbl
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAUQbL2UHp%2FEHY6gwbUsVJwvN1q0HzxlFw5VGs2Hp1mB65zifrb4S43oKaETYpsnLzLkYbRQcrHNz3%2BsHbuexpXpFD4z5Ip%2FrQuwwul9e7%2BdCDeBzrtFUomhMciQGtxYFX2%2FEVw3sULIAh6ximAnpVVpLo3ZfFPIB61zoA35v8g%2BqExjyxG4D1FwlIKaq7qlS619Cgd0t84M5TRRaMRpEjRSFM5Uh0uDvmEq30gpKVy0voiQVdXNIfKTNb1kaZ4qlbKoYGAYiDgoMvy6q3yLdoCV7bkbl
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_ID_asyauqi420@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#107
+Email:        dhany.silva@gmail.com
+Name:         dhany.silva
+Country:      Indonesia (ID)
+Plan:         Premium
+Price:        N/A
+Member Since: September 2025
+Next Billing: N/A
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   N/A
+Card Last 4:  N/A
+Pay Method:   TELKOM_INDONESIA_BILLED
+Phone:        0821-4623-7557
+Phone Verif:  No
+Profiles:     dhany.silva
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAfVA6R9Vsa4847XHDmTKefd3qWWD%2FRE4I1vyypOuZEIMvZuJSC7ye7xrnpbFhRdP42Ws9d7zU1roy%2FloUIZ7uJgsSGNjCHkoL5oGujU5Fk%2BJotsQPVHNiEW3emPu4eP183tHEIQ%2FSFemicgWnBWbS0ppcWpUltNo2Z%2B5FA4WLkfrU7%2FBlMNfGUCvRGtIc3VMCjF6xjhi4A4umUFho2Gx65FoFnWp7B1teTZNluP6Kk0tzjNtN26rYM8lURFp%2FwuVaqrLGAYiDgoMmw6A0Ghj5uw23fy7
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAfVA6R9Vsa4847XHDmTKefd3qWWD%2FRE4I1vyypOuZEIMvZuJSC7ye7xrnpbFhRdP42Ws9d7zU1roy%2FloUIZ7uJgsSGNjCHkoL5oGujU5Fk%2BJotsQPVHNiEW3emPu4eP183tHEIQ%2FSFemicgWnBWbS0ppcWpUltNo2Z%2B5FA4WLkfrU7%2FBlMNfGUCvRGtIc3VMCjF6xjhi4A4umUFho2Gx65FoFnWp7B1teTZNluP6Kk0tzjNtN26rYM8lURFp%2FwuVaqrLGAYiDgoMmw6A0Ghj5uw23fy7
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_ID_dhany.silva@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#108
+Email:        benedettocarvalho99@gmail.com
+Name:         benedettocarvalho99
+Country:      Indonesia (ID)
+Plan:         Premium
+Price:        Rp186.000
+Member Since: Oktober 2026
+Next Billing: 19 November 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   GOPAY
+Card Last 4:  \x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A5955
+Pay Method:   MOBILE_WALLET
+Phone:        0812-4640-5955
+Phone Verif:  No
+Profiles:     benedettocarvalho99
+Login PC:     https://netflix.com/?nftoken=BgjkwevcAxLCAUYB%2BkWFP9pe2Vo7z0yvDrkW%2BEVNWv6jzz7G19a56SsXoN6LzfVqD1cR5sneEaU8SopQCGIcRXB9p2txhxHVi7b9THK1b%2BeeYnhor5LPG5FaLaz8y8UCfJs5ydy%2FPzdjFVsiGDbcd5LhpFxR3%2FRochwHC%2FywI%2FhkuMNFALYFCgWMLJ4ReO4Qxn5%2F6c0%2B9K%2B5QED9mc8EPQY62jnU%2FNa%2Fv6EDQRP968EhPt18uRY0AkmKJ3ZkuTlUqnLD%2FadFrkdVRFdMGAYiDgoMRq4L3g9DExD8Cq3N
+Login Phone:  https://netflix.com/unsupported?nftoken=BgjkwevcAxLCAUYB%2BkWFP9pe2Vo7z0yvDrkW%2BEVNWv6jzz7G19a56SsXoN6LzfVqD1cR5sneEaU8SopQCGIcRXB9p2txhxHVi7b9THK1b%2BeeYnhor5LPG5FaLaz8y8UCfJs5ydy%2FPzdjFVsiGDbcd5LhpFxR3%2FRochwHC%2FywI%2FhkuMNFALYFCgWMLJ4ReO4Qxn5%2F6c0%2B9K%2B5QED9mc8EPQY62jnU%2FNa%2Fv6EDQRP968EhPt18uRY0AkmKJ3ZkuTlUqnLD%2FadFrkdVRFdMGAYiDgoMRq4L3g9DExD8Cq3N
+Login TV:     https://www.netflix.com/tv2
+Source:       Premium_ID_benedettocarvalho99@gmail.com.txt
+──────────────────────────────────────────────────────────────────────
+
+#109
+Email:        bimasatriya99@gmail.com
+Name:         OP KNT
+Country:      Indonesia (ID)
+Plan:         Premium
+Price:        Rp186.000
+Member Since: April 2025
+Next Billing: 14 Desember 2026
+Free Trial:   No
+Quality:      UHD 4K
+Max Streams:  4
+Extra Slots:  0
+Card Brand:   SHOPEEPAY
+Card Last 4:  \x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A3068
+Pay Method:   MOBILE_WALLET
+Phone:        0851-5603-3068
+Phone Verif:  No
